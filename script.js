@@ -237,6 +237,143 @@ const JOURNAL_ENTRIES = [
   {date:'2026-04-13',color:'#993556',text:'Transformative experience — mentor call changed how I think about pricing. I was massively undervaluing my work.'}
 ];
 
+const USER_PROFILE = {
+  fullName: 'Ashok Upadhya',
+  email: 'ashok@growhpf.app',
+  level: 'Level 0',
+  role: 'Beginner',
+  streak: '7 days',
+  goalsActive: 4,
+  checkIns: 23,
+  joined: 'March 2026',
+  timezone: 'Asia/Kolkata'
+};
+
+const LEVEL_ROLES = ['Beginner', 'Observer', 'Learner', 'Thinker', 'Builder', 'Strategist', 'Leader'];
+
+function getUserXP(){
+  const raw=localStorage.getItem('growHPFUserXP');
+  const parsed=Number.parseInt(raw||'0',10);
+  return Number.isFinite(parsed)&&parsed>=0?parsed:0;
+}
+
+function applyUserProgressFromXP(){
+  const xp=getUserXP();
+  const level=Math.floor(xp/20);
+  USER_PROFILE.level=`Level ${level}`;
+  USER_PROFILE.role=LEVEL_ROLES[Math.min(level,LEVEL_ROLES.length-1)];
+}
+
+function gainUserXP(points){
+  const nextXP=getUserXP()+points;
+  localStorage.setItem('growHPFUserXP',String(nextXP));
+  applyUserProgressFromXP();
+  renderSidebarUser();
+  buildProfile();
+}
+
+function formatCurrentDate(){
+  return new Intl.DateTimeFormat('en-US', {
+    weekday: 'long',
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric'
+  }).format(new Date());
+}
+
+function hydrateUserProfileFromSession(){
+  const sessionName=(localStorage.getItem('growHPFUserName')||'').trim();
+  const sessionEmail=(localStorage.getItem('growHPFUserEmail')||'').trim();
+  if(sessionName){
+    USER_PROFILE.fullName=sessionName
+      .split(' ')
+      .filter(Boolean)
+      .map(part=>part.charAt(0).toUpperCase()+part.slice(1).toLowerCase())
+      .join(' ');
+  }
+  if(sessionEmail){
+    USER_PROFILE.email=sessionEmail;
+  }
+
+  applyUserProgressFromXP();
+
+  const greeting=document.getElementById('dashboard-greeting');
+  if(greeting){
+    const firstName=USER_PROFILE.fullName.split(' ')[0]||'User';
+    greeting.textContent=`Good morning, ${firstName}`;
+  }
+
+  const dashboardDate=document.getElementById('dashboard-date');
+  if(dashboardDate){
+    dashboardDate.textContent=`${formatCurrentDate()} · You're on a 7-day streak`;
+  }
+
+  const checkinDate=document.getElementById('checkin-date');
+  if(checkinDate){
+    checkinDate.textContent=`${formatCurrentDate()} · Takes ~4 minutes`;
+  }
+}
+
+function getInitials(name){
+  return name
+    .split(' ')
+    .filter(Boolean)
+    .slice(0,2)
+    .map(part=>part[0].toUpperCase())
+    .join('');
+}
+
+function renderSidebarUser(){
+  const initials=getInitials(USER_PROFILE.fullName);
+  const avatar=document.getElementById('sidebar-avatar');
+  const name=document.getElementById('sidebar-name');
+  const level=document.getElementById('sidebar-level');
+  const note=document.getElementById('sidebar-note');
+
+  if(avatar)avatar.textContent=initials;
+  if(name)name.textContent=USER_PROFILE.fullName;
+  if(level)level.textContent=`${USER_PROFILE.level} - ${USER_PROFILE.role}`;
+  if(note)note.textContent=`${initials} are your initials.`;
+}
+
+function buildProfile(){
+  const initials=getInitials(USER_PROFILE.fullName);
+  const profileAvatar=document.getElementById('profile-avatar');
+  const profileName=document.getElementById('profile-name');
+  const profileEmail=document.getElementById('profile-email');
+  const profileRole=document.getElementById('profile-role');
+  const profileDetails=document.getElementById('profile-details');
+
+  if(profileAvatar)profileAvatar.textContent=initials;
+  if(profileName)profileName.textContent=USER_PROFILE.fullName;
+  if(profileEmail)profileEmail.textContent=USER_PROFILE.email;
+  if(profileRole)profileRole.textContent=`${USER_PROFILE.level} - ${USER_PROFILE.role}`;
+
+  if(profileDetails){
+    const details=[
+      ['Member since',USER_PROFILE.joined],
+      ['Timezone',USER_PROFILE.timezone],
+      ['Experience points',String(getUserXP())],
+      ['Current streak',USER_PROFILE.streak],
+      ['Active goals',String(USER_PROFILE.goalsActive)],
+      ['Check-ins completed',String(USER_PROFILE.checkIns)]
+    ];
+    profileDetails.innerHTML=details.map(([label,value])=>`
+      <div class="profile-item">
+        <div class="profile-item-label">${label}</div>
+        <div class="profile-item-value">${value}</div>
+      </div>`).join('');
+  }
+}
+
+function logoutUser(){
+  sessionStorage.removeItem('growHPFLoggedIn');
+  localStorage.removeItem('growHPFLoggedIn');
+  localStorage.removeItem('growHPFUserName');
+  localStorage.removeItem('growHPFUserEmail');
+  window.location.href='landingpage.html';
+}
+
 // ══════════════ INIT BUILDERS ══════════════
 function buildGD5(containerId){
   const c=document.getElementById(containerId);
@@ -305,8 +442,18 @@ function buildTasks(){
 }
 
 function toggleTask(el,i){
+  const wasChecked=el.classList.contains('checked');
   el.classList.toggle('checked');
   document.getElementById('tt-'+i).classList.toggle('done');
+
+  if(!wasChecked){
+    gainUserXP(2);
+  }
+}
+
+function saveDailyCheckin(){
+  gainUserXP(4);
+  alert('Check-in saved! Great work today — your HPF reflection is being processed.');
 }
 
 function buildGoalsList(filter){
@@ -520,6 +667,37 @@ function selectSit(sit,btn){
   buildGuide(sit);
 }
 
+function toggleSidebar(forceOpen){
+  const shouldOpen=typeof forceOpen==='boolean'
+    ? forceOpen
+    : !document.body.classList.contains('sidebar-open');
+  document.body.classList.toggle('sidebar-open',shouldOpen);
+
+  const toggleBtn=document.getElementById('mobile-nav-toggle');
+  if(toggleBtn)toggleBtn.setAttribute('aria-expanded',String(shouldOpen));
+}
+
+function toggleDesktopSidebar(forceOpen){
+  if(window.innerWidth<=900)return;
+
+  const shouldOpen=typeof forceOpen==='boolean'
+    ? forceOpen
+    : document.body.classList.contains('sidebar-desktop-closed');
+  document.body.classList.toggle('sidebar-desktop-closed',!shouldOpen);
+
+  const desktopToggle=document.getElementById('desktop-nav-toggle');
+  if(desktopToggle)desktopToggle.setAttribute('aria-expanded',String(shouldOpen));
+}
+
+window.addEventListener('resize',()=>{
+  if(window.innerWidth>900)toggleSidebar(false);
+  if(window.innerWidth<=900){
+    document.body.classList.remove('sidebar-desktop-closed');
+    const desktopToggle=document.getElementById('desktop-nav-toggle');
+    if(desktopToggle)desktopToggle.setAttribute('aria-expanded','true');
+  }
+});
+
 // ══════════════ NAV ══════════════
 function nav(id,btn){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
@@ -533,6 +711,9 @@ function nav(id,btn){
   if(id==='matrix')buildMatrix();
   if(id==='guide')buildGuide(currentSit);
   if(id==='journal')buildJournal();
+  if(id==='profile')buildProfile();
+
+  if(window.innerWidth<=900)toggleSidebar(false);
 }
 
 // ══════════════ MODAL ══════════════
@@ -548,6 +729,7 @@ function openModal(){
 function closeModal(){ document.getElementById('modal').classList.remove('open'); }
 function saveGoal(){
   const title=document.getElementById('goal-title-inp').value||'New Goal';
+  gainUserXP(5);
   alert(`Goal "${title}" created! Your HPF roadmap has been generated. Navigate to My Goals to see your personalised step-by-step plan.`);
   closeModal();
   nav('goals',null);
@@ -555,6 +737,14 @@ function saveGoal(){
 document.getElementById('modal').onclick=function(e){if(e.target===this)closeModal();};
 
 // ══════════════ INIT ══════════════
+const hasVisitedLanding=localStorage.getItem('growHPFLandingVisited')==='true';
+const isLoggedIn=sessionStorage.getItem('growHPFLoggedIn')==='true';
+
+if(!hasVisitedLanding || !isLoggedIn){
+  window.location.href='landingpage.html';
+}
+
+hydrateUserProfileFromSession();
 buildGD5('dash-gd5');
 buildCycle();
 buildDashGoals();
@@ -562,3 +752,5 @@ buildTasks();
 buildW6();
 buildDomainRatings();
 buildGuide('business');
+renderSidebarUser();
+buildProfile();

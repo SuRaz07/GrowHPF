@@ -7,13 +7,26 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="dashboard-mode">
+
+<button id="mobile-nav-toggle" class="mobile-nav-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false" onclick="toggleSidebar()">
+  <span></span>
+  <span></span>
+  <span></span>
+</button>
+<button id="desktop-nav-toggle" class="desktop-nav-toggle" type="button" aria-label="Toggle sidebar" aria-expanded="true" onclick="toggleDesktopSidebar()">
+  <span></span>
+  <span></span>
+  <span></span>
+</button>
+<div class="sidebar-backdrop" onclick="toggleSidebar(false)"></div>
 
 <div class="shell">
 
 <!-- SIDEBAR -->
-<nav class="sidebar">
+<nav class="sidebar" id="sidebar">
   <div class="sidebar-logo">
+    <img src="logo.png" alt="LOGO">
     <h1>grow<span>HPF</span></h1>
     <p>Human Purpose Framework</p>
   </div>
@@ -62,26 +75,39 @@
     </div>
   </div>
 
+  <div class="sidebar-section">
+    <div class="sidebar-section-label">Account</div>
+    <div class="nav-item" onclick="nav('profile',this)">
+      <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>
+      Profile
+    </div>
+  </div>
+
   <div class="sidebar-footer">
     <div class="user-chip">
-      <div class="user-avatar">AU</div>
+      <div class="user-avatar" id="sidebar-avatar">AU</div>
       <div>
-        <div class="user-name">Ashok Upadhya</div>
-        <div class="user-level">Level 3 — Thinker</div>
+        <div class="user-name" id="sidebar-name">Ashok Upadhya</div>
+        <div class="user-level" id="sidebar-level">Level 3 — Thinker</div>
       </div>
+    </div>
+    <div class="account-note" id="sidebar-note">AU are your initials.</div>
+    <div class="account-actions">
+      <button class="account-btn" type="button" onclick="nav('profile',document.querySelector('.sidebar-section:last-of-type .nav-item'))">Show profile</button>
+      <button class="account-btn logout-btn" type="button" onclick="logoutUser()">Logout</button>
     </div>
   </div>
 </nav>
 
 <!-- MAIN CONTENT -->
-<main class="main">
+<main class="main" id="app">
 
 <!-- ══════════════ DASHBOARD ══════════════ -->
 <div id="dashboard" class="page active">
   <div class="topbar">
     <div class="topbar-left">
-      <h2>Good morning, Ashok</h2>
-      <p>Sunday, April 19 · You're on a 7-day streak</p>
+      <h2 id="dashboard-greeting">Good morning, Ashok</h2>
+      <p id="dashboard-date">Today · You're on a 7-day streak</p>
     </div>
     <div class="topbar-right">
       <button class="btn btn-ghost btn-sm" onclick="openModal()">+ New Goal</button>
@@ -135,6 +161,40 @@
     <div class="stat-mini"><div class="stat-mini-val" style="color:var(--teal)">23</div><div class="stat-mini-label">Check-ins done</div></div>
     <div class="stat-mini"><div class="stat-mini-val" style="color:var(--amber)">4</div><div class="stat-mini-label">Goals in progress</div></div>
     <div class="stat-mini"><div class="stat-mini-val" style="color:var(--blue)">70</div><div class="stat-mini-label">Avg growth score</div></div>
+  </div>
+</div>
+
+<!-- ══════════════ PROFILE ══════════════ -->
+<div id="profile" class="page">
+  <div class="topbar">
+    <div class="topbar-left">
+      <h2>My Profile</h2>
+      <p>Manage your account, growth identity, and session preferences</p>
+    </div>
+  </div>
+
+  <div class="profile-hero card" style="margin-bottom:20px">
+    <div class="profile-avatar" id="profile-avatar">AU</div>
+    <div>
+      <div class="profile-name" id="profile-name">Ashok Upadhya</div>
+      <div class="profile-meta" id="profile-email">ashok@growhpf.app</div>
+      <div class="profile-meta" id="profile-role">Level 3 - Thinker</div>
+    </div>
+  </div>
+
+  <div class="grid-2" style="margin-bottom:20px">
+    <div class="card">
+      <div class="section-hdr"><div class="section-title">Profile Details</div></div>
+      <div class="profile-list" id="profile-details"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-hdr"><div class="section-title">Session</div></div>
+    <div class="profile-actions">
+      <button class="btn btn-ghost" type="button" onclick="alert('Profile settings editor can be added next.')">Edit profile</button>
+      <button class="btn btn-primary" type="button" onclick="logoutUser()">Logout</button>
+    </div>
   </div>
 </div>
 
@@ -205,7 +265,7 @@
   <div class="topbar">
     <div class="topbar-left">
       <h2>Daily Check-in</h2>
-      <p>Sunday, April 19 · Takes ~4 minutes</p>
+      <p id="checkin-date">Today · Takes ~4 minutes</p>
     </div>
   </div>
 
@@ -221,7 +281,7 @@
     <textarea class="w6-inp" style="width:100%;min-height:100px" placeholder="What did you observe, understand, think, decide, perform, experience, or repeat today?"></textarea>
   </div>
 
-  <button class="btn btn-primary btn-full" style="margin-bottom:10px" onclick="alert('Check-in saved! Great work today — your HPF reflection is being processed.')">Save Today's Check-in</button>
+  <button class="btn btn-primary btn-full" style="margin-bottom:10px" onclick="saveDailyCheckin()">Save Today's Check-in</button>
   <button class="btn btn-ghost btn-full" onclick="nav('insights',null)">View Insights from Past Check-ins</button>
 </div>
 

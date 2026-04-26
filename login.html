@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Login | growHPF</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="login.css">
+</head>
+<body>
+	<main class="login-layout">
+		<section class="auth-card" aria-labelledby="login-title">
+			<div class="auth-brand">
+				<img src="logo.png" alt="growHPF logo">
+				<div>
+					<p class="brand">growHPF</p>
+					<p class="brand-sub">Human Purpose Framework</p>
+				</div>
+			</div>
+
+			<div class="auth-copy">
+				<p class="eyebrow">Login</p>
+				<h1 id="login-title">Welcome back</h1>
+				<p class="lead">Sign in to continue your growth journey.</p>
+			</div>
+
+			<form id="login-form" novalidate>
+				<label for="email">Email</label>
+				<input id="email" name="email" type="email" placeholder="you@example.com" autocomplete="email" required>
+
+				<label for="password">Password</label>
+				<input id="password" name="password" type="password" placeholder="Enter your password" autocomplete="current-password" minlength="6" required>
+
+				<button type="submit" id="auth-submit">Sign In</button>
+			</form>
+
+			<p id="login-message" class="message" aria-live="polite"></p>
+			<p class="auth-footer">
+				<a href="signup.html">Need an account? Sign up</a>
+			</p>
+			<p class="auth-footer secondary">
+				<a href="landingpage.html">Back to landing page</a>
+			</p>
+		</section>
+	</main>
+
+	<script src="login.js"></script>
+</body>
+</html>
