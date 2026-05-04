@@ -26,9 +26,11 @@
 <!-- SIDEBAR -->
 <nav class="sidebar" id="sidebar">
   <div class="sidebar-logo">
-    <img src="logo.png" alt="LOGO">
-    <h1>grow<span>HPF</span></h1>
-    <p>Human Purpose Framework</p>
+    <img src="logo.jpeg" alt="LOGO">
+    <div class="sidebar-brand-copy">
+      <h1>grow<span>HPF</span></h1>
+      <p>Human Purpose Framework</p>
+    </div>
   </div>
 
   <div class="sidebar-section">
@@ -401,6 +403,19 @@
 </div>
 
 <script src="script.js"></script>
+<script>
+  // Ensure sidebar is expanded on desktop so brand text is visible
+  (function(){
+    try{
+      if(window.innerWidth>900){
+        document.body.classList.remove('sidebar-desktop-closed');
+        document.body.classList.add('sidebar-open');
+        const desktopToggle=document.getElementById('desktop-nav-toggle');
+        if(desktopToggle) desktopToggle.setAttribute('aria-expanded','true');
+      }
+    }catch(e){/* ignore */}
+  })();
+</script>
 </body>
 </html>
 
