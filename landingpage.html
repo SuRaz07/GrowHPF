@@ -1,250 +1,157 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>growHPF | Landing</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GrowHPF — Human Purpose Framework</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+<section id="landing">
+  <div class="land-bg"></div>
+  <div class="land-grid"></div>
+  <div class="land-inner">
 
-<header class="landing-nav">
-  <div class="landing-brand">
-    <img src="logo.png" alt="growHPF logo">
-    <div>
-      <div class="landing-brand-name">grow<span>HPF</span></div>
-      <div class="landing-brand-sub">Human Purpose Framework</div>
+    <!-- Nav -->
+    <nav class="land-nav">
+      <div class="logo-svg-wrap">
+        <img class="logo-icon" src="logo.jpeg" alt="growHPF logo">
+        <div class="logo-wordmark">
+          <div class="grow">grow<span>HPF</span></div>
+          <div class="tagline">Human Purpose Framework</div>
+        </div>
+      </div>
+      <div class="land-nav-right">
+        <a class="btn btn-outline-light btn-sm" href="login.html">Sign in</a>
+        <a class="btn btn-solid-light btn-sm" href="signup.html">Get started free</a>
+      </div>
+    </nav>
+
+    <!-- Hero -->
+    <div class="land-hero">
+      <div class="hero-content">
+        <div class="land-overline">Human Purpose Framework</div>
+        <h1 class="land-h1">
+          Grow with<br>
+          <em>intention.</em>
+        </h1>
+        <p class="land-sub">HPF maps your human potential across 7 domains, 49 subdomains, and 5 growth dimensions — giving every goal a science-backed roadmap.</p>
+        <div class="land-ctas">
+          <a class="btn btn-primary" href="signup.html">
+            Start your growth journey
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <a class="btn btn-secondary" href="login.html">Sign in to your account</a>
+        </div>
+        
+      </div>
     </div>
+
+    <!-- Formula strip -->
+    <div class="formula-strip">
+      <span class="formula-label">HPF =</span>
+      <span class="fp domains">[7D] Domains</span>
+      <span class="fp-op">×</span>
+      <span class="fp subdomains">[49SD] Subdomains</span>
+      <span class="fp-op">×</span>
+      <span class="fp spacetime">6W Spacetime</span>
+      <span class="fp-op">=</span>
+      <span class="fp growth">5GD Growth</span>
+    </div>
+
+    <!-- Domain bubbles -->
+    <div class="land-domains-row">
+      <span class="domains-label">7 Domains</span>
+      <a class="d-bubble blue" href="signup.html">O · Observing</a>
+      <a class="d-bubble teal" href="signup.html">U · Understanding</a>
+      <a class="d-bubble orange" href="signup.html">T · Thinking</a>
+      <a class="d-bubble blue" href="signup.html">D · Deciding</a>
+      <a class="d-bubble teal" href="signup.html">P · Performing</a>
+      <a class="d-bubble purple" href="signup.html">E · Experiencing</a>
+      <a class="d-bubble gray" href="signup.html">R · Repeating</a>
+    </div>
+
+    <!-- Feature cards -->
+    <div class="land-features">
+      <div class="feat-card">
+        <div class="feat-icon blue">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><line x1="12" y1="3" x2="12" y2="1"/></svg>
+        </div>
+        <div class="feat-title">7-Domain Goal Mapping</div>
+        <div class="feat-desc">Every goal is decomposed across Observing, Understanding, Thinking, Deciding, Performing, Experiencing, and Repeating.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon teal">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </div>
+        <div class="feat-title">5 Growth Dimensions</div>
+        <div class="feat-desc">Track Sensory, Cognitive, Emotional, Social, and Spiritual growth across all activities with AI-powered insights.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon orange">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+        </div>
+        <div class="feat-title">Daily Check-ins</div>
+        <div class="feat-desc">4-minute daily rituals using the 6W Spacetime framework — What, Where, When, Who, Why, How.</div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <img class="logo-icon" src="logo.jpeg" alt="growHPF logo">
+          <div class="brand-copy">
+            <div class="grow">grow<span>HPF</span></div>
+            <p class="footer-desc">A concise, science-backed framework for human growth across seven domains.</p>
+          </div>
+        </div>
+
+        <div class="footer-links">
+          <div class="links-col">
+            <h4>Product</h4>
+            <ul>
+              <li><a href="#">Overview</a></li>
+              <li><a href="#">Features</a></li>
+            </ul>
+          </div>
+          <div class="links-col">
+            <h4>Company</h4>
+            <ul>
+              <li><a href="#">About</a></li>
+              <li><a href="#">Careers</a></li>
+              <li><a href="#">Contact</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="footer-newsletter">
+          <h4>Get updates</h4>
+          <p class="small">Join our occasional newsletter for research-backed growth tips.</p>
+          <form class="newsletter-form" onsubmit="event.preventDefault(); alert('Thanks — newsletter signup is a demo.');">
+            <input type="email" placeholder="Your email" aria-label="Email" required>
+            <button class="btn btn-primary btn-sm" type="submit">Subscribe</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div class="legal">© 2026 growHPF · All rights reserved</div>
+        <div class="social">
+          <a href="#" aria-label="Twitter" class="social-link">Twitter</a>
+          <a href="#" aria-label="LinkedIn" class="social-link">LinkedIn</a>
+        </div>
+      </div>
+    </footer>
+
   </div>
-  <nav class="landing-links" aria-label="Primary">
-    <a href="#product-intro">Product</a>
-    <a href="#about-hpf">About HPF</a>
-    <a href="#features">Features</a>
-    <a href="#how-it-works">How it works</a>
-    <a href="login.html">Login</a>
-    <a href="signup.html" class="landing-link-cta">Sign up</a>
-  </nav>
-</header>
-
-<main class="landing-main">
-  <section class="landing-hero" id="top">
-    <div class="hero-copy">
-      <div class="hero-kicker">Step-by-step growth system</div>
-      <h1>Grow with structure, clarity, and daily progress.</h1>
-      <p>
-        growHPF helps you observe, understand, think, decide, perform, experience, and repeat through one clean dashboard experience.
-      </p>
-      <div class="hero-actions">
-        <a class="btn btn-primary" href="login.html">Login to Dashboard</a>
-        <a class="btn btn-ghost" href="signup.html">Create Account</a>
-      </div>
-
-      <div class="hero-metrics" aria-label="Platform metrics">
-        <div class="hero-metric">
-          <strong>7D</strong>
-          <span>Core HPF domains</span>
-        </div>
-        <div class="hero-metric">
-          <strong>49SD</strong>
-          <span>Subdomain map</span>
-        </div>
-        <div class="hero-metric">
-          <strong>5GD</strong>
-          <span>Growth dimensions</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="landing-section landing-product-intro" id="product-intro">
-    <div class="landing-section-head">
-      <p class="section-kicker">Product introduction</p>
-      <h2>growHPF is your operating system for intentional growth.</h2>
-    </div>
-
-    <div class="product-intro-grid">
-      <article class="product-intro-copy">
-        <p>
-          growHPF combines structure, reflection, and action into one guided workspace. Instead of random motivation, you follow a repeatable system that turns daily effort into long-term results.
-        </p>
-        <ul class="product-intro-list" aria-label="Product capabilities">
-          <li>Plan goals with domain-based guidance and clear milestones.</li>
-          <li>Use daily check-ins to track consistency and decision quality.</li>
-          <li>Review insights to improve emotional, cognitive, and social growth.</li>
-          <li>Build sustainable habits through the HPF repeat cycle.</li>
-        </ul>
-      </article>
-
-      <aside class="product-intro-panel" aria-label="HPF summary">
-        <div class="product-intro-label">HPF Framework</div>
-        <h3>7 Domains × 49 Subdomains × 5 Growth Dimensions</h3>
-        <p>From observation to repetition, each step is mapped so your progress is measurable and practical.</p>
-        <div class="product-intro-tags">
-          <span>Observe</span>
-          <span>Understand</span>
-          <span>Think</span>
-          <span>Decide</span>
-          <span>Perform</span>
-          <span>Experience</span>
-          <span>Repeat</span>
-        </div>
-      </aside>
-    </div>
-  </section>
-
-  <section class="landing-section" id="about-hpf">
-    <div class="landing-section-head">
-      <p class="section-kicker">About HPF</p>
-      <h2>The Human Purpose Framework turns growth into a clear cycle.</h2>
-    </div>
-
-    <div class="about-hpf-grid">
-      <article class="about-hpf-card">
-        <h3>Observe and Understand</h3>
-        <p>Start with awareness. Gather signals from your life and translate them into context and meaning.</p>
-      </article>
-      <article class="about-hpf-card">
-        <h3>Think and Decide</h3>
-        <p>Move from reflection to strategy. Choose actions aligned with your values, goals, and timeline.</p>
-      </article>
-      <article class="about-hpf-card">
-        <h3>Perform and Experience</h3>
-        <p>Execute intentionally and learn from outcomes, emotions, and feedback across all dimensions.</p>
-      </article>
-      <article class="about-hpf-card">
-        <h3>Repeat with Purpose</h3>
-        <p>Use each cycle to improve habits, sharpen clarity, and build compounding long-term progress.</p>
-      </article>
-    </div>
-  </section>
-
-  <section class="landing-section landing-band" id="features">
-    <div class="landing-section-head">
-      <p class="section-kicker">Why growHPF</p>
-      <h2>A complete system for personal and professional growth</h2>
-    </div>
-
-    <div class="landing-grid">
-      <article class="landing-card">
-        <h3>Guided Dashboard</h3>
-        <p>Track goals, monitor streaks, and keep your daily growth actions in one focused workspace.</p>
-      </article>
-      <article class="landing-card">
-        <h3>6W Daily Reflection</h3>
-        <p>Capture what, where, when, who, why, and how to turn everyday activity into measurable progress.</p>
-      </article>
-      <article class="landing-card">
-        <h3>HPF Domain Map</h3>
-        <p>Navigate 7 domains and 49 subdomains with clarity, so your growth remains intentional and balanced.</p>
-      </article>
-      <article class="landing-card">
-        <h3>Actionable Insights</h3>
-        <p>Get clear recommendations for your next steps based on your scores and check-in trends.</p>
-      </article>
-    </div>
-  </section>
-
-  <section class="landing-section" id="how-it-works">
-    <div class="landing-section-head">
-      <p class="section-kicker">How it works</p>
-      <h2>Simple flow, consistent outcomes</h2>
-    </div>
-
-    <div class="structure-list">
-      <div>
-        <strong>1. Set Direction</strong>
-        <span>Choose your goal context and let the platform generate your HPF-aligned growth roadmap.</span>
-      </div>
-      <div>
-        <strong>2. Execute Daily</strong>
-        <span>Use check-ins, ratings, and reflections to stay consistent and improve your decision quality.</span>
-      </div>
-      <div>
-        <strong>3. Review and Repeat</strong>
-        <span>Track insights, refine your strategy, and repeat with stronger habits and deeper clarity.</span>
-      </div>
-    </div>
-  </section>
-
-  <section class="landing-section landing-cta">
-    <div class="landing-cta-copy">
-      <p class="section-kicker">Start today</p>
-      <h2>Build your structured growth routine in minutes.</h2>
-      <p>Sign in to continue your journey or create a new account to begin your HPF roadmap.</p>
-    </div>
-    <div class="landing-cta-actions">
-      <a class="btn btn-primary" href="login.html">Login</a>
-      <a class="btn btn-ghost" href="signup.html">Create Account</a>
-    </div>
-  </section>
-</main>
-
-<footer class="landing-footer">
-  <div class="landing-footer-surface">
-    <div class="landing-footer-brandline">
-      <img src="logo.png" alt="growHPF logo">
-      <div>
-        <div class="landing-footer-title">growHPF</div>
-        <div class="landing-footer-sub">Human Purpose Framework</div>
-      </div>
-    </div>
-
-    <div class="landing-footer-grid" aria-label="Footer navigation">
-      <div class="landing-footer-col">
-        <h3>Resources</h3>
-        <a href="#">Journals</a>
-        <a href="#">Magazines</a>
-        <a href="#">Books</a>
-        <a href="#">Proceedings</a>
-        <a href="#">Collections</a>
-      </div>
-
-      <div class="landing-footer-col">
-        <h3>Platform</h3>
-        <a href="landingpage.html">Home</a>
-        <a href="login.html">Dashboard Login</a>
-        <a href="signup.html">Create Account</a>
-        <a href="#">HPF Guide</a>
-        <a href="#">Accessibility Statement</a>
-      </div>
-
-      <div class="landing-footer-col">
-        <h3>Join</h3>
-        <a href="#">Join growHPF</a>
-        <a href="#">Join as Coach</a>
-        <a href="#">Subscribe to Updates</a>
-        <a href="#">Institutions and Libraries</a>
-      </div>
-
-      <div class="landing-footer-col">
-        <h3>Connect</h3>
-        <a href="mailto:support@growhpf.app">support@growhpf.app</a>
-        <a href="tel:+919876543210">+977 98465 43210</a>
-        <a href="#">Twitter / X</a>
-        <a href="#">LinkedIn</a>
-        <a href="#">Nepal</a>
-      </div>
-    </div>
-
-    <div class="landing-footer-bottom">
-      <span>The growHPF platform is built for structured, intentional personal growth.</span>
-      <div class="landing-footer-legal" aria-label="Legal">
-        <a href="#">Terms of Use</a>
-        <a href="#">Privacy Policy</a>
-        <a href="#">Code of Ethics</a>
-      </div>
-    </div>
-  </div>
-
-  <div class="landing-footer-note">
-    <span>© 2026 growHPF</span>
-    <span>All rights reserved.</span>
-  </div>
-</footer>
+</section>
+</div>
 
 <script>
-localStorage.setItem('growHPFLandingVisited', 'true');
+  // Mark landing visited so signup/login pages allow forward navigation
+  try { localStorage.setItem('growHPFLandingVisited', 'true'); } catch(e) { /* ignore */ }
 </script>
 </body>
 </html>
