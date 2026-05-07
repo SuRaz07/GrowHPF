@@ -738,7 +738,7 @@ document.getElementById('modal').onclick=function(e){if(e.target===this)closeMod
 
 // ══════════════ INIT ══════════════
 const hasVisitedLanding=localStorage.getItem('growHPFLandingVisited')==='true';
-const isLoggedIn=sessionStorage.getItem('growHPFLoggedIn')==='true';
+const isLoggedIn=sessionStorage.getItem('growHPFLoggedIn')==='true' || localStorage.getItem('growHPFLoggedIn')==='true';
 
 if(!hasVisitedLanding || !isLoggedIn){
   window.location.href='landingpage.html';

@@ -7,7 +7,7 @@ if (localStorage.getItem("growHPFLandingVisited") !== "true") {
   window.location.href = "landingpage.html";
 }
 
-if (sessionStorage.getItem("growHPFLoggedIn") === "true") {
+if (sessionStorage.getItem("growHPFLoggedIn") === "true" || localStorage.getItem("growHPFLoggedIn") === "true") {
   window.location.href = "index.html";
 }
 
@@ -58,8 +58,9 @@ form.addEventListener("submit", (event) => {
   }
 
   sessionStorage.setItem("growHPFLoggedIn", "true");
-  localStorage.removeItem("growHPFLoggedIn");
-  localStorage.setItem("growHPFUserName", displayName || "User");
+  localStorage.setItem("growHPFLoggedIn", "true");
+  const storedSignupName = (localStorage.getItem("growHPFSignupName") || "").trim();
+  localStorage.setItem("growHPFUserName", storedSignupName || displayName || "User");
   localStorage.setItem("growHPFUserEmail", email);
   window.location.href = "index.html";
 });
