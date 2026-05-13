@@ -1,422 +1,568 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>growHPF — Human Purpose Framework</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>growHPF Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
-<body class="dashboard-mode">
+<body class="rt-dashboard dashboard-mode">
+  <button id="mobile-nav-toggle" class="mobile-nav-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false" onclick="toggleSidebar()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+  <button id="desktop-nav-toggle" class="desktop-nav-toggle" type="button" aria-label="Toggle sidebar" aria-expanded="true" onclick="toggleDesktopSidebar()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+  <div class="sidebar-backdrop" onclick="toggleSidebar(false)"></div>
 
-<button id="mobile-nav-toggle" class="mobile-nav-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false" onclick="toggleSidebar()">
-  <span></span>
-  <span></span>
-  <span></span>
-</button>
-<button id="desktop-nav-toggle" class="desktop-nav-toggle" type="button" aria-label="Toggle sidebar" aria-expanded="true" onclick="toggleDesktopSidebar()">
-  <span></span>
-  <span></span>
-  <span></span>
-</button>
-<div class="sidebar-backdrop" onclick="toggleSidebar(false)"></div>
-
-<div class="shell">
-
-<!-- SIDEBAR -->
-<nav class="sidebar" id="sidebar">
-  <div class="sidebar-logo">
-    <img src="logo.jpeg" alt="LOGO">
-    <div class="sidebar-brand-copy">
-      <h1>grow<span>HPF</span></h1>
-      <p>Human Purpose Framework</p>
-    </div>
-  </div>
-
-  <div class="sidebar-section">
-    <div class="sidebar-section-label">Overview</div>
-    <div class="nav-item active" onclick="nav('dashboard',this)">
-      <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
-      Dashboard
-    </div>
-    <div class="nav-item" onclick="nav('goals',this)">
-      <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><line x1="12" y1="3" x2="12" y2="1"/></svg>
-      My Goals
-    </div>
-    <div class="nav-item" onclick="nav('guide',this)">
-      <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-      HPF Guide
-    </div>
-  </div>
-
-  <div class="sidebar-section">
-    <div class="sidebar-section-label">Track</div>
-    <div class="nav-item" onclick="nav('checkin',this)">
-      <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
-      Daily Check-in
-    </div>
-    <div class="nav-item" onclick="nav('journal',this)">
-      <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
-      Journal
-    </div>
-    <div class="nav-item" onclick="nav('insights',this)">
-      <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-      Insights
-    </div>
-  </div>
-
-  <div class="sidebar-section">
-    <div class="sidebar-section-label">Learn</div>
-    <div class="nav-item" onclick="nav('explore',this)">
-      <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-      Explore Domains
-    </div>
-    <div class="nav-item" onclick="nav('matrix',this)">
-      <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="3" width="4" height="4"/><rect x="10" y="3" width="4" height="4"/><rect x="17" y="3" width="4" height="4"/><rect x="3" y="10" width="4" height="4"/><rect x="10" y="10" width="4" height="4"/><rect x="17" y="10" width="4" height="4"/><rect x="3" y="17" width="4" height="4"/><rect x="10" y="17" width="4" height="4"/><rect x="17" y="17" width="4" height="4"/></svg>
-      Domain Matrix
-    </div>
-  </div>
-
-  <div class="sidebar-section">
-    <div class="sidebar-section-label">Account</div>
-    <div class="nav-item" onclick="nav('profile',this)">
-      <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>
-      Profile
-    </div>
-  </div>
-
-  <div class="sidebar-footer">
-    <div class="user-chip">
-      <div class="user-avatar" id="sidebar-avatar">AU</div>
-      <div>
-        <div class="user-name" id="sidebar-name">Ashok Upadhya</div>
-        <div class="user-level" id="sidebar-level">Level 3 — Thinker</div>
+  <div class="shell">
+    <nav class="sidebar" id="sidebar">
+      <div class="sidebar-logo">
+        <img src="logo.jpeg" alt="LOGO">
+        <div class="sidebar-brand-copy">
+          <h1>Think<span><br>Grow</span></h1>
+         
+        </div>
       </div>
-    </div>
-    <div class="account-note" id="sidebar-note">AU are your initials.</div>
-    <div class="account-actions">
-      <button class="account-btn" type="button" onclick="nav('profile',document.querySelector('.sidebar-section:last-of-type .nav-item'))">Show profile</button>
-      <button class="account-btn logout-btn" type="button" onclick="logoutUser()">Logout</button>
-    </div>
-  </div>
-</nav>
 
-<!-- MAIN CONTENT -->
-<main class="main" id="app">
-
-<!--DASHBOARD  -->
-<div id="dashboard" class="page active">
-  <div class="topbar">
-    <div class="topbar-left">
-      <h2 id="dashboard-greeting">Good morning, {user_name}</h2>
-      <p id="dashboard-date">Today · You're on a 7-day streak</p>
-    </div>
-    <div class="topbar-right">
-      <button class="btn btn-ghost btn-sm" onclick="openModal()">+ New Goal</button>
-      <button class="btn btn-primary btn-sm" onclick="nav('checkin',document.querySelector('.nav-item:nth-child(4)'))">Today's Check-in</button>
-    </div>
-  </div>
-
-  <div class="formula-banner">
-    <div class="formula-text">HPF Core Formula</div>
-    <div class="formula-parts">
-      <span class="fp" style="background:#CECBF6;color:#26215C">[7D] Domains</span>
-      <span class="fp-op">×</span>
-      <span class="fp" style="background:#9FE1CB;color:#04342C">[49SD] Subdomains</span>
-      <span class="fp-op">×</span>
-      <span class="fp" style="background:#FAC775;color:#412402">6W Spacetime</span>
-      <span class="fp-op">=</span>
-      <span class="fp" style="background:#97C459;color:#173404">5GD Growth</span>
-    </div>
-  </div>
-
-  <!-- GD5 scores -->
-  <div class="section-hdr"><div class="section-title">5 Growth Dimensions</div></div>
-  <div class="grid-4" style="margin-bottom:24px" id="dash-gd5"></div>
-
-  <div class="grid-2" style="margin-bottom:24px;gap:20px">
-    <!-- HPF Cycle -->
-    <div class="card">
-      <div class="section-hdr"><div class="section-title">Your HPF Cycle Today</div><span class="tag" style="background:var(--purple-light);color:var(--purple-dark)">Day 7</span></div>
-      <div style="display:flex;align-items:center;gap:4px;margin-bottom:12px" id="cycle-bar"></div>
-      <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:0;margin-bottom:12px" id="cycle-labs"></div>
-      <div id="cycle-detail" style="background:var(--paper);border-radius:8px;padding:10px 12px;font-size:12px;color:var(--gray);line-height:1.6">
-        Tap a domain node to see details. You're currently strongest in <strong style="color:var(--teal)">Understanding</strong>.
+      <div class="sidebar-section">
+        <div class="sidebar-section-label">Overview</div>
+        <div class="nav-item active" data-view="dashboard">
+          <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"></rect><rect x="14" y="3" width="7" height="7" rx="1"></rect><rect x="3" y="14" width="7" height="7" rx="1"></rect><rect x="14" y="14" width="7" height="7" rx="1"></rect></svg>
+          Dashboard
+        </div>
+        <div class="nav-item" data-view="my-goals">
+          <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"></path><circle cx="12" cy="12" r="9"></circle></svg>
+          My Goals
+        </div>
+        <div class="nav-item" data-view="hpf-guide">
+          <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg>
+          HPF Guide
+        </div>
       </div>
-    </div>
 
-    <!-- Active Goals -->
-    <div class="card">
-      <div class="section-hdr"><div class="section-title">Active Goals</div><button class="btn btn-ghost btn-sm" onclick="nav('goals',null)">View all</button></div>
-      <div id="dash-goals"></div>
-    </div>
-  </div>
-
-  <!-- Today's tasks -->
-  <div class="card" style="margin-bottom:24px">
-    <div class="section-hdr"><div class="section-title">Today's HPF Action Plan</div><span class="tag" style="background:var(--cream)">3 / 6 done</span></div>
-    <div id="today-tasks"></div>
-  </div>
-
-  <div class="grid-4">
-    <div class="stat-mini"><div class="stat-mini-val" style="color:var(--purple)">7</div><div class="stat-mini-label">Domains active</div></div>
-    <div class="stat-mini"><div class="stat-mini-val" style="color:var(--teal)">23</div><div class="stat-mini-label">Check-ins done</div></div>
-    <div class="stat-mini"><div class="stat-mini-val" style="color:var(--amber)">4</div><div class="stat-mini-label">Goals in progress</div></div>
-    <div class="stat-mini"><div class="stat-mini-val" style="color:var(--blue)">70</div><div class="stat-mini-label">Avg growth score</div></div>
-  </div>
-</div>
-
-<!-- ══════════════ PROFILE ══════════════ -->
-<div id="profile" class="page">
-  <div class="topbar">
-    <div class="topbar-left">
-      <h2>My Profile</h2>
-      <p>Manage your account, growth identity, and session preferences</p>
-    </div>
-  </div>
-
-  <div class="profile-hero card" style="margin-bottom:20px">
-    <div class="profile-avatar" id="profile-avatar">AU</div>
-    <div>
-      <div class="profile-name" id="profile-name">Ashok Upadhya</div>
-      <div class="profile-meta" id="profile-email">ashok@growhpf.app</div>
-      <div class="profile-meta" id="profile-role">Level 3 - Thinker</div>
-    </div>
-  </div>
-
-  <div class="grid-2" style="margin-bottom:20px">
-    <div class="card">
-      <div class="section-hdr"><div class="section-title">Profile Details</div></div>
-      <div class="profile-list" id="profile-details"></div>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="section-hdr"><div class="section-title">Session</div></div>
-    <div class="profile-actions">
-      <button class="btn btn-ghost" type="button" onclick="alert('Profile settings editor can be added next.')">Edit profile</button>
-      <button class="btn btn-primary" type="button" onclick="logoutUser()">Logout</button>
-    </div>
-  </div>
-</div>
-
-<!-- ══════════════ GOALS ══════════════ -->
-<div id="goals" class="page">
-  <div class="topbar">
-    <div class="topbar-left">
-      <h2>My Goals</h2>
-      <p>4 active · 2 completed · Guided by HPF domains</p>
-    </div>
-    <div class="topbar-right">
-      <button class="btn btn-primary" onclick="openModal()">+ Set New Goal</button>
-    </div>
-  </div>
-
-  <div class="tab-row">
-    <div class="tab on" onclick="filterGoals('all',this)">All Goals</div>
-    <div class="tab" onclick="filterGoals('business',this)">Business</div>
-    <div class="tab" onclick="filterGoals('education',this)">Education</div>
-    <div class="tab" onclick="filterGoals('personal',this)">Personal</div>
-  </div>
-
-  <div id="goals-list"></div>
-</div>
-
-<!-- ══════════════ HPF GUIDE ══════════════ -->
-<div id="guide" class="page">
-  <div class="topbar">
-    <div class="topbar-left">
-      <h2>HPF Guide</h2>
-      <p>Choose your situation and get a personalised HPF roadmap</p>
-    </div>
-  </div>
-
-  <div class="section-hdr"><div class="section-title">What describes you right now?</div></div>
-  <div class="category-grid" style="margin-bottom:28px">
-    <div class="cat-btn sel" onclick="selectSit('business',this)">
-      <div class="cat-btn-icon">💼</div>
-      <div class="cat-btn-label">Starting a Business</div>
-    </div>
-    <div class="cat-btn" onclick="selectSit('student',this)">
-      <div class="cat-btn-icon">📚</div>
-      <div class="cat-btn-label">Student / Academic</div>
-    </div>
-    <div class="cat-btn" onclick="selectSit('time',this)">
-      <div class="cat-btn-icon">⏰</div>
-      <div class="cat-btn-label">Time Management</div>
-    </div>
-    <div class="cat-btn" onclick="selectSit('career',this)">
-      <div class="cat-btn-icon">📈</div>
-      <div class="cat-btn-label">Career Growth</div>
-    </div>
-    <div class="cat-btn" onclick="selectSit('health',this)">
-      <div class="cat-btn-icon">🌿</div>
-      <div class="cat-btn-label">Health & Wellness</div>
-    </div>
-    <div class="cat-btn" onclick="selectSit('relationship',this)">
-      <div class="cat-btn-icon">🤝</div>
-      <div class="cat-btn-label">Relationships</div>
-    </div>
-  </div>
-
-  <div id="guide-content"></div>
-</div>
-
-<!-- ══════════════ DAILY CHECK-IN ══════════════ -->
-<div id="checkin" class="page">
-  <div class="topbar">
-    <div class="topbar-left">
-      <h2>Daily Check-in</h2>
-      <p id="checkin-date">Today · Takes ~4 minutes</p>
-    </div>
-  </div>
-
-  <div class="section-hdr"><div class="section-title">6W Spacetime Context</div></div>
-  <div class="w6-grid" id="w6-fields"></div>
-
-  <div class="section-hdr"><div class="section-title">Rate Your 7 Domains Today (1–5)</div></div>
-  <div class="checkin-card" id="domain-ratings"></div>
-
-  <div class="section-hdr" style="margin-top:20px"><div class="section-title">Today's Reflection</div></div>
-  <div class="checkin-card" style="margin-bottom:20px">
-    <div class="checkin-q">What happened today across your domains?</div>
-    <textarea class="w6-inp" style="width:100%;min-height:100px" placeholder="What did you observe, understand, think, decide, perform, experience, or repeat today?"></textarea>
-  </div>
-
-  <button class="btn btn-primary btn-full" style="margin-bottom:10px" onclick="saveDailyCheckin()">Save Today's Check-in</button>
-  <button class="btn btn-ghost btn-full" onclick="nav('insights',null)">View Insights from Past Check-ins</button>
-</div>
-
-<!-- ══════════════ JOURNAL ══════════════ -->
-<div id="journal" class="page">
-  <div class="topbar">
-    <div class="topbar-left">
-      <h2>Growth Journal</h2>
-      <p>Your HPF-guided reflection history</p>
-    </div>
-    <div class="topbar-right">
-      <button class="btn btn-primary btn-sm" onclick="alert('New entry opened!')">+ New Entry</button>
-    </div>
-  </div>
-
-  <div class="timeline" id="journal-timeline"></div>
-</div>
-
-<!-- ══════════════ INSIGHTS ══════════════ -->
-<div id="insights" class="page">
-  <div class="topbar">
-    <div class="topbar-left">
-      <h2>Growth Insights</h2>
-      <p>Based on your HPF check-ins and 5 growth dimensions</p>
-    </div>
-  </div>
-
-  <div class="grid-4" style="margin-bottom:24px" id="ins-gd5"></div>
-
-  <div class="section-hdr"><div class="section-title">Personalised Recommendations</div></div>
-  <div id="insights-list" style="margin-bottom:24px"></div>
-
-  <div class="section-hdr"><div class="section-title">Subdomains to practise this week</div></div>
-  <div class="grid-auto" id="rec-sds" style="margin-bottom:24px"></div>
-</div>
-
-<!-- ══════════════ EXPLORE ══════════════ -->
-<div id="explore" class="page">
-  <div class="topbar">
-    <div class="topbar-left">
-      <h2>Explore Domains</h2>
-      <p>7 domains · 49 subdomains · Each mapped to 5 growth dimensions</p>
-    </div>
-  </div>
-
-  <div class="grid-7" style="margin-bottom:20px" id="exp-domain-cards"></div>
-  <div id="exp-detail"></div>
-</div>
-
-<!-- ══════════════ MATRIX ══════════════ -->
-<div id="matrix" class="page">
-  <div class="topbar">
-    <div class="topbar-left">
-      <h2>Domain Interaction Matrix</h2>
-      <p>How the 7 HPF domains connect and influence each other</p>
-    </div>
-  </div>
-
-  <div class="card" style="margin-bottom:20px">
-    <p style="font-size:12px;color:var(--gray);line-height:1.7;margin-bottom:14px">The matrix [D] shows how each domain flows into others. A value of <span class="m1">1</span> means a direct connection — that the row domain actively feeds into the column domain in the HPF cycle.</p>
-    <div class="matrix-scroll" id="matrix-table"></div>
-  </div>
-
-  <div class="section-hdr"><div class="section-title">Subdomain → Growth Dimension Mapping</div></div>
-  <div class="card">
-    <div class="matrix-scroll" id="sd-matrix-table"></div>
-  </div>
-</div>
-
-</main>
-</div>
-
-<!-- GOAL MODAL -->
-<div class="modal-overlay" id="modal">
-  <div class="modal">
-    <div class="modal-title">Set a New Goal</div>
-    <div class="modal-sub">Tell us your situation and we'll map it to the right HPF domains and subdomains</div>
-
-    <div class="form-group">
-      <label class="form-label">Goal category</label>
-      <div class="category-grid" id="modal-cats">
-        <div class="cat-btn sel" data-cat="business"><div class="cat-btn-icon">💼</div><div class="cat-btn-label">Business</div></div>
-        <div class="cat-btn" data-cat="education"><div class="cat-btn-icon">📚</div><div class="cat-btn-label">Education</div></div>
-        <div class="cat-btn" data-cat="personal"><div class="cat-btn-icon">🌿</div><div class="cat-btn-label">Personal</div></div>
-        <div class="cat-btn" data-cat="career"><div class="cat-btn-icon">📈</div><div class="cat-btn-label">Career</div></div>
-        <div class="cat-btn" data-cat="health"><div class="cat-btn-icon">💪</div><div class="cat-btn-label">Health</div></div>
-        <div class="cat-btn" data-cat="other"><div class="cat-btn-icon">✨</div><div class="cat-btn-label">Other</div></div>
+      <div class="sidebar-section">
+        <div class="sidebar-section-label">Track</div>
+        <div class="nav-item" data-view="checkin">
+          <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path></svg>
+          Daily Check-In
+        </div>
+        <div class="nav-item" data-view="journal">
+          <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"></path><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"></path></svg>
+          Journal
+        </div>
+        <div class="nav-item" data-view="insights">
+          <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+          Insights
+        </div>
       </div>
-    </div>
 
-    <div class="form-group">
-      <label class="form-label">What is your goal?</label>
-      <input class="form-input" id="goal-title-inp" placeholder="e.g. Open a digital agency, Score 3.9 GPA, Manage time better..." />
-    </div>
+      <div class="sidebar-section">
+        <div class="sidebar-section-label">Learn</div>
+        <div class="nav-item" data-view="explore-domains">
+          <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          Explore Domains
+        </div>
+        <div class="nav-item" data-view="category-matrix">
+          <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="3" width="4" height="4"></rect><rect x="10" y="3" width="4" height="4"></rect><rect x="17" y="3" width="4" height="4"></rect><rect x="3" y="10" width="4" height="4"></rect><rect x="10" y="10" width="4" height="4"></rect><rect x="17" y="10" width="4" height="4"></rect><rect x="3" y="17" width="4" height="4"></rect><rect x="10" y="17" width="4" height="4"></rect><rect x="17" y="17" width="4" height="4"></rect></svg>
+          Category Matrix
+        </div>
+      </div>
 
-    <div class="form-group">
-      <label class="form-label">Your current situation</label>
-      <textarea class="form-input" id="goal-situation-inp" placeholder="e.g. I'm currently working as a designer and want to start my own agency..."></textarea>
-    </div>
+      <div class="sidebar-section">
+        <div class="sidebar-section-label">Account</div>
+        <div class="nav-item" data-view="profile">
+          <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M4 20c0-4.4 3.6-8 8-8s8 3.6 8 8"></path></svg>
+          Profile
+        </div>
+      </div>
 
-    <div class="form-group">
-      <label class="form-label">Timeline</label>
-      <select class="form-input" id="goal-timeline-inp">
-        <option>1 month</option>
-        <option>3 months</option>
-        <option selected>6 months</option>
-        <option>1 year</option>
-        <option>2+ years</option>
-      </select>
-    </div>
+      <div class="sidebar-footer">
+        <div class="user-chip">
+          <div class="user-avatar" id="sidebarAvatar">AU</div>
+          <div>
+            <div class="user-name" id="sidebarUserName">Ashok Upadhya</div>
+            <div class="user-level" id="sidebarUserLevel">Live Dashboard</div>
+          </div>
+        </div>
+        <button type="button" class="profile-open-btn" onclick="showView('profile')">Show Profile</button>
+      </div>
+    </nav>
 
-    <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:20px">
-      <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
-      <button class="btn btn-primary" onclick="saveGoal()">Create Goal + HPF Roadmap</button>
-    </div>
+    <main class="main">
+      <section class="rt-shell">
+        <section id="view-dashboard" class="rt-view active">
+        <header class="rt-head">
+          <div>
+            <p class="rt-kicker"> User Dashboard</p>
+            <h1>User Activity and Progress</h1>
+            <p class="rt-sub">This dashboard shows real user activity. If no activity exists, values stay zero.</p>
+          </div>
+          <div class="rt-live-pill">
+            <span class="rt-live-dot"></span>
+            <strong></strong>
+            <span id="lastUpdated"></span>
+          </div>
+        </header>
+
+        <section class="rt-stat-grid" aria-label="Summary metrics">
+          <article class="rt-stat-card">
+            <h2>Total Users</h2>
+            <p class="rt-stat-value" id="totalUsers">0</p>
+            <p class="rt-stat-note">Users in dataset</p>
+          </article>
+          <article class="rt-stat-card">
+            <h2>Active Right Now</h2>
+            <p class="rt-stat-value" id="activeNow">0</p>
+            <p class="rt-stat-note">Users with activity</p>
+          </article>
+          <article class="rt-stat-card">
+            <h2>Impact Score</h2>
+            <p class="rt-stat-value" id="impactScore">0</p>
+            <p class="rt-stat-note">Calculated from usage</p>
+          </article>
+          <article class="rt-stat-card">
+            <h2>Updates Today</h2>
+            <p class="rt-stat-value" id="updatesToday">0</p>
+            <p class="rt-stat-note">Activity events received</p>
+          </article>
+        </section>
+
+        <section class="rt-main-grid">
+          <article class="rt-panel">
+            <div class="rt-panel-head">
+              <h2>Usage Summary</h2>
+              <p>Which categories users are using</p>
+            </div>
+            <div class="rt-chart-wrap">
+              <div class="rt-pie" id="usagePie" role="img" aria-label="Category usage pie chart"></div>
+              <ul class="rt-legend" id="usageLegend"></ul>
+            </div>
+          </article>
+
+          <article class="rt-panel">
+            <div class="rt-panel-head">
+              <h2>Task Completion Trend</h2>
+              <p>7-day completed tasks</p>
+            </div>
+            <div class="rt-bars" id="dailyBars"></div>
+          </article>
+        </section>
+
+        <section class="rt-main-grid">
+          <article class="rt-panel">
+            <div class="rt-panel-head">
+              <h2>Category Usage Count</h2>
+              <p>Per category activity count</p>
+            </div>
+            <div class="rt-list" id="domainUsageList"></div>
+          </article>
+
+          <article class="rt-panel">
+            <div class="rt-panel-head">
+              <h2>Completed Tasks</h2>
+              <p>Latest completed tasks</p>
+            </div>
+            <div class="rt-list" id="goalsAchievedList"></div>
+          </article>
+        </section>
+
+        </section>
+
+        <section id="view-my-goals" class="rt-view">
+          <header class="rt-head">
+            <div>
+              <p class="rt-kicker">Personal Growth</p>
+              <h1>My Goals</h1>
+              <p class="rt-sub">Track your personal growth objectives and achievements</p>
+            </div>
+          </header>
+
+          <article class="rt-panel">
+            <div class="rt-panel-head">
+              <h2>Your Goals</h2>
+              <p>Progress tracking and completion status</p>
+            </div>
+            <div class="goals-builder">
+              <div>
+                <h3>Add a Goal</h3>
+                <p>Capture a goal here, then mark it complete when you finish it.</p>
+              </div>
+              <div class="goals-builder-form">
+                <input id="newGoalInput" type="text" maxlength="120" placeholder="e.g. Finish the HPF prototype">
+                <button id="addGoalButton" type="button">Add Goal</button>
+              </div>
+            </div>
+            <div class="my-goals-section" id="myGoalsContainerMain">
+              <div class="goals-empty-state">
+                <p>No goals set yet. Add your first goal above to start tracking progress.</p>
+              </div>
+            </div>
+          </article>
+        </section>
+
+        <section id="view-hpf-guide" class="rt-view">
+          <header class="rt-head">
+            <div>
+              <p class="rt-kicker">Learn</p>
+              <h1>HPF Guide</h1>
+              <p class="rt-sub">Choose your situation and get a personalized HPF roadmap</p>
+            </div>
+          </header>
+
+          <article class="rt-panel">
+            <div class="rt-panel-head">
+              <h2>What describes you right now?</h2>
+              <p>Select your situation to get a personalized roadmap</p>
+            </div>
+            <div class="scenarios-grid" id="scenariosGrid">
+              <button class="scenario-btn" data-scenario="business">
+                <span class="scenario-emoji">💼</span>
+                <span>Starting a Business</span>
+              </button>
+              <button class="scenario-btn" data-scenario="student">
+                <span class="scenario-emoji">📚</span>
+                <span>Student / Academic</span>
+              </button>
+              <button class="scenario-btn" data-scenario="time">
+                <span class="scenario-emoji">⏰</span>
+                <span>Time Management</span>
+              </button>
+              <button class="scenario-btn" data-scenario="career">
+                <span class="scenario-emoji">📈</span>
+                <span>Career Growth</span>
+              </button>
+              <button class="scenario-btn" data-scenario="health">
+                <span class="scenario-emoji">🌿</span>
+                <span>Health & Wellness</span>
+              </button>
+              <button class="scenario-btn" data-scenario="relationships">
+                <span class="scenario-emoji">🤝</span>
+                <span>Relationships</span>
+              </button>
+            </div>
+          </article>
+
+          <div id="roadmapContainer" style="display:none;">
+            <article class="rt-panel">
+              <div class="rt-panel-head">
+                <h2 id="roadmapTitle">Designer → Digital Agency Founder</h2>
+                <p id="roadmapIntro">You have design skills. Now you need business acumen, systems thinking, and the courage to decide and perform.</p>
+              </div>
+              
+              <div class="hpf-roadmap" id="hpfRoadmap">
+                <div class="roadmap-step">
+                  <div class="step-letter">O</div>
+                  <div class="step-content">
+                    <h4>Observe the market</h4>
+                    <p>Spend 2 weeks doing nothing but market research. Interview 5 potential clients. Observe your competition closely. Use Analytical and External Observing subdomains.</p>
+                    <div class="step-domain">Observing — PCAREIA</div>
+                  </div>
+                </div>
+
+                <div class="roadmap-step">
+                  <div class="step-letter">U</div>
+                  <div class="step-content">
+                    <h4>Understand your niche</h4>
+                    <p>You cannot serve everyone. Use Contextual and Adaptive Understanding to define exactly what type of clients you serve best and why you are the right person.</p>
+                    <div class="step-domain">Understanding — CECIARI</div>
+                  </div>
+                </div>
+
+                <div class="roadmap-step">
+                  <div class="step-letter">T</div>
+                  <div class="step-content">
+                    <h4>Think through your model</h4>
+                    <p>Use System Thinking to map your business model. Use Creative Thinking to differentiate your offer. Use Logical Thinking to build your pricing.</p>
+                    <div class="step-domain">Thinking — LCCASAH</div>
+                  </div>
+                </div>
+
+                <div class="roadmap-step">
+                  <div class="step-letter">D</div>
+                  <div class="step-content">
+                    <h4>Decide and commit</h4>
+                    <p>Stop overthinking. Use Strategic and Informed Deciding to commit to your first 3 target clients, your pricing, and your launch date.</p>
+                    <div class="step-domain">Deciding — RIICETS</div>
+                  </div>
+                </div>
+
+                <div class="roadmap-step">
+                  <div class="step-letter">P</div>
+                  <div class="step-content">
+                    <h4>Perform relentlessly</h4>
+                    <p>Execute with Efficient and Skillful Performing. Build your portfolio. Reach out to 10 people. Deliver exceptional work for your first client.</p>
+                    <div class="step-domain">Performing — ECCASSE</div>
+                  </div>
+                </div>
+
+                <div class="roadmap-step">
+                  <div class="step-letter">E</div>
+                  <div class="step-content">
+                    <h4>Experience and learn</h4>
+                    <p>Every project is data. Use Learning and Cognitive Experiencing to capture what works and what does not after each engagement.</p>
+                    <div class="step-domain">Experiencing — SCESCLT</div>
+                  </div>
+                </div>
+
+                <div class="roadmap-step">
+                  <div class="step-letter">R</div>
+                  <div class="step-content">
+                    <h4>Repeat and scale</h4>
+                    <p>Use Habitual and Strategic Repeating to build systems. Systematise your process so it runs without you being in every decision.</p>
+                    <div class="step-domain">Repeating — IRACSHP</div>
+                  </div>
+                </div>
+              </div>
+
+              <button class="btn btn-primary" onclick="startTrackingGoal()" style="margin-top: 20px;">Start tracking this goal</button>
+            </article>
+          </div>
+        </section>
+
+        <section id="view-checkin" class="rt-view">
+          <header class="rt-head">
+            <div>
+              <p class="rt-kicker">Track</p>
+              <h1>Daily Check-in</h1>
+              <p class="rt-sub">Record categories used and tasks completed today.</p>
+            </div>
+          </header>
+
+          <article class="rt-panel">
+            <div class="rt-panel-head">
+              <h2>Today's Input</h2>
+              <p>Values update the dashboard immediately.</p>
+            </div>
+
+            <div class="w6-grid">
+              <div class="w6-card">
+                <div class="w6-q">Date</div>
+                <div class="w6-label">Check-in Date</div>
+                <input class="w6-inp" id="checkinDate" type="date">
+              </div>
+              <div class="w6-card">
+                <div class="w6-q">Task</div>
+                <div class="w6-label">Task Title</div>
+                <input class="w6-inp" id="goalTitleInput" type="text" placeholder="Task completed today">
+              </div>
+              <div class="w6-card">
+                <div class="w6-q">Status</div>
+                <div class="w6-label">Completed Today</div>
+                <label style="display:flex;align-items:center;gap:8px;margin-top:8px">
+                  <input id="goalAchievedInput" type="checkbox">
+                  <span>Mark task as completed</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="checkin-card" style="margin-top:12px">
+              <div class="checkin-q">Category Usage (0 to 5)</div>
+              <div class="w6-grid" id="domainCheckinGrid"></div>
+            </div>
+
+            <div class="checkin-card">
+              <div class="checkin-q">Notes</div>
+              <textarea class="w6-inp" id="checkinNotes" placeholder="Optional reflection"></textarea>
+            </div>
+
+            <button class="btn btn-primary" type="button" onclick="saveDailyCheckin()">Save Daily Check-in</button>
+            <div id="checkinStatus" style="margin-top:12px;color:#0f6e56;font-weight:600"></div>
+          </article>
+        </section>
+
+        <section id="view-journal" class="rt-view">
+          <header class="rt-head">
+            <div>
+              <p class="rt-kicker">Track</p>
+              <h1>Journal</h1>
+              <p class="rt-sub">Review all your daily check-in entries and category usage history.</p>
+            </div>
+          </header>
+
+          <article class="rt-panel">
+            <div class="rt-panel-head">
+              <h2>Your Entries</h2>
+              <p>All check-ins in reverse chronological order</p>
+            </div>
+            <div class="rt-journal-entries" id="journalEntriesList"></div>
+          </article>
+        </section>
+
+        <section id="view-insights" class="rt-view">
+          <header class="rt-head">
+            <div>
+              <p class="rt-kicker">Analytics</p>
+              <h1>Insights & Growth</h1>
+              <p class="rt-sub">Real-time user growth tracking and engagement metrics.</p>
+            </div>
+          </header>
+
+          <section class="rt-main-grid">
+            <article class="rt-panel">
+              <div class="rt-panel-head">
+                <h2>User Growth</h2>
+                <p>Active participation trend</p>
+              </div>
+              <div class="insights-metric-grid">
+                <div class="insights-metric">
+                  <span class="insights-metric-label">Total Users</span>
+                  <span class="insights-metric-value" id="insightsTotalUsers">0</span>
+                  <span class="insights-metric-change">registered</span>
+                </div>
+                <div class="insights-metric">
+                  <span class="insights-metric-label">Active Today</span>
+                  <span class="insights-metric-value" id="insightsActiveNow">0</span>
+                  <span class="insights-metric-change">with activity</span>
+                </div>
+                <div class="insights-metric">
+                  <span class="insights-metric-label">Daily Activity</span>
+                  <span class="insights-metric-value" id="insightsUpdatesToday">0</span>
+                  <span class="insights-metric-change">events logged</span>
+                </div>
+                <div class="insights-metric">
+                  <span class="insights-metric-label">Impact Score</span>
+                  <span class="insights-metric-value" id="insightsImpactScore">0%</span>
+                  <span class="insights-metric-change">completion rate</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="rt-panel">
+              <div class="rt-panel-head">
+                <h2>7-Day Activity Trend</h2>
+                <p>Daily goal completions over time</p>
+              </div>
+              <div class="rt-bars" id="insightsBars"></div>
+            </article>
+          </section>
+
+          <section class="rt-main-grid">
+            <article class="rt-panel">
+              <div class="rt-panel-head">
+                <h2>Category Performance</h2>
+                <p>Usage distribution across all categories</p>
+              </div>
+              <div class="insights-category-performance" id="insightsCategoryPerf"></div>
+            </article>
+
+            <article class="rt-panel">
+              <div class="rt-panel-head">
+                <h2>Top Categories</h2>
+                <p>Most used categories by engagement</p>
+              </div>
+              <div class="rt-list" id="insightsTopCategories"></div>
+            </article>
+          </section>
+        </section>
+
+        <section id="view-explore-domains" class="rt-view">
+          <header class="rt-head">
+            <div>
+              <p class="rt-kicker">Learn</p>
+              <h1>Explore Domains</h1>
+              <p class="rt-sub">7 domains · 49 subdomains · Each mapped to 5 growth dimensions & 6 ways to engage</p>
+            </div>
+          </header>
+
+          <div class="explore-domains-grid" id="domainsGrid"></div>
+
+          <div class="explore-domain-detail" id="domainDetail" style="display:none;">
+            <button class="btn-back" onclick="closeDomainDetail()">← Back to Domains</button>
+            <article class="rt-panel">
+              <div class="domain-detail-header" id="domainDetailHeader"></div>
+              <div class="domain-detail-description" id="domainDetailDesc"></div>
+              
+              <div class="domain-section">
+                <h3 class="domain-section-title">5 Growth Dimensions</h3>
+                <div class="dimensions-grid" id="domainDimensions"></div>
+              </div>
+
+              <div class="domain-section">
+                <h3 class="domain-section-title">6 Ways to Engage</h3>
+                <div class="ways-grid" id="domainWays"></div>
+              </div>
+
+              <div class="domain-section">
+                <h3 class="domain-section-title">7 Subdomains</h3>
+                <div class="subdomains-grid" id="domainSubdomains"></div>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section id="view-category-matrix" class="rt-view">
+          <header class="rt-head">
+            <div>
+              <p class="rt-kicker">Learn</p>
+              <h1>Domain Interaction Matrix</h1>
+              <p class="rt-sub">How the 7 HPF domains connect and influence each other</p>
+            </div>
+          </header>
+
+          <article class="rt-panel">
+            <p style="font-size:12px;color:var(--gray);line-height:1.7;margin-bottom:14px">The matrix [D] shows how each domain flows into others. A value of <span class="m1">1</span> means a direct connection — that the row domain actively feeds into the column domain in the HPF cycle.</p>
+            <div class="matrix-scroll" id="matrix-table"></div>
+          </article>
+
+          <article class="rt-panel">
+            <div class="rt-panel-head">
+              <h2>Subdomain → Growth Dimension Mapping</h2>
+            </div>
+            <div class="matrix-scroll" id="sd-matrix-table"></div>
+          </article>
+        </section>
+
+        <section id="view-profile" class="rt-view">
+          <header class="rt-head">
+            <div>
+              <p class="rt-kicker">Account</p>
+              <h1>My Profile</h1>
+              <p class="rt-sub">Your identity, usage summary, and dashboard activity details.</p>
+            </div>
+          </header>
+
+          <article class="rt-panel profile-hero-card">
+            <div class="profile-avatar-large" id="profileAvatar">AU</div>
+            <div>
+              <h2 id="profileName">Ashok Upadhya</h2>
+              <p id="profileEmail">No email saved</p>
+              <div class="profile-meta-pills">
+                <span id="profileRole">Member</span>
+                <span id="profileJoined">Joined recently</span>
+              </div>
+            </div>
+          </article>
+
+          <section class="rt-main-grid">
+            <article class="rt-panel">
+              <div class="rt-panel-head">
+                <h2>Profile Details</h2>
+                <p>Personal and account information</p>
+              </div>
+              <div class="profile-details-grid" id="profileDetailsGrid"></div>
+            </article>
+
+            <article class="rt-panel">
+              <div class="rt-panel-head">
+                <h2>Activity Snapshot</h2>
+                <p>Current dashboard stats</p>
+              </div>
+              <div class="profile-details-grid" id="profileActivityGrid"></div>
+            </article>
+          </section>
+        </section>
+      </section>
+    </main>
   </div>
-</div>
 
-<script src="script.js"></script>
-<script>
-  // Ensure sidebar is expanded on desktop so brand text is visible
-  (function(){
-    try{
-      if(window.innerWidth>900){
-        document.body.classList.remove('sidebar-desktop-closed');
-        document.body.classList.add('sidebar-open');
-        const desktopToggle=document.getElementById('desktop-nav-toggle');
-        if(desktopToggle) desktopToggle.setAttribute('aria-expanded','true');
-      }
-    }catch(e){/* ignore */}
-  })();
-</script>
+  <script src="script.js"></script>
 </body>
 </html>
-
-

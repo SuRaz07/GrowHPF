@@ -1,756 +1,1462 @@
-// ══════════════ DATA ══════════════
-const D = [
-  {id:'O',name:'Observing',code:'PCAREIA',col:'#534AB7',bg:'#EEEDFE',bdr:'#AFA9EC',txt:'#3C3489',prog:80,
-   desc:'Foundation of human interaction — gathering information through perceptual and cognitive lenses.',
-   subs:[
-    {n:'Perceptual',d:'Gathering sensory information from the environment.',gd:[1,1,0,0,0]},
-    {n:'Continuous',d:'Maintaining sustained attention to evolving changes.',gd:[0,1,0,0,0]},
-    {n:'Analytical',d:'Breaking down observations to detect patterns.',gd:[0,1,0,0,0]},
-    {n:'Reflective',d:'Looking back at past observations for deeper insights.',gd:[0,1,1,0,1]},
-    {n:'External',d:'Awareness and attention to the outside world.',gd:[1,1,1,1,1]},
-    {n:'Internal',d:'Awareness of self — thoughts, feelings, and states.',gd:[1,1,1,0,1]},
-    {n:'Active',d:'Engaged and intentional focused attention.',gd:[1,1,0,1,0]}
-   ]},
-  {id:'U',name:'Understanding',code:'CECIARI',col:'#0F6E56',bg:'#E1F5EE',bdr:'#5DCAA5',txt:'#085041',prog:75,
-   desc:'Transforms observations into meaning — bridging raw knowledge with deep insight.',
-   subs:[
-    {n:'Conceptual',d:'Forming mental frameworks, categories, and ideas.',gd:[0,1,0,0,0]},
-    {n:'Empathetic',d:"Recognising and sharing others' feelings and perspectives.",gd:[0,1,1,1,1]},
-    {n:'Contextual',d:'Interpreting information within its broader environment.',gd:[1,1,1,1,0]},
-    {n:'Intuitive',d:'Relying on instincts and subconscious insights.',gd:[1,1,1,0,1]},
-    {n:'Adaptive',d:'Adjusting understanding to new and changing circumstances.',gd:[1,1,1,1,1]},
-    {n:'Reflective',d:'Revisiting ideas repeatedly to refine and deepen them.',gd:[0,1,1,0,1]},
-    {n:'Interdisciplinary',d:'Connecting knowledge across multiple fields.',gd:[1,1,0,1,1]}
-   ]},
-  {id:'T',name:'Thinking',code:'LCCASAH',col:'#BA7517',bg:'#FAEEDA',bdr:'#EF9F27',txt:'#633806',prog:68,
-   desc:'Generating and evaluating ideas — the engine of innovation and problem-solving.',
-   subs:[
-    {n:'Logical',d:'Following structured, step-by-step reasoning.',gd:[0,1,0,0,0]},
-    {n:'Creative',d:'Imagining novel ideas, connections, and solutions.',gd:[1,1,1,1,1]},
-    {n:'Critical',d:'Questioning and evaluating ideas systematically.',gd:[0,1,0,0,0]},
-    {n:'Abstract',d:'Dealing with concepts and ideas beyond the tangible.',gd:[0,1,0,0,1]},
-    {n:'System',d:'Seeing relationships within interconnected systems.',gd:[1,1,0,1,0]},
-    {n:'Analytical',d:'Breaking complex problems into manageable parts.',gd:[0,1,0,0,0]},
-    {n:'Holistic',d:'Integrating multiple perspectives for a comprehensive view.',gd:[1,1,1,1,1]}
-   ]},
-  {id:'D',name:'Deciding',code:'RIICETS',col:'#185FA5',bg:'#E6F1FB',bdr:'#85B7EB',txt:'#0C447C',prog:55,
-   desc:'Converting understanding and thinking into actionable choices.',
-   subs:[
-    {n:'Rational',d:'Weighing logic, data, and evidence carefully.',gd:[0,1,0,0,0]},
-    {n:'Intuitive',d:'Trusting instincts and subconscious knowing.',gd:[1,1,1,1,1]},
-    {n:'Informed',d:'Considering all relevant information before deciding.',gd:[1,1,0,1,0]},
-    {n:'Collaborative',d:'Reaching decisions through teamwork and dialogue.',gd:[0,1,1,1,1]},
-    {n:'Ethical',d:'Aligning decisions with moral principles and values.',gd:[1,1,1,1,1]},
-    {n:'Timely',d:'Making decisions at the right moment.',gd:[1,1,0,0,0]},
-    {n:'Strategic',d:'Ensuring decisions support long-term goals.',gd:[1,1,1,1,0]}
-   ]},
-  {id:'P',name:'Performing',code:'ECCASSE',col:'#3B6D11',bg:'#EAF3DE',bdr:'#97C459',txt:'#27500A',prog:62,
-   desc:'Tangible execution of decisions — shaping real-world actions and results.',
-   subs:[
-    {n:'Efficient',d:'Achieving goals with minimal wasted time and resources.',gd:[1,1,0,0,0]},
-    {n:'Creative',d:'Innovating and bringing fresh approaches while acting.',gd:[1,1,1,1,1]},
-    {n:'Collaborative',d:'Working effectively and harmoniously with others.',gd:[0,1,1,1,1]},
-    {n:'Adaptive',d:'Responding dynamically and flexibly to change.',gd:[1,1,1,1,1]},
-    {n:'Skillful',d:'Executing tasks with precision and mastery.',gd:[1,1,0,1,0]},
-    {n:'Strategic',d:'Ensuring every action aligns with broader vision.',gd:[1,1,1,1,0]},
-    {n:'Ethical',d:'Acting with integrity, respect, and moral responsibility.',gd:[1,1,1,1,1]}
-   ]},
-  {id:'E',name:'Experiencing',code:'SCESCLT',col:'#993556',bg:'#FBEAF0',bdr:'#ED93B1',txt:'#72243E',prog:71,
-   desc:'The feedback loop from actions — shaping personal growth and future understanding.',
-   subs:[
-    {n:'Sensory',d:'Gaining embodied knowledge through the five senses.',gd:[1,0,0,0,0]},
-    {n:'Cognitive',d:'Learning from outcomes and intellectual engagement.',gd:[0,1,0,1,1]},
-    {n:'Emotional',d:'Processing and integrating feelings evoked by events.',gd:[0,0,1,1,1]},
-    {n:'Social',d:'Interacting with and growing within communities.',gd:[1,1,1,1,1]},
-    {n:'Cultural',d:'Understanding and honouring shared traditions and values.',gd:[1,1,1,1,1]},
-    {n:'Learning',d:'Deliberately acquiring new knowledge and skills.',gd:[1,1,1,1,1]},
-    {n:'Transformative',d:'Profound changes that permanently redefine one\'s worldview.',gd:[1,1,1,1,1]}
-   ]},
-  {id:'R',name:'Repeating',code:'IRACSHP',col:'#5F5E5A',bg:'#F1EFE8',bdr:'#B4B2A9',txt:'#444441',prog:58,
-   desc:'Ensuring refinement and continuous improvement — sustaining development across spacetime.',
-   subs:[
-    {n:'Iterative',d:'Refining through cycles of trial and error.',gd:[1,1,0,0,0]},
-    {n:'Reflective',d:'Revisiting past efforts to extract deeper lessons.',gd:[1,1,1,1,1]},
-    {n:'Adaptive',d:'Evolving processes to meet changing conditions.',gd:[1,1,1,1,1]},
-    {n:'Continuous',d:'Maintaining consistent practice and effort over time.',gd:[1,1,0,1,0]},
-    {n:'Strategic',d:'Prioritising repeated actions for long-term growth.',gd:[1,1,1,1,0]},
-    {n:'Habitual',d:'Establishing productive and purposeful daily routines.',gd:[1,0,1,0,0]},
-    {n:'Purposeful',d:'Ensuring every cycle contributes to overall objectives.',gd:[1,1,1,1,1]}
-   ]}
+const STORAGE_KEYS = {
+  users: 'growHPFUserMetrics',
+  domains: 'growHPFDomainUsage',
+  goals: 'growHPFGoalAchievements',
+  checkins: 'growHPFDailyCheckins'
+};
+
+const DOMAIN_META = [
+  { key: 'Observing', label: 'Observing', abbrev: 'PCAREIA', color: '#ff7a59' },
+  { key: 'Understanding', label: 'Understanding', abbrev: 'CECIARI', color: '#00a37a' },
+  { key: 'Thinking', label: 'Thinking', abbrev: 'LCCASAH', color: '#ffb020' },
+  { key: 'Deciding', label: 'Deciding', abbrev: 'RIICETS', color: '#2979ff' },
+  { key: 'Performing', label: 'Performing', abbrev: 'ECCASSE', color: '#8b5cf6' },
+  { key: 'Experiencing', label: 'Experiencing', abbrev: 'SCESCLT', color: '#ef4444' },
+  { key: 'Repeating', label: 'Repeating', abbrev: 'IRACSHP', color: '#0ea5a4' }
 ];
 
-const GDL = ['Sensory','Cognitive','Emotional','Social','Spiritual'];
-const GDC = ['#534AB7','#0F6E56','#854F0B','#185FA5','#993556'];
-const GDB = ['#EEEDFE','#E1F5EE','#FAEEDA','#E6F1FB','#FBEAF0'];
-const SCORES = [72,85,61,78,54];
-
-const DM = [[0,1,0,1,0,1,1],[1,0,1,1,0,1,1],[1,1,0,1,0,0,1],[0,1,0,0,1,0,1],[0,0,1,0,0,1,0],[1,0,0,0,0,0,1],[1,1,0,0,0,1,0]];
-
-const GOALS = [
-  {id:1,title:'Launch Digital Agency',category:'business',
-   desc:'Transition from freelance designer to running a full digital agency with clients, team, and systems.',
-   progress:38,timeline:'12 months',
-   domains:['O','U','T','D','P','R'],
-   steps:[
-    {status:'done',title:'Observe the market landscape',detail:'Research 20 competitors, identify your niche, map client pain points.',domain:'Observing'},
-    {status:'done',title:'Understand your unique value',detail:'Define your service stack, pricing model, and brand positioning.',domain:'Understanding'},
-    {status:'done',title:'Think through your business model',detail:'Map revenue streams, cost structure, and 12-month projections.',domain:'Thinking'},
-    {status:'active',title:'Decide your first 3 clients',detail:'Reach out to 10 warm contacts, set discovery calls, close first retainer.',domain:'Deciding'},
-    {status:'todo',title:'Perform — build systems and deliver',detail:'Set up project management, onboarding, and delivery workflows.',domain:'Performing'},
-    {status:'todo',title:'Experience and gather feedback',detail:'Complete first 2 projects, collect testimonials, refine process.',domain:'Experiencing'},
-    {status:'todo',title:'Repeat and scale',detail:'Systematise everything, hire first employee, target month 3 revenue.',domain:'Repeating'}
-   ]},
-  {id:2,title:'Improve GPA to 3.9',category:'education',
-   desc:'Currently at 3.5 GPA. Target 3.9 before final exams by applying HPF-guided study strategies.',
-   progress:55,timeline:'3 months',
-   domains:['O','U','T','D','R'],
-   steps:[
-    {status:'done',title:'Observe your study patterns',detail:'Track where you lose marks, which subjects need most attention.',domain:'Observing'},
-    {status:'done',title:'Understand concepts, not just facts',detail:'Use conceptual and interdisciplinary understanding for deeper retention.',domain:'Understanding'},
-    {status:'done',title:'Think with logical and creative frameworks',detail:'Use spaced repetition, mind maps, and active recall techniques.',domain:'Thinking'},
-    {status:'active',title:'Decide your study schedule',detail:'Block 4 hours daily per subject. Commit to your weakest areas first.',domain:'Deciding'},
-    {status:'todo',title:'Perform consistently',detail:'Complete practice papers under exam conditions every week.',domain:'Performing'},
-    {status:'todo',title:'Repeat with reflection',detail:'Review every test, identify gaps, adjust approach iteratively.',domain:'Repeating'}
-   ]},
-  {id:3,title:'Master Time Management',category:'personal',
-   desc:'Stop feeling overwhelmed. Build a system that gives every hour a purpose aligned with HPF domains.',
-   progress:20,timeline:'1 month',
-   domains:['O','T','D','P','R'],
-   steps:[
-    {status:'done',title:'Observe how you currently spend time',detail:'Time-audit for 7 days. Log every activity in 30-min blocks.',domain:'Observing'},
-    {status:'active',title:'Think through priority frameworks',detail:'Apply 80/20, time-blocking, and the Decide matrix to your tasks.',domain:'Thinking'},
-    {status:'todo',title:'Decide your weekly structure',detail:'Design your ideal week with domain-aligned time blocks.',domain:'Deciding'},
-    {status:'todo',title:'Perform your new system for 14 days',detail:'Execute the new schedule with accountability check-ins.',domain:'Performing'},
-    {status:'todo',title:'Repeat and refine habitually',detail:'Review weekly, adjust, build habitual and purposeful routines.',domain:'Repeating'}
-   ]},
-  {id:4,title:'Grow as a Creative Leader',category:'career',
-   desc:'Move from individual contributor to creative director — lead teams, shape strategy, mentor others.',
-   progress:15,timeline:'6 months',
-   domains:['O','U','T','D','P','E','R'],
-   steps:[
-    {status:'active',title:'Observe leadership styles around you',detail:'Study 3 leaders you admire. What do they do differently?',domain:'Observing'},
-    {status:'todo',title:'Understand team dynamics',detail:'Study empathetic and collaborative understanding of team needs.',domain:'Understanding'},
-    {status:'todo',title:'Think strategically about creative direction',detail:'Develop your creative philosophy and leadership voice.',domain:'Thinking'},
-    {status:'todo',title:'Decide to take on leadership opportunities',detail:'Volunteer to lead projects, mentor junior designers.',domain:'Deciding'},
-    {status:'todo',title:'Perform as a leader',detail:'Run your first team project with full accountability.',domain:'Performing'}
-   ]}
-];
-
-const INSIGHTS = [
-  {col:'#854F0B',title:'Emotional growth needs attention (61)',text:'Your emotional dimension is your lowest score. Focus on Reflective Observing and Empathetic Understanding subdomains this week.',tag:'Observing → Understanding'},
-  {col:'#993556',title:'Spiritual dimension is lagging (54)',text:'Practise Purposeful Repeating and Holistic Thinking daily. Even 10 minutes of reflective journaling will move this needle significantly.',tag:'Thinking → Repeating'},
-  {col:'#0F6E56',title:'Leverage your cognitive strength (85)',text:'You are cognitively strong. Channel this into your Deciding domain — you have the clarity, now make bold, strategic decisions faster.',tag:'Understanding → Deciding'},
-  {col:'#185FA5',title:'Social engagement is solid (78)',text:'Push social further by activating Collaborative Performing. Share your work more openly — seek feedback, build in public.',tag:'Performing → Experiencing'}
-];
-
-const GUIDE_CONTENT = {
-  business: {
-    title: 'Designer → Digital Agency Founder',
-    desc: 'You have design skills. Now you need business acumen, systems thinking, and the courage to decide and perform. HPF maps your exact journey:',
-    steps: [
-      {domain:'O',title:'Observe the market',detail:'Spend 2 weeks doing nothing but market research. Interview 5 potential clients. Observe your competition closely. Use Analytical and External Observing subdomains.'},
-      {domain:'U',title:'Understand your niche',detail:'You cannot serve everyone. Use Contextual and Adaptive Understanding to define exactly what type of clients you serve best and why you are the right person.'},
-      {domain:'T',title:'Think through your model',detail:'Use System Thinking to map your business model. Use Creative Thinking to differentiate your offer. Use Logical Thinking to build your pricing.'},
-      {domain:'D',title:'Decide and commit',detail:'Stop overthinking. Use Strategic and Informed Deciding to commit to your first 3 target clients, your pricing, and your launch date.'},
-      {domain:'P',title:'Perform relentlessly',detail:'Execute with Efficient and Skillful Performing. Build your portfolio. Reach out to 10 people. Deliver exceptional work for your first client.'},
-      {domain:'E',title:'Experience and learn',detail:'Every project is data. Use Learning and Cognitive Experiencing to capture what works and what does not after each engagement.'},
-      {domain:'R',title:'Repeat and scale',detail:'Use Habitual and Strategic Repeating to build systems. Systematise your process so it runs without you being in every decision.'}
+const DOMAIN_DETAILS = {
+  Observing: {
+    description: 'Foundation of human interaction — gathering information through perceptual and cognitive lenses. Observing is the fundamental capability to notice, attend to, and make sense of what is happening in the world and within ourselves. It involves activating our senses, directing our attention, and becoming aware of subtle nuances in our environment and inner experience.',
+    dimensions: [
+      { level: 'Awareness', desc: 'Beginning to notice sensory input and environmental changes' },
+      { level: 'Understanding', desc: 'Recognizing patterns and connections in observations' },
+      { level: 'Application', desc: 'Using observations to inform daily decisions and interactions' },
+      { level: 'Integration', desc: 'Integrating internal and external awareness into unified perception' },
+      { level: 'Mastery', desc: 'Developing keen, nuanced perception across multiple contexts' }
+    ],
+    ways: [
+      { way: 'Mindful Attention', desc: 'Practice focused attention on immediate sensory experience' },
+      { way: 'Environmental Scanning', desc: 'Systematically observe your surroundings for details and patterns' },
+      { way: 'Reflective Journaling', desc: 'Write down observations about situations and your reactions' },
+      { way: 'Dialogue & Inquiry', desc: 'Ask curious questions to understand others\' perspectives' },
+      { way: 'Perspective Shifts', desc: 'View situations from different angles and viewpoints' },
+      { way: 'Deep Listening', desc: 'Hear not just words, but emotions and intentions behind them' }
+    ],
+    subdomains: [
+      { name: 'Perceptual', desc: 'Gathering sensory information from the environment.' },
+      { name: 'Continuous', desc: 'Maintaining sustained attention to evolving changes.' },
+      { name: 'Analytical', desc: 'Breaking down observations to detect patterns.' },
+      { name: 'Reflective', desc: 'Looking back at past observations for deeper insights.' },
+      { name: 'External', desc: 'Awareness and attention to the outside world.' },
+      { name: 'Internal', desc: 'Awareness of self — thoughts, feelings, and states.' },
+      { name: 'Active', desc: 'Engaged and intentional focused attention.' }
     ]
   },
-  student: {
-    title: 'From 3.5 GPA to 3.9 — The HPF Study System',
-    desc: 'The difference between 3.5 and 3.9 is not intelligence. It is system, strategy, and the right mental frameworks. HPF shows you exactly how:',
-    steps: [
-      {domain:'O',title:'Observe your weak patterns',detail:'For 3 days, track every study session. Where do you lose attention? Which subjects drain you fastest? Use Analytical Observing to find the pattern.'},
-      {domain:'U',title:'Understand concepts deeply',detail:'Stop memorising. Use Conceptual and Interdisciplinary Understanding to link topics across subjects. Ask "why" before you ask "what".'},
-      {domain:'T',title:'Think like an examiner',detail:'Use Critical Thinking to anticipate questions. Use Abstract Thinking for theory-heavy subjects. Use System Thinking for subjects with interconnected concepts.'},
-      {domain:'D',title:'Decide your study schedule',detail:'Use Rational and Timely Deciding to design a daily schedule. Commit to 4 hours of deep work per day with zero distractions.'},
-      {domain:'P',title:'Perform under exam conditions',detail:'Practice papers weekly. Use Efficient and Skillful Performing. Time yourself strictly. Simulate the exam environment every Saturday.'},
-      {domain:'R',title:'Repeat with reflection',detail:'After every test, use Reflective and Iterative Repeating. Ask: What did I get wrong? Why? What will I change? Adjust and go again.'}
+  Understanding: {
+    description: 'Constructing meaningful interpretations — making sense of observations through frameworks and connections. Understanding is the bridge between observation and action. It involves interpreting what we perceive, connecting new information to existing knowledge, and building coherent mental models. Understanding allows us to see relationships, appreciate complexity, and develop wisdom.',
+    dimensions: [
+      { level: 'Awareness', desc: 'Recognizing that information has multiple possible meanings' },
+      { level: 'Understanding', desc: 'Building initial mental models and frameworks' },
+      { level: 'Application', desc: 'Using understanding to explain situations to others' },
+      { level: 'Integration', desc: 'Synthesizing multiple frameworks into personal wisdom' },
+      { level: 'Mastery', desc: 'Deep, nuanced understanding across domains and contexts' }
+    ],
+    ways: [
+      { way: 'Systems Thinking', desc: 'Study how components interact within larger wholes' },
+      { way: 'Analogical Reasoning', desc: 'Connect new concepts to familiar domains' },
+      { way: 'Dialogue & Debate', desc: 'Explore multiple interpretations through discussion' },
+      { way: 'Teaching Others', desc: 'Explain concepts to deepen your own understanding' },
+      { way: 'Experiential Learning', desc: 'Understand through direct experience and practice' },
+      { way: 'Research & Reading', desc: 'Study diverse perspectives and expert frameworks' }
+    ],
+    subdomains: [
+      { name: 'Contextual', desc: 'Understanding information within its broader context.' },
+      { name: 'Systematic', desc: 'Grasping interconnections and cause-effect relationships.' },
+      { name: 'Conceptual', desc: 'Building abstract mental models and theories.' },
+      { name: 'Interpretive', desc: 'Drawing meaning from ambiguous or complex information.' },
+      { name: 'Communicative', desc: 'Understanding through dialogue and explanation.' },
+      { name: 'Intuitive', desc: 'Grasping concepts through felt sense and pattern recognition.' },
+      { name: 'Analytical', desc: 'Breaking down concepts into constituent parts.' }
     ]
   },
-  time: {
-    title: 'Time Management Through HPF',
-    desc: 'You do not have a time problem. You have a decision and system problem. HPF gives you a framework to observe, decide, and build powerful habits:',
-    steps: [
-      {domain:'O',title:'Audit your current time',detail:'For 7 days, log every 30-minute block of your day. Use Perceptual and Continuous Observing. Be ruthlessly honest. Where is the time actually going?'},
-      {domain:'U',title:'Understand your time drains',detail:'Use Reflective Understanding to identify patterns. What triggers distraction? What tasks expand to fill time? When is your energy highest?'},
-      {domain:'T',title:'Think about your ideal week',detail:'Use System and Holistic Thinking to design your ideal weekly structure. Map domains to time blocks — creative work in high-energy hours, admin in low-energy hours.'},
-      {domain:'D',title:'Decide your system and protect it',detail:'Use Timely and Strategic Deciding to set hard boundaries. Decide your start time, your deep work blocks, your off-limits hours.'},
-      {domain:'P',title:'Perform the system for 14 days',detail:'Execute without negotiating with yourself. Use Efficient and Habitual Performing. The first 14 days build the groove.'},
-      {domain:'R',title:'Repeat, refine, and make it habitual',detail:'Use Habitual and Purposeful Repeating. Review every Sunday. What slipped? Why? Adjust one thing at a time.'}
+  Thinking: {
+    description: 'Cognitive processing — generating insights, solving problems, and creating mental frameworks. Thinking is the active manipulation of ideas, concepts, and information to create something new or solve complex problems. It ranges from logical deduction to creative ideation, from focused problem-solving to imaginative exploration. Thinking is how we generate possibilities and navigate uncertainty.',
+    dimensions: [
+      { level: 'Awareness', desc: 'Noticing your own thinking patterns and biases' },
+      { level: 'Understanding', desc: 'Understanding different types of thinking and their uses' },
+      { level: 'Application', desc: 'Using specific thinking tools for problems' },
+      { level: 'Integration', desc: 'Integrating multiple thinking approaches flexibly' },
+      { level: 'Mastery', desc: 'Generating innovative solutions and new frameworks' }
+    ],
+    ways: [
+      { way: 'Critical Analysis', desc: 'Evaluate claims by examining evidence and logic' },
+      { way: 'Creative Brainstorming', desc: 'Generate diverse ideas without judgment' },
+      { way: 'Problem-Solving Frameworks', desc: 'Apply structured approaches to complex challenges' },
+      { way: 'Thought Experiments', desc: 'Imagine scenarios to explore ideas and consequences' },
+      { way: 'Collaborative Ideation', desc: 'Build ideas together with diverse perspectives' },
+      { way: 'Reflective Practice', desc: 'Think about your thinking to improve it' }
+    ],
+    subdomains: [
+      { name: 'Critical', desc: 'Evaluating arguments and testing assumptions.' },
+      { name: 'Creative', desc: 'Generating novel ideas and making unexpected connections.' },
+      { name: 'Strategic', desc: 'Planning approaches and considering multiple pathways.' },
+      { name: 'Logical', desc: 'Following reasoning and testing coherence.' },
+      { name: 'Systemic', desc: 'Thinking about wholes and interconnected elements.' },
+      { name: 'Abstract', desc: 'Manipulating concepts and exploring possibilities.' },
+      { name: 'Practical', desc: 'Focusing on real-world application and constraints.' }
     ]
   },
-  career: {
-    title: 'Career Acceleration Through HPF',
-    desc: 'Career growth is not luck — it is the result of deliberate observing, strategic deciding, and consistent performing. Here is your HPF roadmap:',
-    steps: [
-      {domain:'O',title:'Observe where opportunities are',detail:'Use External and Active Observing. Study the industry. Watch what skills are in demand. Identify the gap between where you are and where you want to be.'},
-      {domain:'U',title:'Understand your strengths and gaps',detail:'Use Internal Observing and Reflective Understanding. What are your top 3 skills? Where do you consistently fall short? Be honest.'},
-      {domain:'T',title:'Think about your career strategy',detail:'Use Strategic and System Thinking. Where do you want to be in 3 years? Map the skills, network, and experiences needed.'},
-      {domain:'D',title:'Decide boldly',detail:'Use Rational and Timely Deciding. Apply for the stretch role. Reach out to the mentor. Invest in the course. Stop waiting for the perfect moment.'},
-      {domain:'P',title:'Perform visibly',detail:'Use Skillful and Creative Performing. Do exceptional work. Share it. Make your contribution impossible to ignore.'},
-      {domain:'R',title:'Repeat with strategic habits',detail:'Use Strategic and Continuous Repeating. Build daily habits that compound. 1% better every day is 37x better in a year.'}
+  Deciding: {
+    description: 'Making judgments and choices — committing to actions aligned with values and goals. Deciding is the crucial moment when we move from contemplation to commitment. It involves weighing options, considering values and consequences, and making choices that align with who we are and what we care about. Deciding creates direction and momentum in life.',
+    dimensions: [
+      { level: 'Awareness', desc: 'Recognizing that a decision needs to be made' },
+      { level: 'Understanding', desc: 'Clarifying options and understanding consequences' },
+      { level: 'Application', desc: 'Making decisions aligned with values and goals' },
+      { level: 'Integration', desc: 'Deciding with wisdom that integrates emotion and reason' },
+      { level: 'Mastery', desc: 'Making clear decisions under uncertainty and complexity' }
+    ],
+    ways: [
+      { way: 'Values Clarification', desc: 'Identify core values to guide decision-making' },
+      { way: 'Pros & Cons Analysis', desc: 'Systematically evaluate options and tradeoffs' },
+      { way: 'Consultation & Dialogue', desc: 'Seek input from trusted advisors and perspectives' },
+      { way: 'Intuitive Sensing', desc: 'Notice and honor your gut feelings and instincts' },
+      { way: 'Scenario Planning', desc: 'Consider multiple futures and prepare for them' },
+      { way: 'Commitment Ritual', desc: 'Make decisions visible and mark the commitment' }
+    ],
+    subdomains: [
+      { name: 'Values-Based', desc: 'Choosing based on personal and ethical principles.' },
+      { name: 'Evidence-Based', desc: 'Deciding informed by data and research.' },
+      { name: 'Intuitive', desc: 'Trusting gut feelings and embodied knowing.' },
+      { name: 'Collaborative', desc: 'Deciding through dialogue and shared input.' },
+      { name: 'Risk-Aware', desc: 'Considering consequences and preparing for uncertainty.' },
+      { name: 'Committed', desc: 'Making firm choices and standing by them.' },
+      { name: 'Adaptive', desc: 'Adjusting decisions as circumstances change.' }
     ]
   },
-  health: {
-    title: 'Health & Wellness With HPF',
-    desc: 'Health is not a destination — it is a cycle of observing your body, understanding it, and performing consistently. HPF makes it a system:',
-    steps: [
-      {domain:'O',title:'Observe your body signals',detail:'Use Perceptual and Internal Observing. What does your body tell you after eating, sleeping, exercising? Start a 7-day body log.'},
-      {domain:'U',title:'Understand what works for your body',detail:'Use Adaptive and Intuitive Understanding. Everyone is different. Learn what sleep schedule, food, and movement pattern actually works for you.'},
-      {domain:'T',title:'Think about a sustainable routine',detail:'Use Holistic Thinking. Do not chase extremes. Design a routine you can maintain for 6 months, not 6 days.'},
-      {domain:'D',title:'Decide your non-negotiables',detail:'Use Ethical and Strategic Deciding. What 3 health habits are non-negotiable? Commit to them before adding anything else.'},
-      {domain:'P',title:'Perform consistently, not perfectly',detail:'Use Continuous and Adaptive Performing. Show up even on bad days. Progress beats perfection every time.'},
-      {domain:'R',title:'Repeat and make health habitual',detail:'Use Habitual Repeating. The goal is to make healthy choices automatic — not effortful decisions every day.'}
+  Performing: {
+    description: 'Taking action — executing plans and implementing decisions with skill and intentionality. Performing is where intention meets reality. It is the domain of action, execution, and bringing ideas into the world. Performing involves developing skills, maintaining persistence, adapting to obstacles, and taking responsibility for results. It is how we make a difference.',
+    dimensions: [
+      { level: 'Awareness', desc: 'Recognizing the need for action and your capacity' },
+      { level: 'Understanding', desc: 'Understanding what actions are needed and why' },
+      { level: 'Application', desc: 'Taking skillful action toward meaningful goals' },
+      { level: 'Integration', desc: 'Acting with alignment across body, mind, and values' },
+      { level: 'Mastery', desc: 'Performing at high levels with natural flow and efficiency' }
+    ],
+    ways: [
+      { way: 'Skill Building', desc: 'Deliberately practice and develop specific competencies' },
+      { way: 'Goal Setting', desc: 'Establish clear targets and track progress toward them' },
+      { way: 'Iterative Practice', desc: 'Take action, learn from results, refine and repeat' },
+      { way: 'Accountability Partnerships', desc: 'Support others in their performance and be supported' },
+      { way: 'Resource Management', desc: 'Organize time, energy, and resources effectively' },
+      { way: 'Celebration & Reflection', desc: 'Acknowledge progress and extract lessons from experience' }
+    ],
+    subdomains: [
+      { name: 'Skilled', desc: 'Performing with competence and mastery.' },
+      { name: 'Intentional', desc: 'Acting with clear purpose and awareness.' },
+      { name: 'Persistent', desc: 'Maintaining effort through challenges and setbacks.' },
+      { name: 'Adaptive', desc: 'Adjusting actions based on feedback and changing conditions.' },
+      { name: 'Collaborative', desc: 'Working effectively with others toward shared goals.' },
+      { name: 'Responsible', desc: 'Taking accountability for outcomes and impact.' },
+      { name: 'Energetic', desc: 'Acting with vitality, enthusiasm, and engagement.' }
     ]
   },
-  relationship: {
-    title: 'Deeper Relationships Through HPF',
-    desc: 'Meaningful relationships are built through the HPF cycle — observing others, understanding them deeply, and performing with empathy:',
-    steps: [
-      {domain:'O',title:'Observe people before reacting',detail:'Use Active and External Observing. Before responding, observe fully. Notice tone, body language, the unspoken. Most conflict begins with reactive listening.'},
-      {domain:'U',title:'Understand before being understood',detail:'Use Empathetic and Contextual Understanding. What is the other person experiencing? What is their context? This is the foundation of every meaningful bond.'},
-      {domain:'T',title:'Think about what you truly want',detail:'Use Reflective and Abstract Thinking. What do you want from your relationships? What are you contributing? Are you reactive or intentional?'},
-      {domain:'D',title:'Decide to show up consistently',detail:'Use Collaborative and Ethical Deciding. Relationships thrive on reliability. Decide to be present, honest, and consistent.'},
-      {domain:'P',title:'Perform with empathy and skill',detail:'Use Collaborative and Ethical Performing. Act on your care. Show up. Apologise when wrong. Celebrate others genuinely.'},
-      {domain:'R',title:'Repeat — relationships need maintenance',detail:'Use Reflective and Purposeful Repeating. Regularly check in with important people. Relationships that are not tended fade.'}
+  Experiencing: {
+    description: 'Sensing and feeling — engaging directly with the world and integrating the full spectrum of human experience. Experiencing is about being fully alive and present. It involves engaging our whole selves — body, emotions, intuition, and spirit — in direct contact with life. Experiencing brings richness, vitality, and authenticity to our existence.',
+    dimensions: [
+      { level: 'Awareness', desc: 'Noticing sensations, emotions, and feelings as they arise' },
+      { level: 'Understanding', desc: 'Understanding the meaning and messages of experiences' },
+      { level: 'Application', desc: 'Fully engaging in activities with presence and authenticity' },
+      { level: 'Integration', desc: 'Integrating experiences into personal wisdom and meaning' },
+      { level: 'Mastery', desc: 'Living fully, present, and authentic across all experiences' }
+    ],
+    ways: [
+      { way: 'Sensory Immersion', desc: 'Fully engage the five senses in moments of beauty' },
+      { way: 'Emotional Expression', desc: 'Allow and express genuine emotions and feelings' },
+      { way: 'Creative Engagement', desc: 'Express yourself through art, music, movement' },
+      { way: 'Nature Connection', desc: 'Spend time in nature and feel your connection' },
+      { way: 'Relational Presence', desc: 'Be fully present and authentic with others' },
+      { way: 'Spiritual Practice', desc: 'Engage with practices that connect you to meaning' }
+    ],
+    subdomains: [
+      { name: 'Sensory', desc: 'Fully engaging the five senses in present moments.' },
+      { name: 'Emotional', desc: 'Acknowledging and expressing feelings authentically.' },
+      { name: 'Embodied', desc: 'Connecting with the body and physical presence.' },
+      { name: 'Spiritual', desc: 'Connecting with purpose, meaning, and transcendence.' },
+      { name: 'Social', desc: 'Engaging authentically with others and community.' },
+      { name: 'Creative', desc: 'Expressing inner experiences through art and innovation.' },
+      { name: 'Relational', desc: 'Experiencing deep connection with others and the world.' }
+    ]
+  },
+  Repeating: {
+    description: 'Consolidating learning — building habits, refining practices, and evolving through iteration. Repeating is the domain of growth through repetition and refinement. It involves building sustainable habits, learning from experience, and gradually developing mastery and wisdom. Repeating transforms temporary improvements into lasting capabilities.',
+    dimensions: [
+      { level: 'Awareness', desc: 'Noticing patterns in your learning and performance' },
+      { level: 'Understanding', desc: 'Understanding how learning and habit formation work' },
+      { level: 'Application', desc: 'Deliberately practicing and building new habits' },
+      { level: 'Integration', desc: 'Integrating learning into your natural way of being' },
+      { level: 'Mastery', desc: 'Continuous evolution and refinement toward mastery' }
+    ],
+    ways: [
+      { way: 'Deliberate Practice', desc: 'Practice with focus on improvement and feedback' },
+      { way: 'Habit Stacking', desc: 'Build new habits by attaching them to existing ones' },
+      { way: 'Learning Loops', desc: 'Engage in cycles of action, reflection, and refinement' },
+      { way: 'Community Learning', desc: 'Learn from and with others in your community' },
+      { way: 'Documentation', desc: 'Track progress through journals, notes, and records' },
+      { way: 'Mentorship', desc: 'Learn from experts and mentor others in turn' }
+    ],
+    subdomains: [
+      { name: 'Iterative', desc: 'Improving through cycles of practice and feedback.' },
+      { name: 'Habitual', desc: 'Building sustainable routines and automaticity.' },
+      { name: 'Reflective', desc: 'Learning from experience and extracting lessons.' },
+      { name: 'Cumulative', desc: 'Building on previous learning to reach new levels.' },
+      { name: 'Adaptive', desc: 'Evolving practices as understanding deepens.' },
+      { name: 'Mastery', desc: 'Developing expertise through dedicated practice.' },
+      { name: 'Transformative', desc: 'Using repetition to fundamentally change capabilities.' }
     ]
   }
 };
 
-const TASKS = [
-  {done:true,text:'Morning observation — 10-min journaling of external/internal state',badge:'Observing',bc:'#EEEDFE',btc:'#3C3489'},
-  {done:true,text:'Review competitor digital agencies — market research block',badge:'Understanding',bc:'#E1F5EE',btc:'#085041'},
-  {done:true,text:'Study system thinking framework for business model mapping',badge:'Thinking',bc:'#FAEEDA',btc:'#633806'},
-  {done:false,text:'Reach out to 3 warm contacts for discovery calls',badge:'Deciding',bc:'#E6F1FB',btc:'#0C447C'},
-  {done:false,text:'Build agency proposal template for first client',badge:'Performing',bc:'#EAF3DE',btc:'#27500A'},
-  {done:false,text:'Evening reflection — log what I experienced today',badge:'Experiencing',bc:'#FBEAF0',btc:'#72243E'}
-];
-
-const JOURNAL_ENTRIES = [
-  {date:'2026-04-18',color:'#534AB7',text:'Deep observation session — noticed I\'ve been reacting to emails instead of responding. Switching to 2 email checks per day.'},
-  {date:'2026-04-17',color:'#0F6E56',text:'Spoke to a potential client today. Used contextual understanding — really listened to their pain points instead of pitching immediately.'},
-  {date:'2026-04-16',color:'#BA7517',text:'Spent 2 hours with system thinking for my agency model. The revenue streams are clearer now. Creative thinking unlocked a referral programme idea.'},
-  {date:'2026-04-15',color:'#185FA5',text:'Made a big decision — decided to niche down to e-commerce brands only. Terrifying and exciting. Strategic deciding in action.'},
-  {date:'2026-04-14',color:'#3B6D11',text:'First proposal sent. Efficient performing — done in 90 minutes with the template. No overthinking.'},
-  {date:'2026-04-13',color:'#993556',text:'Transformative experience — mentor call changed how I think about pricing. I was massively undervaluing my work.'}
-];
-
-const USER_PROFILE = {
-  fullName: 'Ashok Upadhya',
-  email: 'ashok@growhpf.app',
-  level: 'Level 0',
-  role: 'Beginner',
-  streak: '7 days',
-  goalsActive: 4,
-  checkIns: 23,
-  joined: 'March 2026',
-  timezone: 'Asia/Kolkata'
+const state = {
+  totalUsers: 0,
+  activeNow: 0,
+  impactScore: 0,
+  updatesToday: 0,
+  usage: [],
+  goalsTrend: [0, 0, 0, 0, 0, 0, 0],
+  domainCounts: [],
+  goalsAchieved: []
 };
 
-const LEVEL_ROLES = ['Beginner', 'Observer', 'Learner', 'Thinker', 'Builder', 'Strategist', 'Leader'];
+let goalsSectionControlsWired = false;
+let currentViewName = 'dashboard';
 
-function getUserXP(){
-  const raw=localStorage.getItem('growHPFUserXP');
-  const parsed=Number.parseInt(raw||'0',10);
-  return Number.isFinite(parsed)&&parsed>=0?parsed:0;
-}
-
-function applyUserProgressFromXP(){
-  const xp=getUserXP();
-  const level=Math.floor(xp/20);
-  USER_PROFILE.level=`Level ${level}`;
-  USER_PROFILE.role=LEVEL_ROLES[Math.min(level,LEVEL_ROLES.length-1)];
-}
-
-function gainUserXP(points){
-  const nextXP=getUserXP()+points;
-  localStorage.setItem('growHPFUserXP',String(nextXP));
-  applyUserProgressFromXP();
-  renderSidebarUser();
-  buildProfile();
-}
-
-function formatCurrentDate(){
-  return new Intl.DateTimeFormat('en-US', {
-    weekday: 'long',
-    month: 'long',
-    day: 'numeric',
-    year: 'numeric'
-  }).format(new Date());
-}
-
-function hydrateUserProfileFromSession(){
-  const sessionName=(localStorage.getItem('growHPFUserName')||'').trim();
-  const sessionEmail=(localStorage.getItem('growHPFUserEmail')||'').trim();
-  if(sessionName){
-    USER_PROFILE.fullName=sessionName
-      .split(' ')
-      .filter(Boolean)
-      .map(part=>part.charAt(0).toUpperCase()+part.slice(1).toLowerCase())
-      .join(' ');
-  }
-  if(sessionEmail){
-    USER_PROFILE.email=sessionEmail;
-  }
-
-  applyUserProgressFromXP();
-
-  const greeting=document.getElementById('dashboard-greeting');
-  if(greeting){
-    const firstName=USER_PROFILE.fullName.split(' ')[0]||'User';
-    greeting.textContent=`Good morning, ${firstName}`;
-  }
-
-  const dashboardDate=document.getElementById('dashboard-date');
-  if(dashboardDate){
-    dashboardDate.textContent=`${formatCurrentDate()} · You're on a 7-day streak`;
-  }
-
-  const checkinDate=document.getElementById('checkin-date');
-  if(checkinDate){
-    checkinDate.textContent=`${formatCurrentDate()} · Takes ~4 minutes`;
+function parseJSON(raw, fallback) {
+  try {
+    if (!raw) {
+      return fallback;
+    }
+    return JSON.parse(raw);
+  } catch (error) {
+    return fallback;
   }
 }
 
-function getInitials(name){
+function getTodayISODate() {
+  const now = new Date();
+  const month = String(now.getMonth() + 1).padStart(2, '0');
+  const day = String(now.getDate()).padStart(2, '0');
+  return `${now.getFullYear()}-${month}-${day}`;
+}
+
+function showView(viewName) {
+  currentViewName = viewName;
+  const dashboardView = document.getElementById('view-dashboard');
+  const checkinView = document.getElementById('view-checkin');
+  const journalView = document.getElementById('view-journal');
+  const insightsView = document.getElementById('view-insights');
+  const exploreDomains = document.getElementById('view-explore-domains');
+  const myGoalsView = document.getElementById('view-my-goals');
+  const hpfGuideView = document.getElementById('view-hpf-guide');
+  const profileView = document.getElementById('view-profile');
+  if (!dashboardView || !checkinView || !journalView || !insightsView || !exploreDomains || !myGoalsView || !hpfGuideView || !profileView) {
+    return;
+  }
+
+  dashboardView.classList.toggle('active', viewName === 'dashboard');
+  checkinView.classList.toggle('active', viewName === 'checkin');
+  journalView.classList.toggle('active', viewName === 'journal');
+  insightsView.classList.toggle('active', viewName === 'insights');
+  exploreDomains.classList.toggle('active', viewName === 'explore-domains');
+  myGoalsView.classList.toggle('active', viewName === 'my-goals');
+  hpfGuideView.classList.toggle('active', viewName === 'hpf-guide');
+  profileView.classList.toggle('active', viewName === 'profile');
+    const categoryMatrixView = document.getElementById('view-category-matrix');
+    if (categoryMatrixView) {
+      categoryMatrixView.classList.toggle('active', viewName === 'category-matrix');
+    }
+  
+  if (viewName === 'journal') {
+    renderJournal();
+  }
+  if (viewName === 'insights') {
+    renderInsights();
+  }
+  if (viewName === 'explore-domains') {
+    renderExploreDomains();
+  }
+  if (viewName === 'my-goals') {
+    renderMyGoalsViewPage();
+  }
+  if (viewName === 'hpf-guide') {
+    renderHPFGuideViewPage();
+  }
+  if (viewName === 'profile') {
+    renderProfileView();
+    if (viewName === 'category-matrix') {
+      initializeCategoryMatrixView();
+    }
+  }
+}
+
+function getUserProfileData() {
+  const usersData = parseJSON(localStorage.getItem(STORAGE_KEYS.users), {});
+  const checkinsData = parseJSON(localStorage.getItem(STORAGE_KEYS.checkins), []);
+  const goalsData = getStoredGoals();
+
+  const savedName = localStorage.getItem('growHPFUserName') || sessionStorage.getItem('growHPFUserName');
+  const savedEmail = localStorage.getItem('growHPFUserEmail') || sessionStorage.getItem('growHPFUserEmail');
+  const name = (savedName || 'Ashok Upadhya').trim();
+  const email = (savedEmail || 'No email saved').trim();
+  const joined = checkinsData.length > 0 ? checkinsData[0].date : getTodayISODate();
+  const completedGoals = goalsData.filter((goal) => goal.achieved).length;
+
+  return {
+    name,
+    email,
+    role: 'HPF Member',
+    joined,
+    totalUsers: Number(usersData.totalUsers) || 0,
+    activeNow: Number(usersData.activeNow) || 0,
+    updatesToday: Number(usersData.updatesToday) || 0,
+    checkins: checkinsData.length,
+    goalsTotal: goalsData.length,
+    goalsCompleted: completedGoals
+  };
+}
+
+function getInitials(name) {
   return name
     .split(' ')
     .filter(Boolean)
-    .slice(0,2)
-    .map(part=>part[0].toUpperCase())
+    .slice(0, 2)
+    .map((part) => part.charAt(0).toUpperCase())
+    .join('') || 'HP';
+}
+
+function renderProfileView() {
+  const profile = getUserProfileData();
+
+  const sidebarAvatar = document.getElementById('sidebarAvatar');
+  const sidebarUserName = document.getElementById('sidebarUserName');
+  const sidebarUserLevel = document.getElementById('sidebarUserLevel');
+  const profileAvatar = document.getElementById('profileAvatar');
+  const profileName = document.getElementById('profileName');
+  const profileEmail = document.getElementById('profileEmail');
+  const profileRole = document.getElementById('profileRole');
+  const profileJoined = document.getElementById('profileJoined');
+  const detailsGrid = document.getElementById('profileDetailsGrid');
+  const activityGrid = document.getElementById('profileActivityGrid');
+
+  if (!profileAvatar || !profileName || !profileEmail || !profileRole || !profileJoined || !detailsGrid || !activityGrid) {
+    return;
+  }
+
+  const initials = getInitials(profile.name);
+  if (sidebarAvatar) {
+    sidebarAvatar.textContent = initials;
+  }
+  if (sidebarUserName) {
+    sidebarUserName.textContent = profile.name;
+  }
+  if (sidebarUserLevel) {
+    sidebarUserLevel.textContent = profile.role;
+  }
+
+  profileAvatar.textContent = initials;
+  profileName.textContent = profile.name;
+  profileEmail.textContent = profile.email;
+  profileRole.textContent = profile.role;
+  profileJoined.textContent = `Joined: ${profile.joined}`;
+
+  detailsGrid.innerHTML = `
+    <div class="profile-detail-item"><span>Name</span><strong>${profile.name}</strong></div>
+    <div class="profile-detail-item"><span>Email</span><strong>${profile.email}</strong></div>
+    <div class="profile-detail-item"><span>Role</span><strong>${profile.role}</strong></div>
+    <div class="profile-detail-item"><span>Joined</span><strong>${profile.joined}</strong></div>
+    <div class="profile-detail-item"><span>Total Goals</span><strong>${formatNumber(profile.goalsTotal)}</strong></div>
+    <div class="profile-detail-item"><span>Completed Goals</span><strong>${formatNumber(profile.goalsCompleted)}</strong></div>
+  `;
+
+  activityGrid.innerHTML = `
+    <div class="profile-detail-item"><span>Total Users</span><strong>${formatNumber(profile.totalUsers)}</strong></div>
+    <div class="profile-detail-item"><span>Active Now</span><strong>${formatNumber(profile.activeNow)}</strong></div>
+    <div class="profile-detail-item"><span>Updates Today</span><strong>${formatNumber(profile.updatesToday)}</strong></div>
+    <div class="profile-detail-item"><span>Check-ins Logged</span><strong>${formatNumber(profile.checkins)}</strong></div>
+    <div class="profile-detail-item"><span>Goal Completion Rate</span><strong>${profile.goalsTotal === 0 ? '0%' : `${Math.round((profile.goalsCompleted / profile.goalsTotal) * 100)}%`}</strong></div>
+    <div class="profile-detail-item"><span>Last Synced</span><strong>${new Intl.DateTimeFormat('en-US', { hour: '2-digit', minute: '2-digit' }).format(new Date())}</strong></div>
+  `;
+}
+
+function clamp(value, min, max) {
+  return Math.min(max, Math.max(min, value));
+}
+
+function formatNumber(value) {
+  return new Intl.NumberFormat('en-US').format(value || 0);
+}
+
+function updateTimestamp() {
+  const el = document.getElementById('lastUpdated');
+  if (!el) {
+    return;
+  }
+  el.textContent = '';
+}
+
+function normalizeUsage(values) {
+  const total = values.reduce((sum, item) => sum + item.value, 0);
+  if (total === 0) {
+    return [{ label: 'No usage', value: 100, color: '#cbd5e1', users: 0 }];
+  }
+
+  let allocated = 0;
+  return values.map((item, index) => {
+    if (index === values.length - 1) {
+      return { ...item, value: 100 - allocated };
+    }
+    const pct = Math.round((item.value / total) * 100);
+    allocated += pct;
+    return { ...item, value: pct };
+  });
+}
+
+function buildGoalsTrend(goals) {
+  const days = [0, 0, 0, 0, 0, 0, 0];
+  const now = new Date();
+  goals.forEach((goal) => {
+    if (!goal.achievedAt) {
+      return;
+    }
+    const achievedDate = new Date(goal.achievedAt);
+    if (Number.isNaN(achievedDate.getTime())) {
+      return;
+    }
+    const dayDiff = Math.floor((now - achievedDate) / 86400000);
+    const idx = 6 - dayDiff;
+    if (idx >= 0 && idx <= 6) {
+      days[idx] += 1;
+    }
+  });
+  return days;
+}
+
+function createGoalId() {
+  return `goal-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+}
+
+function normalizeGoalRecord(goal, index) {
+  if (!goal || typeof goal !== 'object') {
+    return null;
+  }
+
+  const title = typeof goal.title === 'string' ? goal.title.trim() : '';
+  return {
+    id: goal.id || `goal-${index}`,
+    title,
+    achieved: Boolean(goal.achieved),
+    achievedAt: goal.achievedAt || null,
+    createdAt: goal.createdAt || null
+  };
+}
+
+function getStoredGoals() {
+  const goalsData = parseJSON(localStorage.getItem(STORAGE_KEYS.goals), []);
+  if (!Array.isArray(goalsData)) {
+    return [];
+  }
+
+  let needsSave = false;
+  const normalizedGoals = goalsData
+    .map((goal, index) => {
+      const normalized = normalizeGoalRecord(goal, index);
+      if (!normalized) {
+        needsSave = true;
+        return null;
+      }
+      if (!goal.id || normalized.title !== goal.title || normalized.achieved !== Boolean(goal.achieved) || normalized.achievedAt !== (goal.achievedAt || null) || normalized.createdAt !== (goal.createdAt || null)) {
+        needsSave = true;
+      }
+      return normalized;
+    })
+    .filter(Boolean);
+
+  if (needsSave) {
+    localStorage.setItem(STORAGE_KEYS.goals, JSON.stringify(normalizedGoals));
+  }
+
+  return normalizedGoals;
+}
+
+function saveGoals(goals) {
+  localStorage.setItem(STORAGE_KEYS.goals, JSON.stringify(goals));
+}
+
+function createGoalRecord(title, achieved = false, achievedAt = null, createdAt = getTodayISODate()) {
+  return {
+    id: createGoalId(),
+    title: title.trim(),
+    achieved,
+    achievedAt,
+    createdAt
+  };
+}
+
+function hydrateStateFromStorage() {
+  const usersData = parseJSON(localStorage.getItem(STORAGE_KEYS.users), {});
+  const domainsData = parseJSON(localStorage.getItem(STORAGE_KEYS.domains), {});
+  const goalsData = parseJSON(localStorage.getItem(STORAGE_KEYS.goals), []);
+
+  const domainCounts = DOMAIN_META.map((domain) => {
+    const count = Number(domainsData[domain.key]) || 0;
+    return {
+      label: domain.label,
+      count,
+      color: domain.color
+    };
+  });
+
+  const totalDomainEvents = domainCounts.reduce((sum, item) => sum + item.count, 0);
+  const goalsAchieved = goalsData.filter((goal) => Boolean(goal && goal.achieved));
+
+  state.totalUsers = Number(usersData.totalUsers) || 0;
+  state.activeNow = Number(usersData.activeNow) || 0;
+  state.updatesToday = Number(usersData.updatesToday) || totalDomainEvents;
+  state.impactScore = totalDomainEvents === 0
+    ? 0
+    : clamp(Math.round((goalsAchieved.length / totalDomainEvents) * 100), 0, 100);
+
+  state.domainCounts = domainCounts;
+  state.goalsAchieved = goalsAchieved.slice(-6).reverse();
+  state.goalsTrend = buildGoalsTrend(goalsAchieved);
+
+  state.usage = normalizeUsage(
+    domainCounts
+      .filter((item) => item.count > 0)
+      .map((item) => ({
+        label: item.label,
+        value: item.count,
+        color: item.color,
+        users: item.count
+      }))
+  );
+}
+
+function renderStats() {
+  const totalUsersEl = document.getElementById('totalUsers');
+  const activeNowEl = document.getElementById('activeNow');
+  const impactScoreEl = document.getElementById('impactScore');
+  const updatesTodayEl = document.getElementById('updatesToday');
+
+  if (totalUsersEl) {
+    totalUsersEl.textContent = formatNumber(state.totalUsers);
+  }
+  if (activeNowEl) {
+    activeNowEl.textContent = formatNumber(state.activeNow);
+  }
+  if (impactScoreEl) {
+    impactScoreEl.textContent = String(state.impactScore);
+  }
+  if (updatesTodayEl) {
+    updatesTodayEl.textContent = formatNumber(state.updatesToday);
+  }
+}
+
+function renderPie() {
+  const pie = document.getElementById('usagePie');
+  const legend = document.getElementById('usageLegend');
+  if (!pie || !legend) {
+    return;
+  }
+
+  let start = 0;
+  const slices = state.usage.map((item) => {
+    const end = start + item.value;
+    const gradientPart = `${item.color} ${start}% ${end}%`;
+    start = end;
+    return gradientPart;
+  });
+
+  pie.style.background = `conic-gradient(${slices.join(', ')})`;
+
+  legend.innerHTML = state.usage
+    .map((item) => `
+      <li class="rt-legend-item">
+        <span class="rt-legend-dot" style="background:${item.color}"></span>
+        <div>
+          <p>${item.label}</p>
+          <small>${item.value}% (${formatNumber(item.users)} events)</small>
+        </div>
+      </li>`)
     .join('');
 }
 
-function renderSidebarUser(){
-  const initials=getInitials(USER_PROFILE.fullName);
-  const avatar=document.getElementById('sidebar-avatar');
-  const name=document.getElementById('sidebar-name');
-  const level=document.getElementById('sidebar-level');
-  const note=document.getElementById('sidebar-note');
-
-  if(avatar)avatar.textContent=initials;
-  if(name)name.textContent=USER_PROFILE.fullName;
-  if(level)level.textContent=`${USER_PROFILE.level} - ${USER_PROFILE.role}`;
-  if(note)note.textContent=`${initials} are your initials.`;
-}
-
-function buildProfile(){
-  const initials=getInitials(USER_PROFILE.fullName);
-  const profileAvatar=document.getElementById('profile-avatar');
-  const profileName=document.getElementById('profile-name');
-  const profileEmail=document.getElementById('profile-email');
-  const profileRole=document.getElementById('profile-role');
-  const profileDetails=document.getElementById('profile-details');
-
-  if(profileAvatar)profileAvatar.textContent=initials;
-  if(profileName)profileName.textContent=USER_PROFILE.fullName;
-  if(profileEmail)profileEmail.textContent=USER_PROFILE.email;
-  if(profileRole)profileRole.textContent=`${USER_PROFILE.level} - ${USER_PROFILE.role}`;
-
-  if(profileDetails){
-    const details=[
-      ['Member since',USER_PROFILE.joined],
-      ['Timezone',USER_PROFILE.timezone],
-      ['Experience points',String(getUserXP())],
-      ['Current streak',USER_PROFILE.streak],
-      ['Active goals',String(USER_PROFILE.goalsActive)],
-      ['Check-ins completed',String(USER_PROFILE.checkIns)]
-    ];
-    profileDetails.innerHTML=details.map(([label,value])=>`
-      <div class="profile-item">
-        <div class="profile-item-label">${label}</div>
-        <div class="profile-item-value">${value}</div>
-      </div>`).join('');
+function renderGoalBars() {
+  const bars = document.getElementById('dailyBars');
+  if (!bars) {
+    return;
   }
+
+  const maxCount = Math.max(...state.goalsTrend, 1);
+
+  bars.innerHTML = state.goalsTrend
+    .map((value, index) => {
+      const heightPct = Math.round((value / maxCount) * 100);
+      return `
+        <div class="rt-bar-item">
+          <div class="rt-bar-track">
+            <div class="rt-bar-fill" style="height:${heightPct}%"></div>
+          </div>
+          <span>D${index + 1}</span>
+        </div>`;
+    })
+    .join('');
 }
 
-function logoutUser(){
-  sessionStorage.removeItem('growHPFLoggedIn');
-  localStorage.removeItem('growHPFLoggedIn');
-  localStorage.removeItem('growHPFUserName');
-  localStorage.removeItem('growHPFUserEmail');
-  window.location.href='landingpage.html';
-}
-
-// ══════════════ INIT BUILDERS ══════════════
-function buildGD5(containerId){
-  const c=document.getElementById(containerId);
-  if(!c)return; c.innerHTML='';
-  GDL.forEach((g,i)=>{
-    const el=document.createElement('div'); el.className='gd-score-card';
-    el.innerHTML=`<div class="gd-score-label">${g}</div><div class="gd-score-num" style="color:${GDC[i]}">${SCORES[i]}</div><div class="gd-score-bar"><div class="gd-score-fill" style="width:${SCORES[i]}%;background:${GDC[i]}"></div></div>`;
-    c.appendChild(el);
-  });
-}
-
-function buildCycle(){
-  const bar=document.getElementById('cycle-bar');
-  const labs=document.getElementById('cycle-labs');
-  if(!bar)return;
-  bar.innerHTML=''; labs.innerHTML='';
-  D.forEach((d,i)=>{
-    const nd=document.createElement('div');
-    nd.style.cssText=`width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;flex-shrink:0;cursor:pointer;border:1px solid ${i<3?d.bdr:'rgba(15,14,12,0.12)'};background:${i<3?d.bg:'#f5f2ed'};color:${i<3?d.txt:'#888780'}`;
-    nd.textContent=d.id;
-    nd.onclick=()=>{
-      document.getElementById('cycle-detail').innerHTML=`<strong style="color:${d.col}">${d.name} (${d.code})</strong> — ${d.desc}`;
-    };
-    bar.appendChild(nd);
-    if(i<6){const ln=document.createElement('div');ln.style.cssText=`flex:1;height:1.5px;background:${i<2?d.bg:'rgba(15,14,12,0.08)'}`;bar.appendChild(ln);}
-    const lb=document.createElement('div');lb.style.cssText='font-size:9px;color:#888780;text-align:center';lb.textContent=d.name.substring(0,3);
-    labs.appendChild(lb);
-  });
-}
-
-function buildDashGoals(){
-  const c=document.getElementById('dash-goals');
-  if(!c)return; c.innerHTML='';
-  GOALS.slice(0,3).forEach(g=>{
-    const el=document.createElement('div');
-    el.style.cssText='padding:10px 0;border-bottom:0.5px solid rgba(15,14,12,0.08)';
-    const catColors={business:'#EEEDFE',education:'#E1F5EE',personal:'#EAF3DE',career:'#E6F1FB'};
-    const catText={business:'#3C3489',education:'#085041',personal:'#27500A',career:'#0C447C'};
-    el.innerHTML=`
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
-        <div style="font-size:13px;font-weight:500">${g.title}</div>
-        <span style="font-size:11px;font-weight:500;color:${catText[g.category]||'#3C3489'}">${g.progress}%</span>
-      </div>
-      <div style="height:4px;background:#ede9e0;border-radius:2px;overflow:hidden">
-        <div style="width:${g.progress}%;height:4px;background:${catText[g.category]||'#534AB7'};border-radius:2px"></div>
-      </div>`;
-    el.style.cursor='pointer';
-    el.onclick=()=>nav('goals',null);
-    c.appendChild(el);
-  });
-}
-
-function buildTasks(){
-  const c=document.getElementById('today-tasks');
-  if(!c)return; c.innerHTML='';
-  TASKS.forEach((t,i)=>{
-    const el=document.createElement('div'); el.className='task-item';
-    el.innerHTML=`
-      <div class="task-cb ${t.done?'checked':''}" onclick="toggleTask(this,${i})"></div>
-      <div style="flex:1">
-        <div class="task-text ${t.done?'done':''}" id="tt-${i}">${t.text}</div>
-        <span class="task-badge" style="background:${t.bc};color:${t.btc};margin-top:4px;display:inline-block">${t.badge}</span>
-      </div>`;
-    c.appendChild(el);
-  });
-}
-
-function toggleTask(el,i){
-  const wasChecked=el.classList.contains('checked');
-  el.classList.toggle('checked');
-  document.getElementById('tt-'+i).classList.toggle('done');
-
-  if(!wasChecked){
-    gainUserXP(2);
+function renderDomainUsageList() {
+  const list = document.getElementById('domainUsageList');
+  if (!list) {
+    return;
   }
+
+  list.innerHTML = state.domainCounts
+    .map((item) => `
+      <div class="rt-list-item">
+        <span class="rt-list-key">
+          <span class="rt-legend-dot" style="background:${item.color}"></span>
+          ${item.label}
+        </span>
+        <strong>${formatNumber(item.count)}</strong>
+      </div>`)
+    .join('');
 }
 
-function saveDailyCheckin(){
-  gainUserXP(4);
-  alert('Check-in saved! Great work today — your HPF reflection is being processed.');
+function renderGoalsAchievedList() {
+  const list = document.getElementById('goalsAchievedList');
+  if (!list) {
+    return;
+  }
+
+  if (state.goalsAchieved.length === 0) {
+    list.innerHTML = '<div class="rt-empty">0 tasks completed yet.</div>';
+    return;
+  }
+
+  list.innerHTML = state.goalsAchieved
+    .map((goal) => {
+      const date = goal.achievedAt
+        ? new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric' }).format(new Date(goal.achievedAt))
+        : 'No date';
+      const title = goal.title || 'Untitled goal';
+      return `
+        <div class="rt-list-item">
+          <span class="rt-list-key">${title}</span>
+          <small>${date}</small>
+        </div>`;
+    })
+    .join('');
 }
 
-function buildGoalsList(filter){
-  const c=document.getElementById('goals-list');
-  if(!c)return; c.innerHTML='';
-  const filtered=filter&&filter!=='all'?GOALS.filter(g=>g.category===filter):GOALS;
-  filtered.forEach(g=>{
-    const catColor={business:['#EEEDFE','#3C3489'],education:['#E1F5EE','#085041'],personal:['#EAF3DE','#27500A'],career:['#E6F1FB','#0C447C']};
-    const [bg,tc]=catColor[g.category]||['#EEEDFE','#3C3489'];
-    const el=document.createElement('div'); el.className='goal-card';
-    el.innerHTML=`
-      <div class="goal-tag" style="background:${bg};color:${tc}">${g.category.toUpperCase()}</div>
-      <div class="goal-title">${g.title}</div>
-      <div class="goal-desc">${g.desc}</div>
-      <div class="goal-progress-label"><span style="font-size:12px;color:#5F5E5A">Progress</span><span style="font-size:12px;font-weight:500">${g.progress}%</span></div>
-      <div class="goal-bar"><div class="goal-fill" style="width:${g.progress}%;background:${tc}"></div></div>
-      <div style="margin-bottom:14px">
-        <div style="font-size:11px;color:#888780;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.8px">HPF Roadmap Steps</div>
-        ${g.steps.map((s,si)=>`
-          <div class="step-card">
-            <div class="step-num ${s.status==='done'?'step-done':s.status==='active'?'step-active':'step-todo'}">${si+1}</div>
-            <div class="step-content">
-              <div class="step-title">${s.title}</div>
-              <div class="step-detail">${s.detail}</div>
-              <div class="step-domain" style="color:${D.find(d=>d.name===s.domain)?.col||'#888780'}">${s.domain}</div>
+function renderJournal() {
+  const entriesList = document.getElementById('journalEntriesList');
+  if (!entriesList) {
+    return;
+  }
+
+  const checkinsData = parseJSON(localStorage.getItem(STORAGE_KEYS.checkins), []);
+
+  if (checkinsData.length === 0) {
+    entriesList.innerHTML = '<div class="rt-empty">No journal entries yet. Start by adding a daily check-in!</div>';
+    return;
+  }
+
+  const sortedEntries = [...checkinsData].reverse();
+  entriesList.innerHTML = sortedEntries
+    .map((entry) => {
+      const dateObj = new Date(entry.date);
+      const formattedDate = new Intl.DateTimeFormat('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        weekday: 'short'
+      }).format(dateObj);
+
+      const categoryBars = DOMAIN_META
+        .map((domain) => {
+          const value = Number(entry.domains[domain.key]) || 0;
+          return `
+            <div class="journal-entry-category">
+              <span class="journal-category-label">${domain.key}</span>
+              <div class="journal-category-bar">
+                <div class="journal-category-fill" style="width: ${(value / 5) * 100}%; background-color: ${domain.color};"></div>
+              </div>
+              <span class="journal-category-value">${value}/5</span>
+            </div>`;
+        })
+        .join('');
+
+      const taskStatus = entry.goalAchieved
+        ? '<span class="journal-task-completed">✓ Completed</span>'
+        : '<span class="journal-task-pending">○ Pending</span>';
+
+      const taskSection = entry.goalTitle || entry.goalAchieved
+        ? `<div class="journal-task-section">
+             <strong>Task:</strong> ${entry.goalTitle || 'Untitled'}
+             ${taskStatus}
+           </div>`
+        : '';
+
+      const notesSection = entry.notes
+        ? `<div class="journal-notes-section">
+             <strong>Notes:</strong>
+             <p>${entry.notes}</p>
+           </div>`
+        : '';
+
+      return `
+        <article class="journal-entry-card">
+          <div class="journal-entry-date">${formattedDate}</div>
+          ${taskSection}
+          <div class="journal-categories-section">
+            <strong>Category Usage:</strong>
+            <div class="journal-categories-grid">${categoryBars}</div>
+          </div>
+          ${notesSection}
+        </article>`;
+    })
+    .join('');
+}
+
+function renderInsights() {
+  const usersEl = document.getElementById('insightsTotalUsers');
+  const activeEl = document.getElementById('insightsActiveNow');
+  const updatesEl = document.getElementById('insightsUpdatesToday');
+  const impactEl = document.getElementById('insightsImpactScore');
+  const barsEl = document.getElementById('insightsBars');
+  const categoryPerfEl = document.getElementById('insightsCategoryPerf');
+  const topCategoriesEl = document.getElementById('insightsTopCategories');
+
+  if (!usersEl || !activeEl || !updatesEl || !impactEl || !barsEl || !categoryPerfEl || !topCategoriesEl) {
+    return;
+  }
+
+  hydrateStateFromStorage();
+
+  // Update metrics
+  usersEl.textContent = formatNumber(state.totalUsers);
+  activeEl.textContent = formatNumber(state.activeNow);
+  updatesEl.textContent = formatNumber(state.updatesToday);
+  impactEl.textContent = String(state.impactScore) + '%';
+
+  // Render 7-day trend bars
+  const maxCount = Math.max(...state.goalsTrend, 1);
+  barsEl.innerHTML = state.goalsTrend
+    .map((value, index) => {
+      const heightPct = Math.round((value / maxCount) * 100);
+      return `
+        <div class="rt-bar-item">
+          <div class="rt-bar-track">
+            <div class="rt-bar-fill" style="height:${heightPct}%"></div>
+          </div>
+          <span>D${index + 1}</span>
+        </div>`;
+    })
+    .join('');
+
+  // Render category performance with colored bars
+  categoryPerfEl.innerHTML = state.domainCounts
+    .map((item) => {
+      const total = state.domainCounts.reduce((sum, d) => sum + d.count, 0);
+      const widthPct = total === 0 ? 0 : Math.round((item.count / total) * 100);
+      return `
+        <div class="insights-perf-item">
+          <div class="insights-perf-label">${item.label}</div>
+          <div class="insights-perf-bar">
+            <div class="insights-perf-fill" style="width: ${widthPct}%; background-color: ${item.color};"></div>
+          </div>
+          <span class="insights-perf-value">${item.count}</span>
+        </div>`;
+    })
+    .join('');
+
+  // Render top categories by count
+  const sortedCategories = [...state.domainCounts].sort((a, b) => b.count - a.count);
+  topCategoriesEl.innerHTML = sortedCategories.length === 0
+    ? '<div class="rt-empty">No category data yet.</div>'
+    : sortedCategories
+        .map((item) => `
+          <div class="rt-list-item">
+            <span class="rt-list-key">
+              <span class="rt-legend-dot" style="background:${item.color}"></span>
+              ${item.label}
+            </span>
+            <strong>${formatNumber(item.count)}</strong>
+          </div>`)
+        .join('');
+}
+
+function renderExploreDomains() {
+  const grid = document.getElementById('domainsGrid');
+  if (!grid) {
+    return;
+  }
+
+  hydrateStateFromStorage();
+
+  grid.innerHTML = DOMAIN_META
+    .map((domain) => {
+      const count = state.domainCounts.find(d => d.label === domain.label)?.count || 0;
+      const total = state.domainCounts.reduce((sum, d) => sum + d.count, 0);
+      const percentage = total === 0 ? 0 : Math.round((count / total) * 100);
+      const firstLetter = domain.key.charAt(0).toUpperCase();
+
+      return `
+        <article class="domain-card" onclick="showDomainDetail('${domain.key}')">
+          <div class="domain-letter">${firstLetter}</div>
+          <div class="domain-card-content">
+            <h3>${domain.label}</h3>
+            <p class="domain-abbrev">${domain.abbrev}</p>
+            <div class="domain-progress">
+              <div class="domain-progress-bar">
+                <div class="domain-progress-fill" style="width: ${percentage}%; background-color: ${domain.color};"></div>
+              </div>
+              <span class="domain-progress-text">${percentage}%</span>
             </div>
-          </div>`).join('')}
-      </div>
-      <div class="goal-domains">${g.domains.map(id=>{const dom=D.find(d=>d.id===id);return`<span class="domain-pill" style="background:${dom.bg};color:${dom.txt}">${dom.name}</span>`}).join('')}</div>`;
-    c.appendChild(el);
-  });
+          </div>
+        </article>`;
+    })
+    .join('');
 }
 
-function filterGoals(cat,btn){
-  document.querySelectorAll('#goals .tab-row .tab').forEach(t=>t.classList.remove('on'));
-  btn.classList.add('on');
-  buildGoalsList(cat);
-}
+function showDomainDetail(domainKey) {
+  const grid = document.getElementById('domainsGrid');
+  const detail = document.getElementById('domainDetail');
+  const header = document.getElementById('domainDetailHeader');
+  const desc = document.getElementById('domainDetailDesc');
+  const dimensions = document.getElementById('domainDimensions');
+  const ways = document.getElementById('domainWays');
+  const subdomains = document.getElementById('domainSubdomains');
 
-function buildW6(){
-  const g=document.getElementById('w6-fields');
-  if(!g)return; g.innerHTML='';
-  const ws=[
-    {q:'What',l:'Your focus today',ph:'e.g. Agency proposal, Study session, Morning routine'},
-    {q:'Where',l:'Context & place',ph:'e.g. Home office, University library'},
-    {q:'When',l:'Time & phase',ph:'e.g. Morning deep work, 9am–12pm'},
-    {q:'Who',l:'People involved',ph:'e.g. Solo, With team, Client call'},
-    {q:'Why',l:'Your intention',ph:'e.g. To close first client, To improve GPA'},
-    {q:'How',l:'Your approach',ph:'e.g. Focused blocks, Pomodoro, Collaborative'}
-  ];
-  ws.forEach(w=>{
-    const el=document.createElement('div'); el.className='w6-card';
-    el.innerHTML=`<div class="w6-q">${w.q}</div><div class="w6-label">${w.l}</div><input class="w6-inp" placeholder="${w.ph}">`;
-    g.appendChild(el);
-  });
-}
+  if (!grid || !detail || !header || !desc || !dimensions || !ways || !subdomains) {
+    return;
+  }
 
-function buildDomainRatings(){
-  const c=document.getElementById('domain-ratings');
-  if(!c)return; c.innerHTML='';
-  D.forEach((d,di)=>{
-    const row=document.createElement('div'); row.className='rating-row-item';
-    const stars=Array.from({length:5},(_,si)=>`<div class="rstar star ${si<3?'on':''}" onclick="rateDomain(${di},${si})">${si+1}</div>`).join('');
-    row.innerHTML=`<div class="rr-dot" style="background:${d.col}"></div><div class="rr-name">${d.name}</div><div class="rr-stars">${stars}</div><div class="rr-val" id="dv${di}">3</div>`;
-    c.appendChild(row);
-  });
-}
+  const domain = DOMAIN_META.find(d => d.key === domainKey);
+  const details = DOMAIN_DETAILS[domainKey];
 
-function rateDomain(di,si){
-  const stars=document.querySelectorAll(`.rstar[onclick^="rateDomain(${di}"]`);
-  stars.forEach((s,i)=>s.classList.toggle('on',i<=si));
-  document.getElementById('dv'+di).textContent=si+1;
-}
+  if (!domain || !details) {
+    return;
+  }
 
-function buildJournal(){
-  const c=document.getElementById('journal-timeline');
-  if(!c)return; c.innerHTML='';
-  JOURNAL_ENTRIES.forEach(e=>{
-    const el=document.createElement('div'); el.className='tl-item';
-    el.innerHTML=`<div class="tl-dot" style="background:${e.color}"></div><div class="tl-date">${e.date}</div><div class="tl-text">${e.text}</div>`;
-    c.appendChild(el);
-  });
-}
+  const firstLetter = domain.key.charAt(0).toUpperCase();
 
-function buildInsights(){
-  buildGD5('ins-gd5');
-  const c=document.getElementById('insights-list');
-  if(!c)return; c.innerHTML='';
-  INSIGHTS.forEach(it=>{
-    const el=document.createElement('div'); el.className='insight-card';
-    el.innerHTML=`<div class="insight-accent" style="background:${it.col}"></div><div><div class="insight-title">${it.title}</div><div class="insight-text">${it.text}</div><div class="insight-tag">${it.tag}</div></div>`;
-    c.appendChild(el);
-  });
-
-  const rg=document.getElementById('rec-sds');
-  if(!rg)return; rg.innerHTML='';
-  const recs=[
-    {di:0,sn:'Reflective',why:'Builds emotional self-awareness'},
-    {di:1,sn:'Empathetic',why:'Develops compassion and connection'},
-    {di:2,sn:'Holistic',why:'Strengthens spiritual perspective'},
-    {di:6,sn:'Purposeful',why:'Aligns action to meaning'},
-    {di:3,sn:'Strategic',why:'Channels your cognitive strength'},
-    {di:5,sn:'Transformative',why:'Deepens all 5 growth dimensions'}
-  ];
-  recs.forEach(r=>{
-    const d=D[r.di];
-    const el=document.createElement('div');
-    el.style.cssText=`background:${d.bg};border:0.5px solid ${d.bdr};border-radius:10px;padding:12px 14px`;
-    el.innerHTML=`<div style="font-size:10px;font-weight:500;color:${d.txt};margin-bottom:4px">${d.name}</div><div style="font-size:13px;font-weight:500;color:${d.txt};margin-bottom:4px">${r.sn}</div><div style="font-size:11px;color:${d.col}">${r.why}</div>`;
-    rg.appendChild(el);
-  });
-}
-
-function buildExploreDomains(){
-  const c=document.getElementById('exp-domain-cards');
-  if(!c)return; c.innerHTML='';
-  D.forEach((d,i)=>{
-    const el=document.createElement('div'); el.className='domain-card';
-    el.innerHTML=`<div class="domain-id" style="background:${d.bg};color:${d.txt}">${d.id}</div><div class="domain-name">${d.name}</div><div class="domain-code">${d.code}</div><div class="domain-bar"><div class="domain-fill" style="width:${d.prog}%;background:${d.col}"></div></div><div class="domain-score" style="color:${d.col}">${d.prog}%</div>`;
-    el.onclick=()=>showExpandDomain(i,el);
-    c.appendChild(el);
-  });
-}
-
-let selExpCard=null;
-function showExpandDomain(i,card){
-  if(selExpCard){selExpCard.classList.remove('active-domain');}
-  card.classList.add('active-domain');
-  selExpCard=card;
-  const d=D[i];
-  const detail=document.getElementById('exp-detail');
-  detail.innerHTML=`
-    <div class="sd-expand">
-      <div class="sd-expand-header">
-        <div class="domain-id" style="background:${d.bg};color:${d.txt};width:40px;height:40px;border-radius:10px;font-size:15px">${d.id}</div>
-        <div style="flex:1">
-          <div style="font-size:16px;font-weight:500;margin-bottom:2px">${d.name} (${d.code})</div>
-          <div style="font-size:12px;color:#5F5E5A">${d.desc}</div>
-        </div>
-        <span class="tag" style="background:${d.bg};color:${d.txt}">7 subdomains</span>
-      </div>
-      <div class="sd-grid">
-        ${d.subs.map(s=>`
-          <div class="sd-item">
-            <div class="sd-item-name">${s.n}</div>
-            <div class="sd-item-def">${s.d}</div>
-            <div class="gd-dots">${GDL.map((g,gi)=>`<div class="gd-dot" title="${g}" style="${s.gd[gi]?'background:'+GDC[gi]:'background:#ede9e0'}"></div>`).join('')}</div>
-            <div style="display:flex;gap:4px;margin-top:4px;flex-wrap:wrap">${GDL.map((g,gi)=>s.gd[gi]?`<span style="font-size:9px;background:${GDB[gi]};color:${GDC[gi]};padding:1px 5px;border-radius:8px">${g.substring(0,3)}</span>`:'').join('')}</div>
-          </div>`).join('')}
+  header.innerHTML = `
+    <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 12px;">
+      <div class="domain-letter-large" style="background-color: ${domain.color};">${firstLetter}</div>
+      <div>
+        <h2>${domain.label} (${domain.abbrev})</h2>
       </div>
     </div>`;
-  detail.scrollIntoView({behavior:'smooth',block:'nearest'});
+
+  desc.innerHTML = `<p>${details.description}</p>`;
+
+  dimensions.innerHTML = `
+    <div class="dimensions-list">
+      ${details.dimensions
+        .map(
+          (dim, idx) => `
+        <div class="dimension-item" style="border-left: 4px solid ${domain.color};">
+          <div class="dimension-level">Level ${idx + 1}: ${dim.level}</div>
+          <p>${dim.desc}</p>
+        </div>`
+        )
+        .join('')}
+    </div>`;
+
+  ways.innerHTML = `
+    <div class="ways-list">
+      ${details.ways
+        .map(
+          (way) => `
+        <div class="way-item">
+          <div class="way-title">${way.way}</div>
+          <p>${way.desc}</p>
+        </div>`
+        )
+        .join('')}
+    </div>`;
+
+  subdomains.innerHTML = `
+      ${details.subdomains
+        .map(
+          (sub) => `
+        <div class="subdomain-item">
+          <h4>${sub.name}</h4>
+          <p>${sub.desc}</p>
+        </div>`
+        )
+        .join('')}
+    `;
+
+  grid.style.display = 'none';
+  detail.style.display = 'block';
 }
 
-function buildMatrix(){
-  const w=document.getElementById('matrix-table');
-  if(!w)return;
-  let h='<table class="matrix-tbl"><thead><tr><th>From/To</th>';
-  D.forEach(d=>h+=`<th>${d.id}</th>`);
-  h+='</tr></thead><tbody>';
-  D.forEach((d,i)=>{
-    h+=`<tr><td class="rh">${d.id} ${d.name}</td>`;
-    DM[i].forEach(v=>h+=`<td>${v?`<span class="m1">1</span>`:`<span class="m0">·</span>`}</td>`);
-    h+='</tr>';
-  });
-  h+='</tbody></table>';
-  w.innerHTML=h;
+function closeDomainDetail() {
+  const grid = document.getElementById('domainsGrid');
+  const detail = document.getElementById('domainDetail');
 
-  const sdw=document.getElementById('sd-matrix-table');
-  if(!sdw)return;
-  let sh='<table class="matrix-tbl"><thead><tr><th>Subdomain</th><th>Domain</th>';
-  GDL.forEach(g=>sh+=`<th>${g.substring(0,3)}</th>`);
-  sh+='</tr></thead><tbody>';
-  D.forEach(d=>d.subs.forEach(s=>{
-    sh+=`<tr><td style="text-align:left;font-weight:500">${s.n}</td><td style="text-align:left;color:#888780">${d.name}</td>`;
-    s.gd.forEach((v,gi)=>sh+=`<td>${v?`<span style="color:${GDC[gi]};font-weight:500;font-size:13px">✓</span>`:`<span style="color:rgba(15,14,12,0.15)">·</span>`}</td>`);
-    sh+='</tr>';
-  }));
-  sh+='</tbody></table>';
-  sdw.innerHTML=sh;
+  if (grid && detail) {
+    grid.style.display = 'grid';
+    detail.style.display = 'none';
+  }
 }
 
-function buildGuide(sit){
-  const g=GUIDE_CONTENT[sit||'business'];
-  const c=document.getElementById('guide-content');
-  if(!c)return;
-  c.innerHTML=`
-    <div class="card" style="margin-bottom:20px">
-      <div style="font-size:18px;font-weight:500;font-family:'Playfair Display',serif;margin-bottom:6px">${g.title}</div>
-      <div style="font-size:13px;color:#5F5E5A;line-height:1.7;margin-bottom:20px">${g.desc}</div>
-      ${g.steps.map((s,i)=>{
-        const dom=D.find(d=>d.id===s.domain);
-        return`<div class="step-card">
-          <div style="width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;background:${dom.bg};color:${dom.txt};flex-shrink:0">${s.domain}</div>
-          <div>
-            <div style="font-size:13px;font-weight:500;margin-bottom:3px">${s.title}</div>
-            <div style="font-size:12px;color:#5F5E5A;line-height:1.6">${s.detail}</div>
-            <div style="font-size:10px;color:${dom.col};margin-top:4px;font-weight:500">${dom.name} — ${dom.code}</div>
-          </div>
-        </div>`;
-      }).join('')}
+function renderAll() {
+  hydrateStateFromStorage();
+  renderStats();
+  renderPie();
+  renderGoalBars();
+  renderDomainUsageList();
+  renderGoalsAchievedList();
+  renderMyGoals();
+  renderProfileView();
+  if (currentViewName === 'my-goals') {
+    renderMyGoalsViewPage();
+  }
+  updateTimestamp();
+}
+
+function renderMyGoals() {
+  const container = document.getElementById('myGoalsContainer');
+  if (!container) {
+    return;
+  }
+
+  const allGoals = getStoredGoals();
+
+  if (allGoals.length === 0) {
+    container.innerHTML = `
+      <div class="goals-empty-state">
+        <p>No goals set yet. Add a goal in My Goals or log a completed task in Daily Check-in.</p>
+      </div>`;
+    return;
+  }
+
+  const completed = allGoals.filter(g => g.achieved);
+  const pending = allGoals.filter(g => !g.achieved);
+
+  container.innerHTML = `
+    <div class="goals-summary">
+      <div class="goals-stat">
+        <span class="goals-stat-label">Total</span>
+        <span class="goals-stat-value">${allGoals.length}</span>
+      </div>
+      <div class="goals-stat">
+        <span class="goals-stat-label">Completed</span>
+        <span class="goals-stat-value completed">${completed.length}</span>
+      </div>
+      <div class="goals-stat">
+        <span class="goals-stat-label">Pending</span>
+        <span class="goals-stat-value pending">${pending.length}</span>
+      </div>
     </div>
-    <button class="btn btn-primary" onclick="openModal()">Start tracking this goal</button>`;
+    <div class="goals-list">
+      ${pending.length > 0 ? `
+        <div class="goals-group">
+          <h5>Active Goals</h5>
+          ${pending.slice(0, 3).map(goal => `
+            <div class="goal-item active">
+              <span class="goal-status">◇</span>
+              <span class="goal-title">${goal.title || 'Untitled goal'}</span>
+            </div>
+          `).join('')}
+          ${pending.length > 3 ? `<p class="goals-more">+${pending.length - 3} more</p>` : ''}
+        </div>
+      ` : ''}
+      ${completed.length > 0 ? `
+        <div class="goals-group">
+          <h5>Recently Completed</h5>
+          ${completed.slice(0, 3).map(goal => `
+            <div class="goal-item completed">
+              <span class="goal-status">✓</span>
+              <span class="goal-title">${goal.title || 'Untitled goal'}</span>
+            </div>
+          `).join('')}
+        </div>
+      ` : ''}
+    </div>`;
 }
 
-let currentSit='business';
-function selectSit(sit,btn){
-  document.querySelectorAll('#guide .cat-btn').forEach(b=>b.classList.remove('sel'));
-  btn.classList.add('sel');
-  currentSit=sit;
-  buildGuide(sit);
+function renderMyGoalsViewPage() {
+  const container = document.getElementById('myGoalsContainerMain');
+  if (!container) {
+    return;
+  }
+
+  const allGoals = getStoredGoals();
+
+  if (allGoals.length === 0) {
+    container.innerHTML = `
+      <div class="goals-empty-state">
+        <p>No goals set yet. Add your first goal above to start tracking progress.</p>
+      </div>`;
+    return;
+  }
+
+  const completed = allGoals.filter(g => g.achieved);
+  const pending = allGoals.filter(g => !g.achieved);
+
+  const renderGoalCard = (goal) => {
+    const title = goal.title || 'Untitled goal';
+    const statusText = goal.achieved ? 'Completed' : 'In progress';
+    const dateText = goal.achievedAt
+      ? `Completed ${new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric' }).format(new Date(goal.achievedAt))}`
+      : goal.createdAt
+        ? `Created ${new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric' }).format(new Date(goal.createdAt))}`
+        : 'Track this goal until it is complete';
+
+    return `
+      <div class="goal-card ${goal.achieved ? 'completed' : 'active'}">
+        <div class="goal-card-main">
+          <div class="goal-card-heading">
+            <span class="goal-status">${goal.achieved ? '✓' : '◇'}</span>
+            <div>
+              <h4 class="goal-card-title">${title}</h4>
+              <p class="goal-card-meta">${statusText} · ${dateText}</p>
+            </div>
+          </div>
+        </div>
+        <div class="goal-card-actions">
+          <button type="button" class="goal-action-btn" data-goal-action="toggle" data-goal-id="${goal.id}">${goal.achieved ? 'Reopen' : 'Mark complete'}</button>
+          <button type="button" class="goal-action-btn secondary" data-goal-action="remove" data-goal-id="${goal.id}">Remove</button>
+        </div>
+      </div>`;
+  };
+
+  container.innerHTML = `
+    <div class="goals-summary">
+      <div class="goals-stat">
+        <span class="goals-stat-label">Total</span>
+        <span class="goals-stat-value">${allGoals.length}</span>
+      </div>
+      <div class="goals-stat">
+        <span class="goals-stat-label">Completed</span>
+        <span class="goals-stat-value completed">${completed.length}</span>
+      </div>
+      <div class="goals-stat">
+        <span class="goals-stat-label">Pending</span>
+        <span class="goals-stat-value pending">${pending.length}</span>
+      </div>
+    </div>
+    <div class="goals-list">
+      ${pending.length > 0 ? `
+        <div class="goals-group">
+          <h5>Active Goals</h5>
+          ${pending.map(renderGoalCard).join('')}
+        </div>
+      ` : ''}
+      ${completed.length > 0 ? `
+        <div class="goals-group">
+          <h5>Completed Goals</h5>
+          ${completed.map(renderGoalCard).join('')}
+        </div>
+      ` : ''}
+    </div>`;
 }
 
-function toggleSidebar(forceOpen){
-  const shouldOpen=typeof forceOpen==='boolean'
+function addGoalFromInput() {
+  const goalInput = document.getElementById('newGoalInput');
+  if (!goalInput) {
+    return;
+  }
+
+  const title = goalInput.value.trim();
+  if (!title) {
+    goalInput.focus();
+    return;
+  }
+
+  const goals = getStoredGoals();
+  goals.push(createGoalRecord(title));
+  saveGoals(goals);
+  goalInput.value = '';
+  renderAll();
+  goalInput.focus();
+}
+
+function toggleGoalCompletion(goalId) {
+  const goals = getStoredGoals();
+  const goal = goals.find((item) => item.id === goalId);
+  if (!goal) {
+    return;
+  }
+
+  goal.achieved = !goal.achieved;
+  goal.achievedAt = goal.achieved ? `${getTodayISODate()}T00:00:00Z` : null;
+  saveGoals(goals);
+  renderAll();
+}
+
+function removeGoal(goalId) {
+  const goals = getStoredGoals().filter((goal) => goal.id !== goalId);
+  saveGoals(goals);
+  renderAll();
+}
+
+function handleGoalActionClick(event) {
+  const button = event.target.closest('[data-goal-action]');
+  if (!button) {
+    return;
+  }
+
+  const goalId = button.getAttribute('data-goal-id');
+  const goalAction = button.getAttribute('data-goal-action');
+  if (!goalId || !goalAction) {
+    return;
+  }
+
+  if (goalAction === 'toggle') {
+    toggleGoalCompletion(goalId);
+    return;
+  }
+
+  if (goalAction === 'remove') {
+    removeGoal(goalId);
+  }
+}
+
+function wireGoalSectionControls() {
+  if (goalsSectionControlsWired) {
+    return;
+  }
+
+  goalsSectionControlsWired = true;
+
+  const addGoalButton = document.getElementById('addGoalButton');
+  const goalInput = document.getElementById('newGoalInput');
+  const goalContainer = document.getElementById('myGoalsContainerMain');
+
+  if (addGoalButton) {
+    addGoalButton.addEventListener('click', addGoalFromInput);
+  }
+
+  if (goalInput) {
+    goalInput.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        addGoalFromInput();
+      }
+    });
+  }
+
+  if (goalContainer) {
+    goalContainer.addEventListener('click', handleGoalActionClick);
+  }
+}
+
+function renderHPFGuideViewPage() {
+  const scenarioButtons = document.querySelectorAll('.scenario-btn');
+  const roadmapContainer = document.getElementById('roadmapContainer');
+  
+  scenarioButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const scenario = btn.getAttribute('data-scenario');
+      showScenarioRoadmap(scenario);
+      
+      // Update active state
+      scenarioButtons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    });
+  });
+}
+
+function showScenarioRoadmap(scenario) {
+  const roadmapContainer = document.getElementById('roadmapContainer');
+  const roadmapTitle = document.getElementById('roadmapTitle');
+  const roadmapIntro = document.getElementById('roadmapIntro');
+  
+  const scenarios = {
+    business: {
+      title: 'Designer → Digital Agency Founder',
+      intro: 'You have design skills. Now you need business acumen, systems thinking, and the courage to decide and perform.'
+    },
+    student: {
+      title: 'Student → Academic Excellence',
+      intro: 'Balancing coursework, projects, and personal growth requires strategic learning and consistent execution.'
+    },
+    time: {
+      title: 'Chaos → Time Mastery',
+      intro: 'Transform how you manage your time by observing patterns, understanding priorities, and building sustainable routines.'
+    },
+    career: {
+      title: 'Professional → Industry Leader',
+      intro: 'Advance your career by developing strategic thinking, decisive action, and continuous learning.'
+    },
+    health: {
+      title: 'Struggle → Wellness Champion',
+      intro: 'Build lasting health habits by understanding your body, making informed decisions, and consistently performing.'
+    },
+    relationships: {
+      title: 'Distant → Deeply Connected',
+      intro: 'Transform relationships by observing emotional patterns, understanding needs, and communicating authentically.'
+    }
+  };
+  
+  const selected = scenarios[scenario] || scenarios.business;
+  roadmapTitle.textContent = selected.title;
+  roadmapIntro.textContent = selected.intro;
+  roadmapContainer.style.display = 'block';
+  
+  // Scroll to roadmap
+  setTimeout(() => {
+    roadmapContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 100);
+}
+
+function startTrackingGoal() {
+  showView('my-goals');
+  
+  setTimeout(() => {
+    const goalInput = document.getElementById('newGoalInput');
+    if (goalInput) {
+      goalInput.focus();
+      goalInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }, 300);
+}
+
+function buildCheckinDomainInputs() {
+  const grid = document.getElementById('domainCheckinGrid');
+  if (!grid) {
+    return;
+  }
+
+  grid.innerHTML = DOMAIN_META.map((domain) => `
+    <div class="w6-card">
+      <div class="w6-q">Category</div>
+      <div class="w6-label">${domain.label}</div>
+      <input class="w6-inp" type="number" min="0" max="5" value="0" data-domain-input="${domain.key}">
+    </div>
+  `).join('');
+}
+
+function getCheckinDomainValues() {
+  const values = {};
+  DOMAIN_META.forEach((domain) => {
+    const input = document.querySelector(`[data-domain-input="${domain.key}"]`);
+    const raw = Number(input ? input.value : 0);
+    values[domain.key] = clamp(Number.isFinite(raw) ? raw : 0, 0, 5);
+  });
+  return values;
+}
+
+function saveDailyCheckin() {
+  const usersData = parseJSON(localStorage.getItem(STORAGE_KEYS.users), {});
+  const domainsData = parseJSON(localStorage.getItem(STORAGE_KEYS.domains), {});
+  const goalsData = parseJSON(localStorage.getItem(STORAGE_KEYS.goals), []);
+  const checkinsData = parseJSON(localStorage.getItem(STORAGE_KEYS.checkins), []);
+
+  const dateInput = document.getElementById('checkinDate');
+  const goalTitleInput = document.getElementById('goalTitleInput');
+  const goalAchievedInput = document.getElementById('goalAchievedInput');
+  const notesInput = document.getElementById('checkinNotes');
+  const status = document.getElementById('checkinStatus');
+
+  const checkinDate = dateInput && dateInput.value ? dateInput.value : getTodayISODate();
+  const goalTitle = goalTitleInput ? goalTitleInput.value.trim() : '';
+  const goalAchieved = Boolean(goalAchievedInput && goalAchievedInput.checked);
+  const notes = notesInput ? notesInput.value.trim() : '';
+  const domainValues = getCheckinDomainValues();
+
+  let totalActivity = 0;
+  DOMAIN_META.forEach((domain) => {
+    const value = Number(domainValues[domain.key]) || 0;
+    domainsData[domain.key] = (Number(domainsData[domain.key]) || 0) + value;
+    totalActivity += value;
+  });
+
+  usersData.totalUsers = Math.max(1, Number(usersData.totalUsers) || 0);
+  usersData.activeNow = totalActivity > 0 ? 1 : 0;
+  usersData.updatesToday = (Number(usersData.updatesToday) || 0) + totalActivity;
+
+  if (goalTitle || goalAchieved) {
+    goalsData.push(createGoalRecord(goalTitle || 'Untitled task', goalAchieved, goalAchieved ? `${checkinDate}T00:00:00Z` : null, checkinDate));
+  }
+
+  checkinsData.push({
+    date: checkinDate,
+    domains: domainValues,
+    goalTitle,
+    goalAchieved,
+    notes
+  });
+
+  localStorage.setItem(STORAGE_KEYS.users, JSON.stringify(usersData));
+  localStorage.setItem(STORAGE_KEYS.domains, JSON.stringify(domainsData));
+  localStorage.setItem(STORAGE_KEYS.goals, JSON.stringify(goalsData));
+  localStorage.setItem(STORAGE_KEYS.checkins, JSON.stringify(checkinsData));
+
+  if (status) {
+    status.textContent = 'Daily check-in saved successfully.';
+  }
+
+  renderAll();
+}
+
+function toggleSidebar(forceOpen) {
+  const shouldOpen = typeof forceOpen === 'boolean'
     ? forceOpen
     : !document.body.classList.contains('sidebar-open');
-  document.body.classList.toggle('sidebar-open',shouldOpen);
+  document.body.classList.toggle('sidebar-open', shouldOpen);
 
-  const toggleBtn=document.getElementById('mobile-nav-toggle');
-  if(toggleBtn)toggleBtn.setAttribute('aria-expanded',String(shouldOpen));
+  const toggleBtn = document.getElementById('mobile-nav-toggle');
+  if (toggleBtn) {
+    toggleBtn.setAttribute('aria-expanded', String(shouldOpen));
+  }
 }
 
-function toggleDesktopSidebar(forceOpen){
-  if(window.innerWidth<=900)return;
+function toggleDesktopSidebar(forceOpen) {
+  if (window.innerWidth <= 900) {
+    return;
+  }
 
-  const shouldOpen=typeof forceOpen==='boolean'
+  const shouldOpen = typeof forceOpen === 'boolean'
     ? forceOpen
     : document.body.classList.contains('sidebar-desktop-closed');
-  document.body.classList.toggle('sidebar-desktop-closed',!shouldOpen);
+  document.body.classList.toggle('sidebar-desktop-closed', !shouldOpen);
 
-  const desktopToggle=document.getElementById('desktop-nav-toggle');
-  if(desktopToggle)desktopToggle.setAttribute('aria-expanded',String(shouldOpen));
+  const desktopToggle = document.getElementById('desktop-nav-toggle');
+  if (desktopToggle) {
+    desktopToggle.setAttribute('aria-expanded', String(shouldOpen));
+  }
 }
 
-window.addEventListener('resize',()=>{
-  if(window.innerWidth>900)toggleSidebar(false);
-  if(window.innerWidth<=900){
+function wireSidebarNavState() {
+  const items = document.querySelectorAll('.sidebar .nav-item');
+  items.forEach((item) => {
+    item.addEventListener('click', () => {
+      items.forEach((node) => node.classList.remove('active'));
+      item.classList.add('active');
+      const viewName = item.getAttribute('data-view');
+      if (viewName) {
+        showView(viewName);
+      }
+      if (window.innerWidth <= 900) {
+        toggleSidebar(false);
+      }
+    });
+  });
+}
+
+window.addEventListener('resize', () => {
+  if (window.innerWidth > 900) {
+    toggleSidebar(false);
+  }
+  if (window.innerWidth <= 900) {
     document.body.classList.remove('sidebar-desktop-closed');
-    const desktopToggle=document.getElementById('desktop-nav-toggle');
-    if(desktopToggle)desktopToggle.setAttribute('aria-expanded','true');
+    const desktopToggle = document.getElementById('desktop-nav-toggle');
+    if (desktopToggle) {
+      desktopToggle.setAttribute('aria-expanded', 'true');
+    }
   }
 });
 
-// ══════════════ NAV ══════════════
-function nav(id,btn){
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  if(btn)btn.classList.add('active');
+function startDashboard() {
+  wireSidebarNavState();
+  wireGoalSectionControls();
+  buildCheckinDomainInputs();
+  const dateInput = document.getElementById('checkinDate');
+  if (dateInput && !dateInput.value) {
+    dateInput.value = getTodayISODate();
+  }
+  showView('dashboard');
+  renderAll();
+  setInterval(renderAll, 5000);
 
-  if(id==='goals')buildGoalsList('all');
-  if(id==='insights')buildInsights();
-  if(id==='explore')buildExploreDomains();
-  if(id==='matrix')buildMatrix();
-  if(id==='guide')buildGuide(currentSit);
-  if(id==='journal')buildJournal();
-  if(id==='profile')buildProfile();
+// ==================== MATRIX GENERATION ====================
 
-  if(window.innerWidth<=900)toggleSidebar(false);
-}
+// Domain Interaction Matrix - Shows how each domain flows into others
+const DOMAIN_INTERACTION_MATRIX = [
+  // O  U  T  D  P  E  R
+  [ 0, 1, 1, 0, 0, 0, 0 ],  // Observing → Understanding, Thinking
+  [ 0, 0, 1, 1, 0, 0, 0 ],  // Understanding → Thinking, Deciding
+  [ 0, 0, 0, 1, 0, 0, 0 ],  // Thinking → Deciding
+  [ 0, 0, 0, 0, 1, 0, 0 ],  // Deciding → Performing
+  [ 0, 0, 0, 0, 0, 1, 0 ],  // Performing → Experiencing
+  [ 1, 1, 1, 0, 0, 0, 1 ],  // Experiencing → Observing, Understanding, Thinking, Repeating
+  [ 1, 0, 0, 0, 1, 0, 0 ]   // Repeating → Observing, Performing
+];
 
-// ══════════════ MODAL ══════════════
-function openModal(){
-  document.getElementById('modal').classList.add('open');
-  document.querySelectorAll('#modal-cats .cat-btn').forEach(btn=>{
-    btn.onclick=()=>{
-      document.querySelectorAll('#modal-cats .cat-btn').forEach(b=>b.classList.remove('sel'));
-      btn.classList.add('sel');
-    };
+// Subdomain to Growth Dimensions mapping
+const SUBDOMAIN_DIMENSION_MAP = [
+  { subdomain: 'Perceptual', dimensions: ['Awareness', 'Understanding', 'Integration'] },
+  { subdomain: 'Continuous', dimensions: ['Awareness', 'Application', 'Mastery'] },
+  { subdomain: 'Analytical', dimensions: ['Understanding', 'Application', 'Integration'] },
+  { subdomain: 'Reflective', dimensions: ['Understanding', 'Integration', 'Mastery'] },
+  { subdomain: 'External', dimensions: ['Awareness', 'Application', 'Integration'] },
+  { subdomain: 'Internal', dimensions: ['Awareness', 'Understanding', 'Mastery'] },
+  { subdomain: 'Active', dimensions: ['Application', 'Integration', 'Mastery'] }
+];
+
+function renderDomainInteractionMatrix() {
+  const container = document.getElementById('matrix-table');
+  if (!container) return;
+
+  const domains = DOMAIN_META.map(d => d.key);
+  let html = '<table class="matrix-table" style="width:100%; border-collapse: collapse; font-size: 12px;">';
+  
+  // Header row
+  html += '<tr><th style="border: 1px solid #ddd; padding: 8px; background: #f5f5f5; text-align: center; font-weight: 600;">Domain</th>';
+  domains.forEach(d => {
+    html += `<th style="border: 1px solid #ddd; padding: 8px; background: #f5f5f5; text-align: center; font-weight: 600; width: 50px;">${d.substring(0, 3)}</th>`;
   });
-}
-function closeModal(){ document.getElementById('modal').classList.remove('open'); }
-function saveGoal(){
-  const title=document.getElementById('goal-title-inp').value||'New Goal';
-  gainUserXP(5);
-  alert(`Goal "${title}" created! Your HPF roadmap has been generated. Navigate to My Goals to see your personalised step-by-step plan.`);
-  closeModal();
-  nav('goals',null);
-}
-document.getElementById('modal').onclick=function(e){if(e.target===this)closeModal();};
+  html += '</tr>';
 
-// ══════════════ INIT ══════════════
-const hasVisitedLanding=localStorage.getItem('growHPFLandingVisited')==='true';
-const isLoggedIn=sessionStorage.getItem('growHPFLoggedIn')==='true' || localStorage.getItem('growHPFLoggedIn')==='true';
+  // Data rows
+  DOMAIN_INTERACTION_MATRIX.forEach((row, rowIdx) => {
+    const rowDomain = domains[rowIdx];
+    const domainColor = DOMAIN_META[rowIdx].color;
+    html += `<tr><td style="border: 1px solid #ddd; padding: 8px; background: ${domainColor}20; font-weight: 600;">${rowDomain}</td>`;
+    
+    row.forEach((value) => {
+      const bgColor = value === 1 ? '#0f6e56' : '#f5f5f5';
+      const textColor = value === 1 ? '#fff' : '#999';
+      html += `<td style="border: 1px solid #ddd; padding: 8px; text-align: center; background: ${bgColor}; color: ${textColor}; font-weight: ${value === 1 ? 600 : 400};">${value}</td>`;
+    });
+    html += '</tr>';
+  });
 
-if(!hasVisitedLanding || !isLoggedIn){
-  window.location.href='landingpage.html';
+  html += '</table>';
+  container.innerHTML = html;
 }
 
-hydrateUserProfileFromSession();
-buildGD5('dash-gd5');
-buildCycle();
-buildDashGoals();
-buildTasks();
-buildW6();
-buildDomainRatings();
-buildGuide('business');
-renderSidebarUser();
-buildProfile();
+function renderSubdomainDimensionMatrix() {
+  const container = document.getElementById('sd-matrix-table');
+  if (!container) return;
+
+  const dimensions = ['Awareness', 'Understanding', 'Application', 'Integration', 'Mastery'];
+  let html = '<table class="matrix-table" style="width:100%; border-collapse: collapse; font-size: 12px;">';
+  
+  // Header row
+  html += '<tr><th style="border: 1px solid #ddd; padding: 8px; background: #f5f5f5; text-align: center; font-weight: 600;">Subdomain</th>';
+  dimensions.forEach(d => {
+    html += `<th style="border: 1px solid #ddd; padding: 8px; background: #f5f5f5; text-align: center; font-weight: 600;">${d}</th>`;
+  });
+  html += '</tr>';
+
+  // Data rows
+  SUBDOMAIN_DIMENSION_MAP.forEach((item) => {
+    html += `<tr><td style="border: 1px solid #ddd; padding: 8px; background: #534AB720; font-weight: 600;">${item.subdomain}</td>`;
+    
+    dimensions.forEach((dim) => {
+      const hasDim = item.dimensions.includes(dim);
+      const bgColor = hasDim ? '#534AB7' : '#f5f5f5';
+      const textColor = hasDim ? '#fff' : '#999';
+      const checkmark = hasDim ? '✓' : '−';
+      html += `<td style="border: 1px solid #ddd; padding: 8px; text-align: center; background: ${bgColor}; color: ${textColor}; font-weight: ${hasDim ? 600 : 400};">${checkmark}</td>`;
+    });
+    html += '</tr>';
+  });
+
+  html += '</table>';
+  container.innerHTML = html;
+}
+
+function initializeCategoryMatrixView() {
+  renderDomainInteractionMatrix();
+  renderSubdomainDimensionMatrix();
+}
+}
+
+startDashboard();
