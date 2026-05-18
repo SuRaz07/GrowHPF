@@ -1401,41 +1401,10 @@ window.addEventListener('resize', () => {
   }
 });
 
-// Inject demo data for testing charts (remove after testing)
-function injectDemoData() {
-  const demoGoals = [];
-  
-  // Generate 7 days of demo data with varying completions
-  const today = new Date();
-  const daysData = [3, 2, 5, 1, 4, 2, 6]; // Completions for past 7 days
-  
-  daysData.forEach((count, dayIndex) => {
-    for (let i = 0; i < count; i++) {
-      const date = new Date(today);
-      date.setDate(date.getDate() - (6 - dayIndex));
-      date.setHours(Math.floor(Math.random() * 24), Math.floor(Math.random() * 60), 0);
-      
-      demoGoals.push({
-        id: `demo_${dayIndex}_${i}`,
-        title: `Demo Goal ${dayIndex}-${i}`,
-        domain: ['observe', 'understand', 'Think', 'Decide', 'perfrom', 'Experience', 'Repeat'][dayIndex],
-        achieved: true,
-        achievedAt: date.toISOString()
-      });
-    }
-  });
-  
-  // Use the correct storage key format
-  localStorage.setItem(STORAGE_KEYS.goals, JSON.stringify(demoGoals));
-}
-
 function startDashboard() {
   if (!ensureAuthenticated()) {
     return;
   }
-
-  // Uncomment the next line to inject demo data for chart testing
-  injectDemoData();
 
   wireSidebarNavState();
   wireGoalSectionControls();
