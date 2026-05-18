@@ -1,26 +1,39 @@
+function getActiveUserScope() {
+  const email = (localStorage.getItem('Think GrowUserEmail') || '').trim().toLowerCase();
+  if (!email) {
+    return 'guest';
+  }
+
+  // Convert email to a stable, storage-safe scope segment.
+  const normalized = email.replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+  return normalized || 'guest';
+}
+
+const ACTIVE_USER_SCOPE = getActiveUserScope();
+
 const STORAGE_KEYS = {
-  users: 'growHPFUserMetrics',
-  domains: 'growHPFDomainUsage',
-  goals: 'growHPFGoalAchievements',
-  checkins: 'growHPFDailyCheckins'
+  users: `Think Grow:${ACTIVE_USER_SCOPE}:userMetrics`,
+  domains: `Think Grow:${ACTIVE_USER_SCOPE}:domainUsage`,
+  goals: `Think Grow:${ACTIVE_USER_SCOPE}:goalAchievements`,
+  checkins: `Think Grow:${ACTIVE_USER_SCOPE}:dailyCheckins`
 };
 
 const DOMAIN_META = [
-  { key: 'Observing', label: 'Observing', abbrev: 'PCAREIA', color: '#ff7a59' },
-  { key: 'Understanding', label: 'Understanding', abbrev: 'CECIARI', color: '#00a37a' },
-  { key: 'Thinking', label: 'Thinking', abbrev: 'LCCASAH', color: '#ffb020' },
-  { key: 'Deciding', label: 'Deciding', abbrev: 'RIICETS', color: '#2979ff' },
-  { key: 'Performing', label: 'Performing', abbrev: 'ECCASSE', color: '#8b5cf6' },
-  { key: 'Experiencing', label: 'Experiencing', abbrev: 'SCESCLT', color: '#ef4444' },
-  { key: 'Repeating', label: 'Repeating', abbrev: 'IRACSHP', color: '#0ea5a4' }
+  { key: 'observe', label: 'observe', abbrev: 'PCAREIA', color: '#ff7a59' },
+  { key: 'understand', label: 'understand', abbrev: 'CECIARI', color: '#00a37a' },
+  { key: 'Think', label: 'Think', abbrev: 'LCCASAH', color: '#ffb020' },
+  { key: 'Decide', label: 'Decide', abbrev: 'RIICETS', color: '#2979ff' },
+  { key: 'perfrom', label: 'perfrom', abbrev: 'ECCASSE', color: '#8b5cf6' },
+  { key: 'Experience', label: 'Experience', abbrev: 'SCESCLT', color: '#ef4444' },
+  { key: 'Repeat', label: 'Repeat', abbrev: 'IRACSHP', color: '#0ea5a4' }
 ];
 
 const DOMAIN_DETAILS = {
-  Observing: {
-    description: 'Foundation of human interaction — gathering information through perceptual and cognitive lenses. Observing is the fundamental capability to notice, attend to, and make sense of what is happening in the world and within ourselves. It involves activating our senses, directing our attention, and becoming aware of subtle nuances in our environment and inner experience.',
+  observe: {
+    description: 'Foundation of human interaction — gathering information through perceptual and cognitive lenses. observe is the fundamental capability to notice, attend to, and make sense of what is happening in the world and within ourselves. It involves activating our senses, directing our attention, and becoming aware of subtle nuances in our environment and inner experience.',
     dimensions: [
       { level: 'Awareness', desc: 'Beginning to notice sensory input and environmental changes' },
-      { level: 'Understanding', desc: 'Recognizing patterns and connections in observations' },
+      { level: 'understand', desc: 'Recognizing patterns and connections in observations' },
       { level: 'Application', desc: 'Using observations to inform daily decisions and interactions' },
       { level: 'Integration', desc: 'Integrating internal and external awareness into unified perception' },
       { level: 'Mastery', desc: 'Developing keen, nuanced perception across multiple contexts' }
@@ -43,40 +56,40 @@ const DOMAIN_DETAILS = {
       { name: 'Active', desc: 'Engaged and intentional focused attention.' }
     ]
   },
-  Understanding: {
-    description: 'Constructing meaningful interpretations — making sense of observations through frameworks and connections. Understanding is the bridge between observation and action. It involves interpreting what we perceive, connecting new information to existing knowledge, and building coherent mental models. Understanding allows us to see relationships, appreciate complexity, and develop wisdom.',
+  understand: {
+    description: 'Constructing meaningful interpretations — making sense of observations through frameworks and connections. understand is the bridge between observation and action. It involves interpreting what we perceive, connecting new information to existing knowledge, and building coherent mental models. understand allows us to see relationships, appreciate complexity, and develop wisdom.',
     dimensions: [
       { level: 'Awareness', desc: 'Recognizing that information has multiple possible meanings' },
-      { level: 'Understanding', desc: 'Building initial mental models and frameworks' },
-      { level: 'Application', desc: 'Using understanding to explain situations to others' },
+      { level: 'understand', desc: 'Building initial mental models and frameworks' },
+      { level: 'Application', desc: 'Using understand to explain situations to others' },
       { level: 'Integration', desc: 'Synthesizing multiple frameworks into personal wisdom' },
-      { level: 'Mastery', desc: 'Deep, nuanced understanding across domains and contexts' }
+      { level: 'Mastery', desc: 'Deep, nuanced understand across domains and contexts' }
     ],
     ways: [
-      { way: 'Systems Thinking', desc: 'Study how components interact within larger wholes' },
+      { way: 'Systems Think', desc: 'Study how components interact within larger wholes' },
       { way: 'Analogical Reasoning', desc: 'Connect new concepts to familiar domains' },
       { way: 'Dialogue & Debate', desc: 'Explore multiple interpretations through discussion' },
-      { way: 'Teaching Others', desc: 'Explain concepts to deepen your own understanding' },
+      { way: 'Teaching Others', desc: 'Explain concepts to deepen your own understand' },
       { way: 'Experiential Learning', desc: 'Understand through direct experience and practice' },
       { way: 'Research & Reading', desc: 'Study diverse perspectives and expert frameworks' }
     ],
     subdomains: [
-      { name: 'Contextual', desc: 'Understanding information within its broader context.' },
+      { name: 'Contextual', desc: 'understand information within its broader context.' },
       { name: 'Systematic', desc: 'Grasping interconnections and cause-effect relationships.' },
       { name: 'Conceptual', desc: 'Building abstract mental models and theories.' },
       { name: 'Interpretive', desc: 'Drawing meaning from ambiguous or complex information.' },
-      { name: 'Communicative', desc: 'Understanding through dialogue and explanation.' },
+      { name: 'Communicative', desc: 'understand through dialogue and explanation.' },
       { name: 'Intuitive', desc: 'Grasping concepts through felt sense and pattern recognition.' },
       { name: 'Analytical', desc: 'Breaking down concepts into constituent parts.' }
     ]
   },
-  Thinking: {
-    description: 'Cognitive processing — generating insights, solving problems, and creating mental frameworks. Thinking is the active manipulation of ideas, concepts, and information to create something new or solve complex problems. It ranges from logical deduction to creative ideation, from focused problem-solving to imaginative exploration. Thinking is how we generate possibilities and navigate uncertainty.',
+  Think: {
+    description: 'Cognitive processing — generating insights, solving problems, and creating mental frameworks. Think is the active manipulation of ideas, concepts, and information to create something new or solve complex problems. It ranges from logical deduction to creative ideation, from focused problem-solving to imaginative exploration. Think is how we generate possibilities and navigate uncertainty.',
     dimensions: [
-      { level: 'Awareness', desc: 'Noticing your own thinking patterns and biases' },
-      { level: 'Understanding', desc: 'Understanding different types of thinking and their uses' },
-      { level: 'Application', desc: 'Using specific thinking tools for problems' },
-      { level: 'Integration', desc: 'Integrating multiple thinking approaches flexibly' },
+      { level: 'Awareness', desc: 'Noticing your own Think patterns and biases' },
+      { level: 'understand', desc: 'understand different types of Think and their uses' },
+      { level: 'Application', desc: 'Using specific Think tools for problems' },
+      { level: 'Integration', desc: 'Integrating multiple Think approaches flexibly' },
       { level: 'Mastery', desc: 'Generating innovative solutions and new frameworks' }
     ],
     ways: [
@@ -85,25 +98,25 @@ const DOMAIN_DETAILS = {
       { way: 'Problem-Solving Frameworks', desc: 'Apply structured approaches to complex challenges' },
       { way: 'Thought Experiments', desc: 'Imagine scenarios to explore ideas and consequences' },
       { way: 'Collaborative Ideation', desc: 'Build ideas together with diverse perspectives' },
-      { way: 'Reflective Practice', desc: 'Think about your thinking to improve it' }
+      { way: 'Reflective Practice', desc: 'Think about your Think to improve it' }
     ],
     subdomains: [
       { name: 'Critical', desc: 'Evaluating arguments and testing assumptions.' },
       { name: 'Creative', desc: 'Generating novel ideas and making unexpected connections.' },
       { name: 'Strategic', desc: 'Planning approaches and considering multiple pathways.' },
       { name: 'Logical', desc: 'Following reasoning and testing coherence.' },
-      { name: 'Systemic', desc: 'Thinking about wholes and interconnected elements.' },
+      { name: 'Systemic', desc: 'Think about wholes and interconnected elements.' },
       { name: 'Abstract', desc: 'Manipulating concepts and exploring possibilities.' },
       { name: 'Practical', desc: 'Focusing on real-world application and constraints.' }
     ]
   },
-  Deciding: {
-    description: 'Making judgments and choices — committing to actions aligned with values and goals. Deciding is the crucial moment when we move from contemplation to commitment. It involves weighing options, considering values and consequences, and making choices that align with who we are and what we care about. Deciding creates direction and momentum in life.',
+  Decide: {
+    description: 'Making judgments and choices — committing to actions aligned with values and goals. Decide is the crucial moment when we move from contemplation to commitment. It involves weighing options, considering values and consequences, and making choices that align with who we are and what we care about. Decide creates direction and momentum in life.',
     dimensions: [
       { level: 'Awareness', desc: 'Recognizing that a decision needs to be made' },
-      { level: 'Understanding', desc: 'Clarifying options and understanding consequences' },
+      { level: 'understand', desc: 'Clarifying options and understand consequences' },
       { level: 'Application', desc: 'Making decisions aligned with values and goals' },
-      { level: 'Integration', desc: 'Deciding with wisdom that integrates emotion and reason' },
+      { level: 'Integration', desc: 'Decide with wisdom that integrates emotion and reason' },
       { level: 'Mastery', desc: 'Making clear decisions under uncertainty and complexity' }
     ],
     ways: [
@@ -116,22 +129,22 @@ const DOMAIN_DETAILS = {
     ],
     subdomains: [
       { name: 'Values-Based', desc: 'Choosing based on personal and ethical principles.' },
-      { name: 'Evidence-Based', desc: 'Deciding informed by data and research.' },
+      { name: 'Evidence-Based', desc: 'Decide informed by data and research.' },
       { name: 'Intuitive', desc: 'Trusting gut feelings and embodied knowing.' },
-      { name: 'Collaborative', desc: 'Deciding through dialogue and shared input.' },
+      { name: 'Collaborative', desc: 'Decide through dialogue and shared input.' },
       { name: 'Risk-Aware', desc: 'Considering consequences and preparing for uncertainty.' },
       { name: 'Committed', desc: 'Making firm choices and standing by them.' },
       { name: 'Adaptive', desc: 'Adjusting decisions as circumstances change.' }
     ]
   },
-  Performing: {
-    description: 'Taking action — executing plans and implementing decisions with skill and intentionality. Performing is where intention meets reality. It is the domain of action, execution, and bringing ideas into the world. Performing involves developing skills, maintaining persistence, adapting to obstacles, and taking responsibility for results. It is how we make a difference.',
+  perfrom: {
+    description: 'Taking action — executing plans and implementing decisions with skill and intentionality. perfrom is where intention meets reality. It is the domain of action, execution, and bringing ideas into the world. perfrom involves developing skills, maintaining persistence, adapting to obstacles, and taking responsibility for results. It is how we make a difference.',
     dimensions: [
       { level: 'Awareness', desc: 'Recognizing the need for action and your capacity' },
-      { level: 'Understanding', desc: 'Understanding what actions are needed and why' },
+      { level: 'understand', desc: 'understand what actions are needed and why' },
       { level: 'Application', desc: 'Taking skillful action toward meaningful goals' },
       { level: 'Integration', desc: 'Acting with alignment across body, mind, and values' },
-      { level: 'Mastery', desc: 'Performing at high levels with natural flow and efficiency' }
+      { level: 'Mastery', desc: 'perfrom at high levels with natural flow and efficiency' }
     ],
     ways: [
       { way: 'Skill Building', desc: 'Deliberately practice and develop specific competencies' },
@@ -142,7 +155,7 @@ const DOMAIN_DETAILS = {
       { way: 'Celebration & Reflection', desc: 'Acknowledge progress and extract lessons from experience' }
     ],
     subdomains: [
-      { name: 'Skilled', desc: 'Performing with competence and mastery.' },
+      { name: 'Skilled', desc: 'perfrom with competence and mastery.' },
       { name: 'Intentional', desc: 'Acting with clear purpose and awareness.' },
       { name: 'Persistent', desc: 'Maintaining effort through challenges and setbacks.' },
       { name: 'Adaptive', desc: 'Adjusting actions based on feedback and changing conditions.' },
@@ -151,11 +164,11 @@ const DOMAIN_DETAILS = {
       { name: 'Energetic', desc: 'Acting with vitality, enthusiasm, and engagement.' }
     ]
   },
-  Experiencing: {
-    description: 'Sensing and feeling — engaging directly with the world and integrating the full spectrum of human experience. Experiencing is about being fully alive and present. It involves engaging our whole selves — body, emotions, intuition, and spirit — in direct contact with life. Experiencing brings richness, vitality, and authenticity to our existence.',
+  Experience: {
+    description: 'Sensing and feeling — engaging directly with the world and integrating the full spectrum of human experience. Experience is about being fully alive and present. It involves engaging our whole selves — body, emotions, intuition, and spirit — in direct contact with life. Experience brings richness, vitality, and authenticity to our existence.',
     dimensions: [
       { level: 'Awareness', desc: 'Noticing sensations, emotions, and feelings as they arise' },
-      { level: 'Understanding', desc: 'Understanding the meaning and messages of experiences' },
+      { level: 'understand', desc: 'understand the meaning and messages of experiences' },
       { level: 'Application', desc: 'Fully engaging in activities with presence and authenticity' },
       { level: 'Integration', desc: 'Integrating experiences into personal wisdom and meaning' },
       { level: 'Mastery', desc: 'Living fully, present, and authentic across all experiences' }
@@ -175,14 +188,14 @@ const DOMAIN_DETAILS = {
       { name: 'Spiritual', desc: 'Connecting with purpose, meaning, and transcendence.' },
       { name: 'Social', desc: 'Engaging authentically with others and community.' },
       { name: 'Creative', desc: 'Expressing inner experiences through art and innovation.' },
-      { name: 'Relational', desc: 'Experiencing deep connection with others and the world.' }
+      { name: 'Relational', desc: 'Experience deep connection with others and the world.' }
     ]
   },
-  Repeating: {
-    description: 'Consolidating learning — building habits, refining practices, and evolving through iteration. Repeating is the domain of growth through repetition and refinement. It involves building sustainable habits, learning from experience, and gradually developing mastery and wisdom. Repeating transforms temporary improvements into lasting capabilities.',
+  Repeat: {
+    description: 'Consolidating learning — building habits, refining practices, and evolving through iteration. Repeat is the domain of growth through repetition and refinement. It involves building sustainable habits, learning from experience, and gradually developing mastery and wisdom. Repeat transforms temporary improvements into lasting capabilities.',
     dimensions: [
       { level: 'Awareness', desc: 'Noticing patterns in your learning and performance' },
-      { level: 'Understanding', desc: 'Understanding how learning and habit formation work' },
+      { level: 'understand', desc: 'understand how learning and habit formation work' },
       { level: 'Application', desc: 'Deliberately practicing and building new habits' },
       { level: 'Integration', desc: 'Integrating learning into your natural way of being' },
       { level: 'Mastery', desc: 'Continuous evolution and refinement toward mastery' }
@@ -200,7 +213,7 @@ const DOMAIN_DETAILS = {
       { name: 'Habitual', desc: 'Building sustainable routines and automaticity.' },
       { name: 'Reflective', desc: 'Learning from experience and extracting lessons.' },
       { name: 'Cumulative', desc: 'Building on previous learning to reach new levels.' },
-      { name: 'Adaptive', desc: 'Evolving practices as understanding deepens.' },
+      { name: 'Adaptive', desc: 'Evolving practices as understand deepens.' },
       { name: 'Mastery', desc: 'Developing expertise through dedicated practice.' },
       { name: 'Transformative', desc: 'Using repetition to fundamentally change capabilities.' }
     ]
@@ -220,6 +233,26 @@ const state = {
 
 let goalsSectionControlsWired = false;
 let currentViewName = 'dashboard';
+
+function isAuthenticated() {
+  return sessionStorage.getItem('Think GrowLoggedIn') === 'true' || localStorage.getItem('Think GrowLoggedIn') === 'true';
+}
+
+function logoutUser() {
+  sessionStorage.removeItem('Think GrowLoggedIn');
+  localStorage.removeItem('Think GrowLoggedIn');
+  // After logout, send users back to the public landing page
+  window.location.href = 'Landing%20page/landingpage.html';
+}
+
+function ensureAuthenticated() {
+  if (!isAuthenticated()) {
+    // Always require users to come via the landing page before signing in
+    window.location.href = 'Landing%20page/landingpage.html';
+    return false;
+  }
+  return true;
+}
 
 function parseJSON(raw, fallback) {
   try {
@@ -294,8 +327,8 @@ function getUserProfileData() {
   const checkinsData = parseJSON(localStorage.getItem(STORAGE_KEYS.checkins), []);
   const goalsData = getStoredGoals();
 
-  const savedName = localStorage.getItem('growHPFUserName') || sessionStorage.getItem('growHPFUserName');
-  const savedEmail = localStorage.getItem('growHPFUserEmail') || sessionStorage.getItem('growHPFUserEmail');
+  const savedName = localStorage.getItem('Think GrowUserName') || sessionStorage.getItem('Think GrowUserName');
+  const savedEmail = localStorage.getItem('Think GrowUserEmail') || sessionStorage.getItem('Think GrowUserEmail');
   const name = (savedName || 'Ashok Upadhya').trim();
   const email = (savedEmail || 'No email saved').trim();
   const joined = checkinsData.length > 0 ? checkinsData[0].date : getTodayISODate();
@@ -423,7 +456,7 @@ function buildGoalsTrend(goals) {
       return;
     }
     const dayDiff = Math.floor((now - achievedDate) / 86400000);
-    const idx = 6 - dayDiff;
+  const idx = dayDiff;
     if (idx >= 0 && idx <= 6) {
       days[idx] += 1;
     }
@@ -660,8 +693,18 @@ function renderJournal() {
     return;
   }
 
-  const sortedEntries = [...checkinsData].reverse();
-  entriesList.innerHTML = sortedEntries
+const uniqueDailyEntries = [];
+const seenDates = new Set();
+
+[...checkinsData]
+  .reverse()
+  .forEach((entry) => {
+    if (!seenDates.has(entry.date)) {
+      seenDates.add(entry.date);
+      uniqueDailyEntries.push(entry);
+    }
+  });
+ entriesList.innerHTML = uniqueDailyEntries
     .map((entry) => {
       const dateObj = new Date(entry.date);
       const formattedDate = new Intl.DateTimeFormat('en-US', {
@@ -1169,7 +1212,7 @@ function showScenarioRoadmap(scenario) {
   const scenarios = {
     business: {
       title: 'Designer → Digital Agency Founder',
-      intro: 'You have design skills. Now you need business acumen, systems thinking, and the courage to decide and perform.'
+      intro: 'You have design skills. Now you need business acumen, systems Think, and the courage to decide and perform.'
     },
     student: {
       title: 'Student → Academic Excellence',
@@ -1177,19 +1220,19 @@ function showScenarioRoadmap(scenario) {
     },
     time: {
       title: 'Chaos → Time Mastery',
-      intro: 'Transform how you manage your time by observing patterns, understanding priorities, and building sustainable routines.'
+      intro: 'Transform how you manage your time by observe patterns, understand priorities, and building sustainable routines.'
     },
     career: {
       title: 'Professional → Industry Leader',
-      intro: 'Advance your career by developing strategic thinking, decisive action, and continuous learning.'
+      intro: 'Advance your career by developing strategic Think, decisive action, and continuous learning.'
     },
     health: {
       title: 'Struggle → Wellness Champion',
-      intro: 'Build lasting health habits by understanding your body, making informed decisions, and consistently performing.'
+      intro: 'Build lasting health habits by understand your body, making informed decisions, and consistently perfrom.'
     },
     relationships: {
       title: 'Distant → Deeply Connected',
-      intro: 'Transform relationships by observing emotional patterns, understanding needs, and communicating authentically.'
+      intro: 'Transform relationships by observe emotional patterns, understand needs, and communicating authentically.'
     }
   };
   
@@ -1326,6 +1369,12 @@ function wireSidebarNavState() {
   const items = document.querySelectorAll('.sidebar .nav-item');
   items.forEach((item) => {
     item.addEventListener('click', () => {
+      const action = item.getAttribute('data-action');
+      if (action === 'logout') {
+        logoutUser();
+        return;
+      }
+
       items.forEach((node) => node.classList.remove('active'));
       item.classList.add('active');
       const viewName = item.getAttribute('data-view');
@@ -1352,7 +1401,42 @@ window.addEventListener('resize', () => {
   }
 });
 
+// Inject demo data for testing charts (remove after testing)
+function injectDemoData() {
+  const demoGoals = [];
+  
+  // Generate 7 days of demo data with varying completions
+  const today = new Date();
+  const daysData = [3, 2, 5, 1, 4, 2, 6]; // Completions for past 7 days
+  
+  daysData.forEach((count, dayIndex) => {
+    for (let i = 0; i < count; i++) {
+      const date = new Date(today);
+      date.setDate(date.getDate() - (6 - dayIndex));
+      date.setHours(Math.floor(Math.random() * 24), Math.floor(Math.random() * 60), 0);
+      
+      demoGoals.push({
+        id: `demo_${dayIndex}_${i}`,
+        title: `Demo Goal ${dayIndex}-${i}`,
+        domain: ['observe', 'understand', 'Think', 'Decide', 'perfrom', 'Experience', 'Repeat'][dayIndex],
+        achieved: true,
+        achievedAt: date.toISOString()
+      });
+    }
+  });
+  
+  // Use the correct storage key format
+  localStorage.setItem(STORAGE_KEYS.goals, JSON.stringify(demoGoals));
+}
+
 function startDashboard() {
+  if (!ensureAuthenticated()) {
+    return;
+  }
+
+  // Uncomment the next line to inject demo data for chart testing
+  injectDemoData();
+
   wireSidebarNavState();
   wireGoalSectionControls();
   buildCheckinDomainInputs();
@@ -1369,23 +1453,23 @@ function startDashboard() {
 // Domain Interaction Matrix - Shows how each domain flows into others
 const DOMAIN_INTERACTION_MATRIX = [
   // O  U  T  D  P  E  R
-  [ 0, 1, 1, 0, 0, 0, 0 ],  // Observing → Understanding, Thinking
-  [ 0, 0, 1, 1, 0, 0, 0 ],  // Understanding → Thinking, Deciding
-  [ 0, 0, 0, 1, 0, 0, 0 ],  // Thinking → Deciding
-  [ 0, 0, 0, 0, 1, 0, 0 ],  // Deciding → Performing
-  [ 0, 0, 0, 0, 0, 1, 0 ],  // Performing → Experiencing
-  [ 1, 1, 1, 0, 0, 0, 1 ],  // Experiencing → Observing, Understanding, Thinking, Repeating
-  [ 1, 0, 0, 0, 1, 0, 0 ]   // Repeating → Observing, Performing
+  [ 0, 1, 1, 0, 0, 0, 0 ],  // Observe → understand, Think
+  [ 0, 0, 1, 1, 0, 0, 0 ],  // understand → Think, Decide
+  [ 0, 0, 0, 1, 0, 0, 0 ],  // Think → Decide
+  [ 0, 0, 0, 0, 1, 0, 0 ],  // Decide → perfrom
+  [ 0, 0, 0, 0, 0, 1, 0 ],  // perfrom → Experience
+  [ 1, 1, 1, 0, 0, 0, 1 ],  // Experience → Observe, understand, Think, Repeat
+  [ 1, 0, 0, 0, 1, 0, 0 ]   // Repeat → Observe, perfrom
 ];
 
 // Subdomain to Growth Dimensions mapping
 const SUBDOMAIN_DIMENSION_MAP = [
-  { subdomain: 'Perceptual', dimensions: ['Awareness', 'Understanding', 'Integration'] },
+  { subdomain: 'Perceptual', dimensions: ['Awareness', 'understand', 'Integration'] },
   { subdomain: 'Continuous', dimensions: ['Awareness', 'Application', 'Mastery'] },
-  { subdomain: 'Analytical', dimensions: ['Understanding', 'Application', 'Integration'] },
-  { subdomain: 'Reflective', dimensions: ['Understanding', 'Integration', 'Mastery'] },
+  { subdomain: 'Analytical', dimensions: ['understand', 'Application', 'Integration'] },
+  { subdomain: 'Reflective', dimensions: ['understand', 'Integration', 'Mastery'] },
   { subdomain: 'External', dimensions: ['Awareness', 'Application', 'Integration'] },
-  { subdomain: 'Internal', dimensions: ['Awareness', 'Understanding', 'Mastery'] },
+  { subdomain: 'Internal', dimensions: ['Awareness', 'understand', 'Mastery'] },
   { subdomain: 'Active', dimensions: ['Application', 'Integration', 'Mastery'] }
 ];
 
@@ -1425,7 +1509,7 @@ function renderSubdomainDimensionMatrix() {
   const container = document.getElementById('sd-matrix-table');
   if (!container) return;
 
-  const dimensions = ['Awareness', 'Understanding', 'Application', 'Integration', 'Mastery'];
+  const dimensions = ['Awareness', 'understand', 'Application', 'Integration', 'Mastery'];
   let html = '<table class="matrix-table" style="width:100%; border-collapse: collapse; font-size: 12px;">';
   
   // Header row

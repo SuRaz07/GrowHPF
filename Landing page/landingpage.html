@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Think Grow — Human Purpose Framework</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    :root {
+      --blue: #185fa5;
+      --blue-dark: #124781;
+      --blue-soft: #e6f1fb;
+      --teal: #0f6e56;
+      --teal-soft: #e1f5ee;
+      --amber: #854f0b;
+      --amber-soft: #faeeda;
+      --purple: #534ab7;
+      --purple-soft: #eeedfe;
+      --ink: #0f172a;
+      --gray: #64748b;
+      --border: rgba(15, 23, 42, 0.08);
+      --shadow: 0 18px 44px rgba(15, 23, 42, 0.08);
+    }
+
+    body {
+      background:
+        radial-gradient(circle at 8% 10%, rgba(24,95,165,.13), transparent 28%),
+        radial-gradient(circle at 92% 12%, rgba(15,110,86,.11), transparent 26%),
+        radial-gradient(circle at 50% 100%, rgba(83,74,183,.08), transparent 32%),
+        linear-gradient(180deg, #fbfcfe 0%, #f4f7fb 58%, #eef3f7 100%);
+      color: var(--ink);
+      overflow-x: hidden;
+    }
+
+    html,
+    body {
+      width: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 100%;
+      margin: 0;
+    }
+
+    .panel {
+      background: rgba(255, 255, 255, 0.84);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px 28px;
+      border-radius: 14px;
+      border: 1px solid transparent;
+      font-weight: 700;
+      font-size: 15px;
+      cursor: pointer;
+      transition: transform .2s ease, box-shadow .2s ease, background .2s ease, border-color .2s ease;
+      white-space: nowrap;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--blue) 0%, #2f74bf 100%);
+      color: #fff;
+      box-shadow: 0 12px 28px rgba(24,95,165,.18);
+    }
+
+    .btn-primary:hover {
+      box-shadow: 0 16px 34px rgba(24,95,165,.24);
+    }
+
+    .btn-secondary {
+      background: #fff;
+      border-color: rgba(15,23,42,.1);
+      color: var(--ink);
+    }
+
+    .btn-secondary:hover {
+      border-color: rgba(24,95,165,.16);
+      background: #f8fbfe;
+    }
+
+    .btn-soft {
+      background: rgba(255,255,255,.88);
+      border-color: rgba(15,23,42,.1);
+      color: var(--ink);
+    }
+
+    .btn-soft:hover {
+      background: #fff;
+      border-color: rgba(24,95,165,.18);
+    }
+
+    .btn-sm {
+      padding: 11px 18px;
+      font-size: 13px;
+      border-radius: 12px;
+    }
+
+    #landing {
+      min-height: 100vh;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .landing-flow {
+      margin-top: 0;
+      background: rgba(255, 255, 255, 0.86);
+      border: 1px solid var(--border);
+      border-top: 0;
+      border-radius: 0;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .landing-flow .panel:not(.hero-cta-box) {
+      background: transparent;
+      border: 0;
+      box-shadow: none;
+      backdrop-filter: none;
+    }
+
+    .land-nav,
+    .hero-content,
+    .formula-strip,
+    .land-domains-row,
+    .feat-card,
+    .footer-inner {
+      border-radius: 0;
+    }
+
+    .land-nav {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+      padding: 16px 22px;
+      border-radius: 0;
+      border-bottom: 0;
+      box-shadow: 0 12px 26px rgba(15, 23, 42, 0.07);
+    }
+
+    .logo-svg-wrap,
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .logo-icon {
+      width: 46px;
+      height: 46px;
+      object-fit: cover;
+      border-radius: 10px;
+      box-shadow: 0 8px 18px rgba(24,95,165,.12);
+    }
+
+    .logo-wordmark .grow,
+    .brand-copy .grow {
+      font-family: 'Inter', sans-serif;
+      font-size: 20px;
+      line-height: 1;
+      letter-spacing: -0.5px;
+      font-weight: 800;
+      color: var(--ink);
+    }
+
+    .logo-wordmark .grow span,
+    .brand-copy .grow span {
+      color: var(--blue);
+    }
+
+    .tagline {
+      margin-top: 4px;
+      font-size: 10px;
+      letter-spacing: 1.6px;
+      text-transform: uppercase;
+      color: var(--gray);
+    }
+
+    .land-nav-right {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .hero-wrap {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0;
+      align-items: stretch;
+    }
+
+    .hero-content {
+      padding: clamp(30px, 5vw, 52px);
+    }
+
+    .land-overline,
+    .formula-label,
+    .domains-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 800;
+      color: var(--blue-dark);
+      margin-bottom: 14px;
+    }
+
+    .land-overline::before {
+      content: '';
+      width: 34px;
+      height: 2px;
+      border-radius: 99px;
+      background: var(--blue);
+    }
+
+    .land-h1 {
+      font-size: clamp(3rem, 7vw, 5.2rem);
+      line-height: .98;
+      letter-spacing: -1.8px;
+      margin-bottom: 16px;
+      max-width: 9.5ch;
+    }
+
+    .land-h1 em {
+      font-style: italic;
+      color: var(--blue);
+      font-weight: 700;
+      display: block;
+      margin-top: 6px;
+    }
+
+    .land-sub {
+      max-width: 62ch;
+      color: var(--gray);
+      font-size: 18px;
+      line-height: 1.78;
+      margin-bottom: 26px;
+    }
+
+    .land-ctas {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .hero-cta-box {
+      min-height: 540px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 36px;
+      color: #fff;
+      background: linear-gradient(135deg, #2f63de 0%, #2247b8 100%);
+    }
+
+    .hero-cta-box h2 {
+      font-size: clamp(38px, 5vw, 56px);
+      line-height: 1.12;
+      letter-spacing: -1.2px;
+      font-weight: 800;
+      margin-bottom: 16px;
+    }
+
+    .hero-cta-box p {
+      font-size: clamp(19px, 2.2vw, 34px);
+      line-height: 1.3;
+      opacity: 0.96;
+      font-weight: 600;
+      margin-bottom: 30px;
+    }
+
+    .cta-consult {
+      background: #fff;
+      color: #2454d3;
+      border: 0;
+      border-radius: 16px;
+      padding: 14px 28px;
+      font-size: 22px;
+      font-weight: 800;
+      box-shadow: 0 14px 34px rgba(11, 28, 95, 0.24);
+    }
+
+    .cta-consult:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 18px 40px rgba(11, 28, 95, 0.28);
+    }
+
+    .formula-strip,
+    .land-domains-row,
+    .land-features,
+    .site-footer {
+      margin-top: 0;
+    }
+
+    .formula-strip {
+      padding: 18px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      text-align: center;
+      border-top: 1px solid var(--border);
+    }
+
+    .fp {
+      padding: 10px 14px;
+      font-size: 12px;
+      font-weight: 800;
+      border: 1px solid transparent;
+    }
+
+    .fp.domains {
+      background: rgba(24,95,165,.1);
+      color: var(--blue-dark);
+      border-color: rgba(24,95,165,.12);
+    }
+
+    .fp.subdomains {
+      background: rgba(15,110,86,.1);
+      color: var(--teal);
+      border-color: rgba(15,110,86,.12);
+    }
+
+    .fp.spacetime {
+      background: rgba(133,79,11,.1);
+      color: #8a540d;
+      border-color: rgba(133,79,11,.12);
+    }
+
+    .fp.growth {
+      background: rgba(83,74,183,.1);
+      color: var(--purple);
+      border-color: rgba(83,74,183,.12);
+    }
+
+    .fp-op {
+      color: var(--gray);
+      font-size: 18px;
+      font-weight: 800;
+    }
+
+    .land-domains-row {
+      padding: 18px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      border-top: 1px solid var(--border);
+    }
+
+    .d-bubble {
+      padding: 10px 14px;
+      font-size: 12px;
+      font-weight: 800;
+      border: 1px solid transparent;
+      font-family: inherit;
+    }
+
+    .d-bubble.blue {
+      background: rgba(24,95,165,.1);
+      color: var(--blue-dark);
+      border-color: rgba(24,95,165,.12);
+    }
+
+    .d-bubble.teal {
+      background: rgba(15,110,86,.1);
+      color: var(--teal);
+      border-color: rgba(15,110,86,.12);
+    }
+
+    .d-bubble.orange {
+      background: rgba(133,79,11,.1);
+      color: #8a540d;
+      border-color: rgba(133,79,11,.12);
+    }
+
+    .d-bubble.purple {
+      background: rgba(83,74,183,.1);
+      color: var(--purple);
+      border-color: rgba(83,74,183,.12);
+    }
+
+    .d-bubble.gray {
+      background: rgba(95,94,90,.08);
+      color: #5f5e5a;
+      border-color: rgba(95,94,90,.1);
+    }
+
+    .land-features {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .feat-card {
+      padding: 24px;
+      border-right: 1px solid var(--border);
+      transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+    }
+
+    .land-features .feat-card:last-child {
+      border-right: 0;
+    }
+
+    .feat-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(24,95,165,.14);
+      box-shadow: 0 24px 48px rgba(15,23,42,.08);
+    }
+
+    .feat-icon {
+      width: 52px;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 18px;
+      border: 1px solid rgba(15,23,42,.08);
+      background: #fff;
+    }
+
+    .feat-icon.blue {
+      background: rgba(24,95,165,.08);
+      color: var(--blue-dark);
+    }
+
+    .feat-icon.teal {
+      background: rgba(15,110,86,.08);
+      color: var(--teal);
+    }
+
+    .feat-icon.orange {
+      background: rgba(133,79,11,.08);
+      color: #8a540d;
+    }
+
+    .feat-title {
+      font-size: 22px;
+      line-height: 1.2;
+      margin-bottom: 12px;
+      font-weight: 800;
+      letter-spacing: -0.4px;
+    }
+
+    .feat-desc {
+      color: var(--gray);
+      line-height: 1.7;
+      font-size: 15px;
+    }
+
+    .site-footer {
+      padding: 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .prefooter-cta {
+      border-top: 1px solid var(--border);
+      padding: 24px;
+      background: #f7f9fc;
+    }
+
+    .prefooter-cta .hero-cta-box {
+      min-height: 360px;
+      border-radius: 24px;
+      overflow: hidden;
+    }
+
+    .footer-inner {
+      padding: 28px;
+      display: grid;
+      grid-template-columns: 1.2fr .9fr 1fr;
+      gap: 24px;
+    }
+
+    .brand-copy .footer-desc {
+      margin-top: 8px;
+      color: var(--gray);
+      max-width: 320px;
+      line-height: 1.7;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 34px;
+      flex-wrap: wrap;
+    }
+
+    .links-col h4,
+    .footer-newsletter h4 {
+      font-size: 15px;
+      margin-bottom: 12px;
+    }
+
+    .links-col ul {
+      list-style: none;
+    }
+
+    .links-col li {
+      margin-bottom: 10px;
+    }
+
+    .links-col a,
+    .social-link {
+      color: var(--gray);
+      font-size: 14px;
+    }
+
+    .links-col a:hover,
+    .social-link:hover {
+      color: var(--blue);
+    }
+
+    .small {
+      color: var(--gray);
+      font-size: 14px;
+      line-height: 1.7;
+      margin-bottom: 14px;
+    }
+
+    .newsletter-form {
+      display: flex;
+      gap: 10px;
+    }
+
+    .newsletter-form input {
+      flex: 1;
+      padding: 13px 14px;
+      border: 1px solid rgba(15,23,42,.1);
+      border-radius: 14px;
+      background: #fff;
+      font: inherit;
+    }
+
+    .footer-bottom {
+      margin-top: 0;
+      padding: 16px 28px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      color: var(--gray);
+      font-size: 13px;
+      border-top: 1px solid var(--border);
+    }
+
+    .social-link + .social-link {
+      margin-left: 14px;
+    }
+
+    @media (max-width: 1024px) {
+      .hero-wrap,
+      .footer-inner,
+      .land-features {
+        grid-template-columns: 1fr;
+      }
+
+      .feat-card {
+        border-right: 0;
+        border-top: 1px solid var(--border);
+      }
+
+      .land-features .feat-card:first-child {
+        border-top: 0;
+      }
+
+      .hero-cta-box {
+        min-height: 420px;
+      }
+    }
+
+    @media (max-width: 860px) {
+      .land-nav {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .land-nav-right,
+      .land-ctas,
+      .newsletter-form,
+      .footer-bottom {
+        width: 100%;
+      }
+
+      .land-ctas,
+      .newsletter-form {
+        flex-direction: column;
+      }
+
+      .land-ctas .btn,
+      .newsletter-form .btn {
+        width: 100%;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    @media (max-width: 720px) {
+      #landing {
+        padding-top: 0;
+      }
+
+      .hero-cta-box {
+        min-height: 360px;
+      }
+
+      .cta-consult {
+        width: 100%;
+        font-size: 18px;
+      }
+
+      .land-h1 {
+        max-width: 100%;
+      }
+
+      .footer-links {
+        gap: 22px;
+      }
+
+      .prefooter-cta {
+        padding: 16px;
+      }
+
+      .prefooter-cta .hero-cta-box {
+        min-height: 300px;
+      }
+    }
+
+    @media (max-width: 540px) {
+      .logo-wordmark {
+        display: none;
+      }
+
+      .land-nav,
+      .hero-content,
+      .formula-strip,
+      .land-domains-row,
+      .feat-card,
+      .footer-inner {
+        border-radius: 0;
+      }
+
+      .land-h1 {
+        font-size: 3rem;
+      }
+
+      .land-sub {
+        font-size: 16px;
+      }
+
+      .hero-cta-box {
+        min-height: 300px;
+        padding: 26px;
+      }
+
+      .hero-cta-box p {
+        margin-bottom: 22px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <section id="landing">
+    <div class="container">
+      <nav class="land-nav panel">
+        <div class="logo-svg-wrap">
+          <img class="logo-icon" src="../logo.jpeg" alt="Think Grow logo">
+          <div class="logo-wordmark">
+            <div class="grow">Think<span>Grow</span></div>
+           
+          </div>
+        </div>
+
+        <div class="land-nav-right">
+          <a class="btn btn-soft btn-sm" href="../Login/signup/login.html">Sign in</a>
+          <a class="btn btn-primary btn-sm" href="../Login/signup/signup.html">Get started free</a>
+        </div>
+      </nav>
+    </div>
+
+    <div class="container landing-flow">
+      <div class="hero-wrap">
+      <div class="hero-content panel">
+        <div class="land-overline">Human Purpose Framework</div>
+        <h1 class="land-h1">
+          Grow with
+          <em>intention.</em>
+        </h1>
+
+        <p class="land-sub">
+          HPF maps your human potential across 7 domains, 49 subdomains, and 5 growth dimensions — giving every goal a science-backed roadmap.
+        </p>
+
+        <div class="land-ctas">
+          <a class="btn btn-primary" href="../Login/signup/signup.html">
+            Start your growth journey
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <a class="btn btn-secondary" href="../Login/signup/login.html">Sign in to your account</a>
+        </div>
+      </div>
+
+      </div>
+
+      <div class="formula-strip panel">
+        <span class="formula-label">HPF =</span>
+        <span class="fp domains">[7D] Domains</span>
+        <span class="fp-op">×</span>
+        <span class="fp subdomains">[49SD] Subdomains</span>
+        <span class="fp-op">×</span>
+        <span class="fp spacetime">6W Spacetime</span>
+        <span class="fp-op">=</span>
+        <span class="fp growth">5GD Growth</span>
+      </div>
+
+      <div class="land-domains-row panel">
+        <span class="domains-label">7 Domains</span>
+        <a class="d-bubble blue" href="../Login/signup/signup.html">O · observe</a>
+        <a class="d-bubble teal" href="../Login/signup/signup.html">U · understand</a>
+        <a class="d-bubble orange" href="../Login/signup/signup.html">T · Think</a>
+        <a class="d-bubble blue" href="../Login/signup/signup.html">D · Decide</a>
+        <a class="d-bubble teal" href="../Login/signup/signup.html">P · Perform</a>
+        <a class="d-bubble purple" href="../Login/signup/signup.html">E · Experience</a>
+        <a class="d-bubble gray" href="../Login/signup/signup.html">R · Repeat</a>
+      </div>
+
+      <div class="land-features">
+        <div class="feat-card panel">
+          <div class="feat-icon blue">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><line x1="12" y1="3" x2="12" y2="1"/></svg>
+          </div>
+          <div class="feat-title">7-Domain Goal Mapping</div>
+          <div class="feat-desc">Every goal is decomposed across observe, understand, Think, Decide, Perform, Experience, and Repeat.</div>
+        </div>
+
+        <div class="feat-card panel">
+          <div class="feat-icon teal">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </div>
+          <div class="feat-title">5 Growth Dimensions</div>
+          <div class="feat-desc">Track Sensory, Cognitive, Emotional, Social, and Spiritual growth across all activities with AI-powered insights.</div>
+        </div>
+
+        <div class="feat-card panel">
+          <div class="feat-icon orange">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+          </div>
+          <div class="feat-title">Daily Check-ins</div>
+          <div class="feat-desc">4-minute daily rituals using the 6W Spacetime framework — What, Where, When, Who, Why, How.</div>
+        </div>
+      </div>
+
+      <div class="prefooter-cta">
+        <div class="hero-cta-box panel">
+          <div>
+            <h2>Ready to Grow Your Business?</h2>
+            <p>Let's create something professional, modern, and impactful together.</p>
+            <a class="btn cta-consult" href="../Login/signup/signup.html">Get Free Consultation</a>
+          </div>
+        </div>
+      </div>
+
+      <footer class="site-footer">
+        <div class="footer-inner panel">
+          <div>
+            <div class="footer-brand">
+              <img class="logo-icon" src="../logo.jpeg" alt="Think Grow logo">
+              <div class="brand-copy">
+                <div class="grow">Think<span>Grow</span></div>
+                <p class="footer-desc">A concise, science-backed framework for human growth across seven domains.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="footer-links">
+            <div class="links-col">
+              <h4>Product</h4>
+              <ul>
+                <li><a href="#">Overview</a></li>
+                <li><a href="#">Features</a></li>
+              </ul>
+            </div>
+            <div class="links-col">
+              <h4>Company</h4>
+              <ul>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Careers</a></li>
+                <li><a href="#">Contact</a></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="footer-newsletter">
+            <h4>Get updates</h4>
+            <p class="small">Join our occasional newsletter for research-backed growth tips.</p>
+            <form class="newsletter-form" onsubmit="event.preventDefault(); alert('Thanks — newsletter signup is a demo.');">
+              <input type="email" placeholder="Your email" aria-label="Email" required>
+              <button class="btn btn-primary btn-sm" type="submit">Subscribe</button>
+            </form>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <div class="legal">© 2023 Think Grow · All rights reserved</div>
+          <div class="social">
+            <a href="#" aria-label="Twitter" class="social-link">Twitter</a>
+            <a href="#" aria-label="LinkedIn" class="social-link">LinkedIn</a>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </section>
+
+  <script>
+    try { 
+      // If user already logged in, send them to the dashboard directly
+      if (sessionStorage.getItem('Think GrowLoggedIn') === 'true' || localStorage.getItem('Think GrowLoggedIn') === 'true') {
+        window.location.href = '../index.html';
+      }
+      localStorage.setItem('Think GrowLandingVisited', 'true');
+    } catch (e) { /* ignore */ }
+  </script>
+</body>
+</html>
