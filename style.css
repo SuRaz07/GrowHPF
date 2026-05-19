@@ -459,7 +459,7 @@ input[type="text"], input[type="email"], input[type="password"], textarea {
 input:focus, textarea:focus { box-shadow: 0 6px 18px rgba(24,95,165,0.08); border-color: rgba(24,95,165,0.2); }
 
 .auth-card button[type="submit"], .btn { display:inline-flex; align-items:center; gap:8px; padding:12px 16px; border-radius:10px; border:0; cursor:pointer; font-weight:700; }
-.auth-card button[type="submit"] { background: linear-gradient(90deg,var(--purple),var(--blue)); color:#fff; width:100%; justify-content:center; padding:14px 16px; }
+.auth-card button[type="submit"] { background: linear-gradient(90deg,var(--purple),var(--blue)); color:#fff; width:100%; justify-content:center; padding:14px 16px; margin-top: 16px; }
 .auth-card .secondary { background: transparent; color:var(--purple-dark); border:1px solid rgba(15,14,12,0.06); }
 
 .message { font-size:13px; margin-top:8px; }
@@ -475,14 +475,15 @@ input:focus, textarea:focus { box-shadow: 0 6px 18px rgba(24,95,165,0.08); borde
 }
 
 /* input with action (show password) */
-.input-with-action { position: relative; }
+.input-with-action { position: relative; display: flex; align-items: center; }
 .input-with-action input {
   padding-right: 52px;
+  display: block;
 }
 .input-with-action .show-password-btn {
   position: absolute;
   right: 10px;
-  top: 50%;
+  top: 5%;
   transform: translateY(-50%);
   background: transparent;
   border: none;
